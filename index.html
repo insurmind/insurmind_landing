@@ -17,7 +17,7 @@
 <meta name="twitter:title" content="Insurmind — Agentes de IA para aseguradoras y brokers en México">
 <meta name="twitter:description" content="Cotizan, resuelven, emiten y cobran por WhatsApp, sin intervención, sobre la tarificación, emisión y pagos que ya tienes.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600&family=Inter+Tight:wght@450..800&family=Archivo:wght@450..800&display=swap" rel="stylesheet">
 <style>
 :root{
   --paper:#F7F8F7; --paper-2:#EEF1EF; --ink:#101917; --ink-2:#3B4A45; --mute:#5B6E68;
@@ -70,9 +70,17 @@ section{padding:96px 0;scroll-margin-top:76px}
 @media (max-width:760px){section{padding:64px 0;scroll-margin-top:104px}}
 .hero{padding:72px 0 88px}
 .grid2{display:grid;grid-template-columns:1.15fr .85fr;gap:64px;align-items:center}
-.hero .grid2{align-items:start}
+.hero .grid2{align-items:start;grid-template-columns:minmax(0,1.5fr) minmax(0,.82fr);gap:52px}
+@media (max-width:900px){.hero .grid2{grid-template-columns:1fr;gap:36px}}
 @media (max-width:900px){.grid2{grid-template-columns:1fr;gap:40px}}
-.hero h1{max-width:15em}
+.hero-title{max-width:760px;margin:0;font-family:"Inter Tight","Archivo",system-ui,sans-serif;
+  font-size:clamp(2.6rem,5.3vw,6.25rem);font-weight:500;line-height:.98;letter-spacing:-0.035em;text-wrap:balance}
+.hero-title__opening,.hero-title__outcome{font-weight:800}
+.hero-title__opening{display:block}
+.hero-title__bridge{font-weight:500}
+.hero-title__outcome{color:#14634f}
+.hero-title::before{content:"";display:block;width:72px;height:4px;margin-bottom:30px;border-radius:999px;background:#9ee637}
+@media (max-width:900px){.hero-title::before{margin-bottom:22px}}
 .hero .sub{margin-top:28px;font-size:1.25rem;line-height:1.45;color:var(--ink-2);max-width:30em}
 .hero .sub b{font-weight:500;color:var(--ink)}
 .hero .cta{margin-top:36px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
@@ -321,7 +329,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 <section class="hero">
   <div class="wrap grid2">
     <div>
-      <h1>Agentes de IA que se conectan a cualquier aseguradora en México para cotizar, resolver, emitir y cobrar.</h1>
+      <h1 class="hero-title"><span class="hero-title__opening">Agentes de IA</span> <span class="hero-title__bridge">que se conectan a cualquier aseguradora en México para</span> <span class="hero-title__outcome">cotizar, resolver, emitir y cobrar.</span></h1>
       <p class="sub">Sin intervención, de principio a fin.<br>
       <b>Tú ves cada conversación, mides la conversión y tomas el control cuando el negocio lo pida.</b></p>
       <div class="cta">
