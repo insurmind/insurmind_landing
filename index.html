@@ -206,6 +206,21 @@ section{padding:96px 0;scroll-margin-top:76px}
 .moat .find{margin-top:56px;padding:28px 0 0;border-top:1px solid var(--ink);max-width:40em;font-size:1.25rem;font-weight:300;line-height:1.35}
 .moat .find b{font-weight:500}
 
+/* franja de cobranza (COBRA) */
+.cobstack{display:grid;gap:26px}
+.cobstack .note{text-align:center;font-size:.85rem;color:var(--mute);margin-top:-10px}
+.cobmini{max-width:400px;margin:0 auto;border:1px solid var(--line);border-radius:14px;background:#fff;padding:18px 20px 16px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.cobmini .lbl{display:block;font-size:.76rem;color:var(--mute)}
+.cobmini .amt{display:block;font-size:clamp(1.7rem,4vw,2.2rem);font-weight:300;letter-spacing:-0.02em;line-height:1.1;margin-top:6px}
+.cobmini .of{display:block;font-size:.85rem;color:var(--mute);margin-top:3px}
+.cobmini .row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:16px;padding-top:14px;border-top:1px solid var(--line-soft)}
+.cobmini .prog{font-size:.82rem;color:var(--ink-2)}
+.cobmini .prog b{font-weight:600}
+.cobmini .prog em{display:block;font-style:normal;font-size:.78rem;color:var(--green);margin-top:2px}
+.cobmini .wabtn{display:inline-flex;align-items:center;gap:7px;background:var(--ink);color:#fff;border-radius:999px;padding:9px 15px;font-size:.82rem;font-weight:500;white-space:nowrap}
+.cobmini .wabtn svg{width:14px;height:14px;fill:currentColor;flex:none}
+@media (max-width:560px){.cobmini .row{align-items:stretch}.cobmini .wabtn{justify-content:center;width:100%}}
+
 /* dashboard */
 .dash{border:1px solid var(--line);border-radius:14px;background:#fff;overflow:hidden;font-size:.82rem}
 .dash .kpi{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line-soft)}
@@ -516,6 +531,16 @@ Col. Del Valle<span class="t">19:19<span class="ck">✓✓</span></span></div>
         <p class="vsub">Defiende la cartera, no solo la vende.</p>
         <p>Días antes del vencimiento, sin que nadie lo pida, el agente envía el aviso con su liga de pago. Es el único módulo que actúa cuando ya no hay venta que hacer, y por eso es el que evita que una póliza se cancele por un recibo olvidado.</p>
       </div>
+      <div class="cobstack">
+        <div class="cobmini" role="img" aria-label="Panel de cobranza. Esta semana vencen 15,708,014 pesos en recibos pendientes de cobro. Hay 1,284 recordatorios programados que el agente ya está enviando, y un botón para enviar un recordatorio por WhatsApp.">
+          <span class="lbl">Cobranza · esta semana</span>
+          <span class="amt">$15,708,014 MXN</span>
+          <span class="of">en recibos pendientes de cobro</span>
+          <div class="row">
+            <span class="prog">Recordatorios programados: <b>1,284</b><em>el agente ya los está enviando</em></span>
+            <span class="wabtn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884a9.82 9.82 0 0 1 6.988 2.896 9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.885-9.885 9.885M20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463 0 .104 5.359.101 11.945c0 2.096.549 4.142 1.595 5.945L0 24l6.305-1.654a11.94 11.94 0 0 0 5.71 1.454h.006c6.585 0 11.946-5.359 11.949-11.945a11.88 11.88 0 0 0-3.45-8.406"/></svg>Enviar recordatorio</span>
+          </div>
+        </div>
       <div class="demo" data-seq="cobra">
         <div class="phone">
           <div class="bar"><div class="avatar">SA</div><div><div class="who">Seguro Auto</div><div class="st">en línea</div></div></div>
@@ -526,6 +551,8 @@ Col. Del Valle<span class="t">19:19<span class="ck">✓✓</span></span></div>
         </div>
         <div class="ctl"><button type="button" data-pause aria-label="Pausar la conversación de cobranza">Pausar</button><button type="button" data-replay aria-label="Repetir la conversación de cobranza">Repetir</button></div>
         <span class="cap">Un mensaje que el cliente no pidió, una semana antes de que venza el recibo</span>
+      </div>
+      <p class="note">Los datos del panel son ilustrativos.</p>
       </div>
     </div>
 
