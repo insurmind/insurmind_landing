@@ -1,0 +1,6 @@
+{
+  "detector": {
+    "ignoreRules": ["nested-cards", "pulsing-dot"],
+    "ignoreFiles": [".claude/**", ".agents/**", "assets/**"]
+  }
+}
