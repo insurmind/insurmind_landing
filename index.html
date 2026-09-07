@@ -70,6 +70,7 @@ section{padding:96px 0;scroll-margin-top:76px}
 @media (max-width:760px){section{padding:64px 0;scroll-margin-top:104px}}
 .hero{padding:72px 0 88px}
 .grid2{display:grid;grid-template-columns:1.15fr .85fr;gap:64px;align-items:center}
+.hero .grid2{align-items:start}
 @media (max-width:900px){.grid2{grid-template-columns:1fr;gap:40px}}
 .hero h1{max-width:15em}
 .hero .sub{margin-top:28px;font-size:1.25rem;line-height:1.45;color:var(--ink-2);max-width:30em}
@@ -112,10 +113,10 @@ section{padding:96px 0;scroll-margin-top:76px}
 
 /* animation engine: default = final state. .anim = running */
 .anim .msg{opacity:0;transform:translateY(8px);animation:pop .35s ease-out forwards;animation-delay:calc(var(--at) * 1s);animation-play-state:inherit}
-.anim .typing{display:inline-flex;opacity:0;animation:typ 1s linear both;animation-delay:calc(var(--at) * 1s);animation-duration:calc(var(--dur,1.4) * 1s);animation-play-state:inherit}
+.anim .typing{display:inline-flex;opacity:0;margin-bottom:-30px;animation:typ 1s linear both;animation-delay:calc(var(--at) * 1s);animation-duration:calc(var(--dur,1.4) * 1s);animation-play-state:inherit}
 .anim.paused *{animation-play-state:paused!important}
 @keyframes pop{to{opacity:1;transform:none}}
-@keyframes typ{0%{opacity:0;height:0;padding-top:0;padding-bottom:0}6%{opacity:1;height:auto;padding-top:9px;padding-bottom:9px}92%{opacity:1;height:auto;padding-top:9px;padding-bottom:9px}100%{opacity:0;height:0;padding-top:0;padding-bottom:0;margin-top:-6px}}
+@keyframes typ{0%{opacity:0}8%{opacity:1}92%{opacity:1}100%{opacity:0}}
 @media (prefers-reduced-motion:reduce){
   .anim .msg{animation:none;opacity:1;transform:none}
   .anim .typing{display:none;animation:none}
