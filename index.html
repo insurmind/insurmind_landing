@@ -43,7 +43,7 @@ strong{font-weight:500}
 @media (max-width:760px){.nav ul{display:none}}
 
 /* sections */
-section{padding:96px 0}
+section{padding:96px 0;scroll-margin-top:76px}
 @media (max-width:760px){section{padding:64px 0}}
 .hero{padding:72px 0 88px}
 .grid2{display:grid;grid-template-columns:1.15fr .85fr;gap:64px;align-items:center}
@@ -131,16 +131,14 @@ section{padding:96px 0}
 /* verbs */
 .verbs{padding-top:0;padding-bottom:0}
 .verbs-intro{font-size:clamp(1.3rem,2.2vw,1.7rem);font-weight:300;letter-spacing:-0.01em;padding:72px 0 8px;max-width:26em}
-.verb{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;padding:88px 0;border-top:1px solid var(--line-soft)}
+.verb{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;padding:88px 0;border-top:1px solid var(--line-soft)}
 .verb:nth-of-type(even) .txt{order:2}
 @media (max-width:900px){.verb{grid-template-columns:1fr;gap:40px;padding:64px 0}.verb:nth-of-type(even) .txt{order:0}}
 .verb .k{font-size:clamp(3rem,7vw,5.5rem);font-weight:300;letter-spacing:-0.035em;line-height:1;color:var(--ink)}
 .verb .k::after{content:".";color:var(--green)}
 .verb h3{margin-top:22px;font-size:1.5rem;font-weight:400;max-width:20em}
 .verb p{margin-top:16px;color:var(--ink-2);max-width:30em}
-.verb .two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-@media (max-width:560px){.verb .two{grid-template-columns:1fr}}
-.verb .two .phone{max-width:none}
+.verb .two{display:grid;grid-template-columns:1fr;gap:40px}
 .verb .two .chat{min-height:300px}
 
 /* EMITE static + notes */
@@ -182,12 +180,12 @@ section{padding:96px 0}
 /* moat */
 .moat{background:var(--paper-2)}
 .moat .head{max-width:34em}
-.moat .cases{margin-top:56px;display:grid;grid-template-columns:repeat(3,1fr);gap:40px}
+.moat .cases{margin-top:56px;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:auto auto;gap:40px}
 @media (max-width:900px){.moat .cases{grid-template-columns:1fr;gap:28px}}
-.case{border-top:1px solid var(--line);padding-top:18px}
+.case{border-top:1px solid var(--line);padding-top:18px;display:grid;grid-row:span 2;grid-template-rows:subgrid;gap:14px}
 .case .before,.case .after{font-size:1rem;padding-left:64px;position:relative}
 .case .before{color:var(--mute)}
-.case .after{margin-top:14px}
+.case .after{margin-top:0}
 .case .before::before,.case .after::before{position:absolute;left:0;top:.2em;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
 .case .before::before{content:"Antes"}
 .case .after::before{content:"Ahora";color:var(--green)}
@@ -255,7 +253,13 @@ section{padding:96px 0}
 .fit svg{width:100%;height:auto;display:block;font-family:"Hanken Grotesk",sans-serif}
 .fit .legend{margin-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;font-size:.95rem;color:var(--ink-2)}
 .fit .legend b{display:block;font-weight:500;color:var(--ink)}
+.fit .hint{display:none;margin-top:12px;font-size:.85rem;color:var(--mute)}
 @media (max-width:760px){.fit .legend{grid-template-columns:1fr}}
+@media (max-width:900px){
+  .fit .diagram{padding:14px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .fit .diagram svg{min-width:760px}
+  .fit .hint{display:block}
+}
 
 /* proof */
 .proof{background:var(--paper-2)}
@@ -300,7 +304,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
       <p class="note">Sobre la tarificación, emisión y pagos que ya tienes — <span>una o varias aseguradoras a la vez.</span> Con barreras deterministas delante de cada mensaje, y sin sustituir tu core.</p>
     </div>
 
-    <div class="demo" data-seq="emite" data-autoplay>
+    <div class="demo" data-seq="emite">
       <div class="phone">
         <div class="bar"><div class="avatar">SA</div><div><div class="who">Seguro Auto</div><div class="st">en línea</div></div></div>
         <div class="chat">
@@ -706,6 +710,7 @@ Col. Del Valle<span class="t">19:19<span class="ck">✓✓</span></span></div>
         <text x="40" y="728" font-size="12" fill="#5B6E68">El core —póliza de registro, siniestros, contabilidad técnica— vive en este plano, y sigue siendo de la aseguradora.</text>
       </svg>
     </div>
+    <p class="hint">Desliza el diagrama para verlo completo →</p>
     <div class="legend">
       <div><b>Arriba: los canales</b>El asegurado entra por una landing con tu marca y sigue por WhatsApp; tu equipo observa e interviene desde el dashboard.</div>
       <div><b>En medio: Insurmind</b>Captación, conversación, cobranza y control. Es el producto. Una persona puede entrar cuando quiera.</div>
