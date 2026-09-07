@@ -17,7 +17,7 @@
 <meta name="twitter:title" content="Insurmind — Agentes de IA para aseguradoras y brokers en México">
 <meta name="twitter:description" content="Cotizan, resuelven, emiten y cobran por WhatsApp, sin intervención, sobre la tarificación, emisión y pagos que ya tienes.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600&family=Inter+Tight:wght@450..800&family=Archivo:wght@450..800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600&family=Inter+Tight:wght@450..800&family=Archivo:wght@450..800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
   --paper:#F7F8F7; --paper-2:#EEF1EF; --ink:#101917; --ink-2:#3B4A45; --mute:#5B6E68;
@@ -137,23 +137,72 @@ section{padding:96px 0;scroll-margin-top:76px}
 .demo{position:relative}
 .demo .cap{display:block;text-align:center;font-size:.85rem;color:var(--mute);margin-top:10px}
 
-/* problem */
-.problem{background:var(--ink);color:#fff}
-.problem h2{max-width:16em}
-.scenes{margin-top:48px;display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
-@media (max-width:1100px){.scenes{grid-template-columns:repeat(3,1fr)}}
-@media (max-width:800px){.scenes{grid-template-columns:1fr 1fr}}
-@media (max-width:560px){.scenes{grid-template-columns:1fr}}
-.scene .when{font-size:1.7rem;font-weight:300;letter-spacing:-0.02em;margin-bottom:12px;color:rgba(255,255,255,.9)}
-.mini{background:#E4DFD6;border-radius:14px;padding:12px 10px;display:flex;flex-direction:column;gap:6px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:.8rem;line-height:1.35;color:var(--ink);min-height:230px;flex:1}
-.scene{display:flex;flex-direction:column}
-.mini .msg{max-width:92%}
-.mini .msg.in{background:#fff}
-.mini .msg.out{background:#D9FDD3}
-.mini .gap{align-self:center;font-size:.78rem;color:#4F5D58;padding:8px 0}
-.flag{align-self:stretch;margin:4px 0;padding:8px 11px;background:rgba(200,137,63,.26);color:#3B2E1E;font:500 .8rem/1.35 "Hanken Grotesk",sans-serif;border-radius:6px}
-.flag::before{content:"↑ ";color:var(--warn)}
-.scenes-note{margin-top:26px;font-size:.9rem;color:rgba(255,255,255,.55)}
+/* problema / embudo */
+.problem .wrap{max-width:1320px}
+.problem{background:#071a16;color:#f4f2e9;--sand:#dfc6a8;--lime:#d6ff62;--pk:#10231f}
+.problem .eyebrow{font-family:"DM Mono",ui-monospace,monospace;font-size:.88rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--lime);margin-bottom:18px}
+.problem h2{max-width:15em;font-family:"Inter Tight","Archivo",system-ui,sans-serif;font-weight:600;font-size:clamp(1.9rem,4vw,3.4rem);line-height:.98;letter-spacing:-0.035em;color:#f4f2e9}
+.problem h2 .hit{font-weight:800;color:var(--lime)}
+.embudo-wrap{margin-top:44px;position:relative}
+.embudo{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:auto 1fr auto auto;gap:0 22px}
+.mom{display:grid;grid-row:span 4;grid-template-rows:subgrid;min-width:0}
+.mom__head{padding-bottom:12px}
+.mom__n{font-family:"DM Mono",ui-monospace,monospace;font-size:.88rem;font-weight:500;color:var(--lime);letter-spacing:.06em}
+.mom__t{font-family:"DM Mono",ui-monospace,monospace;font-size:clamp(1.15rem,1.7vw,1.5rem);font-weight:500;letter-spacing:-0.02em;color:#f4f2e9;margin-top:2px}
+.mom__lab{font-size:.9rem;line-height:1.35;color:#a7b0ab;margin-top:6px;max-width:22ch}
+/* ventana de WhatsApp, sin marco de teléfono */
+.wa{background:#efeae2;border-radius:12px;overflow:hidden;border:1px solid rgba(244,242,233,.10);box-shadow:0 8px 22px -14px rgba(0,0,0,.5);display:flex;flex-direction:column;align-self:stretch}
+.wa__bar{background:#f6f5f3;border-bottom:1px solid rgba(16,35,31,.09);padding:8px 11px;display:flex;align-items:center;gap:9px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wa__av{width:28px;height:28px;border-radius:50%;background:#c9d2cd;color:#10231f;display:grid;place-items:center;font-weight:600;font-size:.76rem;flex:none}
+.wa__who{font-size:.88rem;font-weight:600;line-height:1.15;color:#10231f}
+.wa__st{font-size:.8rem;color:#5A6770;line-height:1.2}
+.wa__body{flex:1;padding:11px 10px 10px;display:flex;flex-direction:column;gap:6px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:.88rem;line-height:1.42;color:#10231f;
+ background:radial-gradient(circle at 22% 32%, rgba(16,35,31,.03) 0 1px, transparent 1.6px) 0 0/22px 22px, #efeae2}
+.wa .msg{max-width:92%;padding:6px 8px 5px;border-radius:8px;position:relative;box-shadow:0 1px 0 rgba(0,0,0,.07);white-space:pre-line}
+.wa .msg.in{background:#ffffff;align-self:flex-start;border-top-left-radius:2px}
+.wa .msg.out{background:#d9fdd3;align-self:flex-end;border-top-right-radius:2px}
+.wa .msg .t{display:block;text-align:right;font-family:"DM Mono",ui-monospace,monospace;font-size:.8rem;color:#5A6770;margin-top:2px;margin-left:10px;float:right;position:relative;top:3px}
+.wa .msg .t .ck{color:#53BDEB;margin-left:3px}
+.wa .gap{align-self:center;font-size:.88rem;color:#4F5D58;background:rgba(255,255,255,.6);border-radius:6px;padding:3px 9px;margin:2px 0}
+/* línea temporal continua */
+.mom__node{position:relative;height:46px}
+.mom__node::before{content:"";position:absolute;left:-11px;right:-11px;top:50%;height:1px;background:var(--lime);opacity:.5;transform-origin:left center}
+.mom:first-child .mom__node::before{left:0}
+.mom:last-child .mom__node::before{right:0}
+.mom__node::after{content:"";position:absolute;left:50%;top:50%;width:11px;height:11px;margin:-6px 0 0 -6px;border-radius:50%;border:1.5px solid var(--lime);background:#071a16}
+.mom:last-child .mom__node .arrow{position:absolute;right:-2px;top:50%;transform:translateY(-50%);color:var(--lime);opacity:.7;font-size:.8rem;line-height:1}
+/* consecuencia comercial, fuera de la ventana */
+.mom__cons{background:var(--sand);color:var(--pk);border-radius:10px;padding:12px 14px;font-size:.9rem;line-height:1.4;display:flex;gap:8px;align-items:flex-start}
+.mom__cons svg{flex:none;width:14px;height:14px;margin-top:2px;fill:none;stroke:currentColor;stroke-width:1.7}
+.scenes-note{margin-top:26px;font-size:.9rem;color:#a7b0ab}
+.embudo-hint{display:none;font-family:"DM Mono",ui-monospace,monospace;font-size:.88rem;color:#a7b0ab;margin-bottom:14px;text-wrap:balance}
+.embudo-nav{display:none;gap:8px;margin-top:16px}
+.embudo-nav button{font:500 .88rem "Inter Tight",system-ui,sans-serif;min-width:38px;min-height:38px;border-radius:999px;border:1px solid rgba(244,242,233,.28);background:transparent;color:#f4f2e9;cursor:pointer}
+.embudo-nav button:hover:not(:disabled){border-color:var(--lime);color:var(--lime)}
+.embudo-nav button:disabled{opacity:.35;cursor:default}
+@media (max-width:1180px){
+  .embudo{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:min(320px,80%);gap:0 16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:2px;padding-bottom:6px;scrollbar-width:none}
+  .embudo::-webkit-scrollbar{display:none}
+  .mom{scroll-snap-align:start}
+  .mom__node::before{left:0;right:0}
+  .embudo-hint,.embudo-nav{display:flex}
+}
+@media (max-width:640px){.embudo{grid-auto-columns:86%}}
+@media (max-width:420px){.embudo{grid-auto-columns:88%}}
+/* animación: estado por defecto = estado final */
+.anim.embudo .mom__node::before{animation:linea .5s ease-out backwards;animation-delay:calc(var(--i) * .16s)}
+.anim.embudo .mom__node::after{animation:nodo .4s cubic-bezier(.16,1,.3,1) backwards;animation-delay:calc(.2s + var(--i) * .16s)}
+.anim.embudo .mom__head,.anim.embudo .wa{animation:sube .5s cubic-bezier(.16,1,.3,1) backwards;animation-delay:calc(.3s + var(--i) * .16s)}
+.anim.embudo .wa .msg,.anim.embudo .wa .gap{animation:sube .4s cubic-bezier(.16,1,.3,1) backwards;animation-delay:calc(.9s + var(--i) * .5s + var(--j,0) * .26s)}
+.anim.embudo .mom__cons{animation:sube .5s cubic-bezier(.16,1,.3,1) backwards;animation-delay:calc(4.4s + var(--i) * .34s)}
+.anim.embudo.paused *{animation-play-state:paused!important}
+@keyframes linea{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes nodo{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:none}}
+@keyframes sube{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){
+  .anim.embudo .mom__node::before,.anim.embudo .mom__node::after,.anim.embudo .mom__head,
+  .anim.embudo .wa,.anim.embudo .wa .msg,.anim.embudo .wa .gap,.anim.embudo .mom__cons{animation:none}
+}
 /* verbs */
 .verbs{padding-top:0;padding-bottom:0}
 .verbs-intro{font-size:clamp(1.3rem,2.2vw,1.7rem);font-weight:300;letter-spacing:-0.01em;padding:72px 0 8px;max-width:26em}
@@ -372,56 +421,22 @@ Col. Del Valle<span class="t">19:19<span class="ck">✓✓</span></span></div>
 <!-- 2. EL PROBLEMA -->
 <section class="problem">
   <div class="wrap">
-    <h2>Hoy el embudo se rompe en los mismos cinco sitios. Siempre.</h2>
-    <div class="scenes">
-
-      <div class="scene">
-        <div class="when">18:21</div>
-        <div class="mini">
-          <div class="msg out">Hola, quiero cotizar el seguro de mi HR-V 2020<span class="t">18:21<span class="ck">✓✓</span></span></div>
-          <div class="msg in">Gracias por contactarnos. Un asesor te atenderá en horario de oficina, de lunes a viernes de 9:00 a 18:00.<span class="t">18:21</span></div>
-          <div class="flag">Son las 18:21. Nadie contesta hasta mañana.</div>
-        </div>
+    <p class="eyebrow">Dónde se pierde la venta</p>
+    <h2>Hoy el embudo se rompe en los mismos <span class="hit">cinco sitios</span>. Siempre.</h2>
+    <div class="embudo-wrap demo" data-seq="embudo">
+      <p class="embudo-hint">Desliza para recorrer los cinco momentos →</p>
+      <ol class="embudo" tabindex="0" aria-label="Los cinco puntos donde se rompe el embudo, en orden">
+        <li class="mom" style="--i:0"><div class="mom__head"><div class="mom__n">01</div><div class="mom__t">18:21</div><p class="mom__lab">Nadie responde fuera de horario.</p></div><div class="wa" role="img" aria-label="Momento 1, 18:21. El cliente escribe pidiendo cotizar el seguro de su HR-V 2020 y solo recibe una respuesta automática de horario de oficina."><div class="wa__bar"><span class="wa__av" aria-hidden="true">SA</span><span><span class="wa__who">Seguro Auto</span><br><span class="wa__st">última vez hoy</span></span></div><div class="wa__body"><div class="msg out" style="--j:0">Hola, quiero cotizar el seguro de mi HR-V 2020<span class="t">18:21<span class="ck">✓✓</span></span></div><div class="msg in" style="--j:1">Gracias por contactarnos. Un asesor te atenderá en horario de oficina, de lunes a viernes de 9:00 a 18:00.<span class="t">18:21</span></div></div></div><div class="mom__node" aria-hidden="true"></div><p class="mom__cons"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 2.5 20h19L12 4Z"/><path d="M12 10v4"/><path d="M12 17h.01"/></svg><span>Son las 18:21. Nadie contesta hasta mañana.</span></p></li>
+        <li class="mom" style="--i:1"><div class="mom__head"><div class="mom__n">02</div><div class="mom__t">18:40</div><p class="mom__lab">El lead espera 16 horas.</p></div><div class="wa" role="img" aria-label="Momento 2, 18:40. El cliente pregunta por el deducible y la respuesta llega a las 10:52 del día siguiente."><div class="wa__bar"><span class="wa__av" aria-hidden="true">SA</span><span><span class="wa__who">Seguro Auto</span><br><span class="wa__st">última vez hoy</span></span></div><div class="wa__body"><div class="msg out" style="--j:0">¿el deducible de daños materiales es 25%?<span class="t">18:40<span class="ck">✓✓</span></span></div><div class="gap" style="--j:1">· · ·</div><div class="msg in" style="--j:2">Buen día, ¿en qué le puedo ayudar?<span class="t">10:52</span></div></div></div><div class="mom__node" aria-hidden="true"></div><p class="mom__cons"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 2.5 20h19L12 4Z"/><path d="M12 10v4"/><path d="M12 17h.01"/></svg><span>16 horas sin respuesta. El lead se enfría.</span></p></li>
+        <li class="mom" style="--i:2"><div class="mom__head"><div class="mom__n">03</div><div class="mom__t">18:52</div><p class="mom__lab">Un chatbot entrega una respuesta falsa.</p></div><div class="wa" role="img" aria-label="Momento 3, 18:52. Un chatbot afirma que la póliza cubre cualquier daño al vehículo, una cobertura que el cliente no contrató."><div class="wa__bar"><span class="wa__av" aria-hidden="true">SA</span><span><span class="wa__who">Seguro Auto</span><br><span class="wa__st">en línea</span></span></div><div class="wa__body"><div class="msg out" style="--j:0">si choco, ¿me cubre los daños de mi coche?<span class="t">18:52<span class="ck">✓✓</span></span></div><div class="msg in" style="--j:1">¡Claro! Con tu póliza estás protegido ante cualquier daño a tu vehículo. 😊<span class="t">18:52</span></div></div></div><div class="mom__node" aria-hidden="true"></div><p class="mom__cons"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 2.5 20h19L12 4Z"/><path d="M12 10v4"/><path d="M12 17h.01"/></svg><span>Falso. Contrató cobertura limitada, que no incluye daños materiales. Se enterará en el siniestro.</span></p></li>
+        <li class="mom" style="--i:3"><div class="mom__head"><div class="mom__n">04</div><div class="mom__t">+3 días</div><p class="mom__lab">El seguimiento llega cuando la venta ya se perdió.</p></div><div class="wa" role="img" aria-label="Momento 4, tres días después. El seguimiento llega cuando el cliente ya contrató con otra aseguradora."><div class="wa__bar"><span class="wa__av" aria-hidden="true">SA</span><span><span class="wa__who">Seguro Auto</span><br><span class="wa__st">en línea</span></span></div><div class="wa__body"><div class="msg in" style="--j:0">Hola Juan, te llamé y no contestaste. ¿Sigues interesado en la cotización?<span class="t">12:15</span></div><div class="msg out" style="--j:1">ya lo contraté con otra, gracias<span class="t">13:02<span class="ck">✓✓</span></span></div></div></div><div class="mom__node" aria-hidden="true"></div><p class="mom__cons"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 2.5 20h19L12 4Z"/><path d="M12 10v4"/><path d="M12 17h.01"/></svg><span>Venta perdida. Cotizó en otro lado mientras esperaba.</span></p></li>
+        <li class="mom" style="--i:4"><div class="mom__head"><div class="mom__n">05</div><div class="mom__t">+11 meses</div><p class="mom__lab">La póliza se cancela porque nadie recordó el recibo.</p></div><div class="wa" role="img" aria-label="Momento 5, once meses después. El cliente descubre que su póliza fue cancelada por falta de pago y nadie le avisó."><div class="wa__bar"><span class="wa__av" aria-hidden="true">SA</span><span><span class="wa__who">Seguro Auto</span><br><span class="wa__st">última vez hoy</span></span></div><div class="wa__body"><div class="gap" style="--j:0">sin mensajes desde la emisión</div><div class="msg out" style="--j:1">oye, mi póliza ya no aparece vigente??<span class="t">08:44<span class="ck">✓✓</span></span></div><div class="msg in" style="--j:2">Su póliza fue cancelada por falta de pago el 21 de septiembre.<span class="t">11:30</span></div></div></div><div class="mom__node" aria-hidden="true"><span class="arrow">→</span></div><p class="mom__cons"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 2.5 20h19L12 4Z"/><path d="M12 10v4"/><path d="M12 17h.01"/></svg><span>Cancelada por un recibo que nadie recordó. La renovación ya estaba ganada.</span></p></li>
+      </ol>
+      <div class="embudo-nav">
+        <button type="button" data-prev aria-label="Momento anterior">←</button>
+        <button type="button" data-next aria-label="Momento siguiente">→</button>
       </div>
-
-      <div class="scene">
-        <div class="when">18:40</div>
-        <div class="mini">
-          <div class="msg out">¿el deducible de daños materiales es 25%?<span class="t">18:40<span class="ck">✓✓</span></span></div>
-          <div class="gap">· · ·</div>
-          <div class="flag">16 horas sin respuesta. El lead se enfría.</div>
-          <div class="msg in">Buen día, ¿en qué le puedo ayudar?<span class="t">10:52</span></div>
-        </div>
-      </div>
-
-      <div class="scene">
-        <div class="when">18:52</div>
-        <div class="mini">
-          <div class="msg out">si choco, ¿me cubre los daños de mi coche?<span class="t">18:52<span class="ck">✓✓</span></span></div>
-          <div class="msg in">¡Claro! Con tu póliza estás protegido ante cualquier daño a tu vehículo. 😊<span class="t">18:52</span></div>
-          <div class="flag">Falso. Contrató cobertura limitada, que no incluye daños materiales. Se enterará en el siniestro.</div>
-        </div>
-      </div>
-
-      <div class="scene">
-        <div class="when">+3 días</div>
-        <div class="mini">
-          <div class="msg in">Hola Juan, te llamé y no contestaste. ¿Sigues interesado en la cotización?<span class="t">12:15</span></div>
-          <div class="msg out">ya lo contraté con otra, gracias<span class="t">13:02<span class="ck">✓✓</span></span></div>
-          <div class="flag">Venta perdida. Cotizó en otro lado mientras esperaba.</div>
-        </div>
-      </div>
-
-      <div class="scene">
-        <div class="when">+11 meses</div>
-        <div class="mini">
-          <div class="gap">sin mensajes desde la emisión</div>
-          <div class="msg out">oye, mi póliza ya no aparece vigente??<span class="t">08:44<span class="ck">✓✓</span></span></div>
-          <div class="msg in">Su póliza fue cancelada por falta de pago el 21 de septiembre.<span class="t">11:30</span></div>
-          <div class="flag">Cancelada por un recibo que nadie recordó. La renovación ya estaba ganada.</div>
-        </div>
-      </div>
-
+      <div class="ctl"><button type="button" data-pause aria-label="Pausar la animación del embudo">Pausar</button><button type="button" data-replay aria-label="Repetir la animación del embudo">Repetir</button></div>
     </div>
     <p class="scenes-note">Escenas ilustrativas: un embudo sin agente, o con un chatbot genérico. Las conversaciones reales de producción empiezan abajo.</p>
   </div>
@@ -787,7 +802,7 @@ Col. Del Valle<span class="t">19:19<span class="ck">✓✓</span></span></div>
   document.querySelectorAll(".swatch .sw").forEach(function(b){ b.style.setProperty("--c",b.dataset.c); b.addEventListener("click",function(){ document.querySelector(".lmock").style.setProperty("--brand",b.dataset.c); document.querySelectorAll(".swatch .sw").forEach(function(x){x.setAttribute("aria-pressed","false");x.classList.remove("on")}); b.classList.add("on"); b.setAttribute("aria-pressed","true"); }); });
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var demos = document.querySelectorAll('[data-seq]');
-  function target(d){ return d.querySelector('.chat') || d.querySelector('.dash'); }
+  function target(d){ return d.querySelector('.chat') || d.querySelector('.dash') || d.querySelector('.embudo'); }
   function label(b,verb){ var a=b.getAttribute('aria-label')||''; b.textContent=verb; b.setAttribute('aria-label', verb+' '+a.replace(/^\S+\s/,'')); }
   function play(d){ var t=target(d); t.classList.remove('paused'); t.classList.remove('anim'); void t.offsetWidth; t.classList.add('anim'); var b=d.querySelector('[data-pause]'); if(b) label(b,'Pausar'); }
   demos.forEach(function(d){
@@ -796,6 +811,25 @@ Col. Del Valle<span class="t">19:19<span class="ck">✓✓</span></span></div>
     if(p) p.addEventListener('click',function(){ if(!t.classList.contains('anim')){play(d);return;} t.classList.toggle('paused'); label(p, t.classList.contains('paused')?'Continuar':'Pausar'); });
     if(r) r.addEventListener('click',function(){ play(d); });
   });
+  var emb=document.querySelector('.embudo');
+  if(emb){
+    var prev=document.querySelector('[data-prev]'), next=document.querySelector('[data-next]');
+    function step(){ var m=emb.querySelector('.mom'); return m ? m.getBoundingClientRect().width + 16 : emb.clientWidth; }
+    function go(dir){ emb.scrollBy({left:dir*step(), behavior: reduce ? 'auto' : 'smooth'}); }
+    function sync(){ var max=emb.scrollWidth-emb.clientWidth-2;
+      if(prev) prev.disabled = emb.scrollLeft<=2;
+      if(next) next.disabled = emb.scrollLeft>=max || max<=0; }
+    if(prev) prev.addEventListener('click',function(){go(-1)});
+    if(next) next.addEventListener('click',function(){go(1)});
+    emb.addEventListener('scroll',sync,{passive:true});
+    emb.addEventListener('keydown',function(e){
+      if(e.key==='ArrowRight'){e.preventDefault();go(1)}
+      else if(e.key==='ArrowLeft'){e.preventDefault();go(-1)}
+      else if(e.key==='Home'){e.preventDefault();emb.scrollTo({left:0,behavior:'auto'})}
+      else if(e.key==='End'){e.preventDefault();emb.scrollTo({left:emb.scrollWidth,behavior:'auto'})}
+    });
+    addEventListener('resize',sync); sync();
+  }
   if(reduce || !('IntersectionObserver' in window)) return;
   var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ play(e.target); io.unobserve(e.target);} }); },{threshold:.45});
   demos.forEach(function(d){ if(d.hasAttribute('data-autoplay')) play(d); else io.observe(d); });
