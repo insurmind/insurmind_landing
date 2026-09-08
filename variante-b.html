@@ -226,13 +226,10 @@ section{padding:72px 0;scroll-margin-top:76px}
 .verb .two .chat{min-height:300px}
 
 /* EMITE static + notes */
-.emite-static{display:grid;grid-template-columns:1fr auto;gap:22px;align-items:start}
-.emite-static .phone{margin:0}
-.emite-static .notes{width:200px;display:flex;flex-direction:column;gap:34px;font-size:.9rem;color:var(--ink-2);padding-top:6px}
-.emite-static .notes b{display:block;font-weight:500;color:var(--green);font-size:.78rem;margin-bottom:4px}
-.emite-static .chat{padding-left:34px}
-.mk::before{content:attr(data-n);position:absolute;left:-24px;top:6px;width:16px;height:16px;border-radius:50%;background:var(--green);color:#fff;font:600 .62rem/16px system-ui;text-align:center}
-@media (max-width:1150px){.emite-static{grid-template-columns:1fr;gap:16px}.emite-static .notes{width:auto;padding-top:0;gap:10px;order:2}.emite-static .notes div{display:flex;gap:10px;align-items:baseline}.emite-static .notes b{margin:0;min-width:12px}}
+.emite-static{display:block}
+.emite-static .phone{margin:0;max-width:none}
+
+@media (max-width:1150px){}
 /* landing mock (COTIZA) */
 .lmock{border:1px solid var(--line);border-radius:14px;background:#fff;overflow:hidden;max-width:520px;margin:0 auto}
 .lmock .top{display:flex;gap:6px;padding:10px 14px;border-bottom:1px solid var(--line-soft);align-items:center}
@@ -526,16 +523,15 @@ Col. Del Valle<span class="t">19:19<span class="ck">✓✓</span></span></div>
         <p>El agente lee placas y número de serie de una foto de la tarjeta de circulación, pide el domicilio, valida los datos y emite la póliza por el mismo canal. No deja un lead caliente para que llame un humano: entrega la póliza.</p>
       </div>
       <div class="emite-static">
-        <div class="notes"><div><b>1</b>Pide solo lo que falta para emitir, en dos pasos.</div><div><b>2</b>Lee placas y NIV de una foto de la tarjeta de circulación y los confirma con el cliente antes de enviar nada a la aseguradora.</div><div><b>3</b>Emite en la aseguradora y devuelve número de póliza y monto por el mismo canal.</div></div>
-        <div class="phone">
+          <div class="phone">
           <div class="bar"><div class="avatar">SA</div><div><div class="who">Seguro Auto</div><div class="st">en línea</div></div></div>
           <div class="chat">
-            <div class="msg in mk" data-n="1" style="--at:0">Perfecto, Juan. Ahora necesito:
+            <div class="msg in" style="--at:0">Perfecto, Juan. Ahora necesito:
 · Placas del vehículo
 · Número de serie (NIV/VIN): 17 caracteres<span class="t">19:14</span></div>
           <div class="msg out photo" style="--at:2.4"><div class="img" role="img" aria-label="Foto de la tarjeta de circulación del vehículo"></div><span class="t">19:15<span class="ck">✓✓</span></span></div>
           <div class="typing" style="--at:4;--dur:1.8"><i></i><i></i><i></i></div>
-          <div class="msg in mk" data-n="2" style="--at:6">Leí tu tarjeta de circulación:
+          <div class="msg in" style="--at:6">Leí tu tarjeta de circulación:
 · Placas: MXA-12-34
 · NIV: 3G1TC5CF0LL000000
 ¿Es correcto?<span class="t">19:15</span></div>
@@ -547,7 +543,7 @@ Col. Del Valle<span class="t">19:19<span class="ck">✓✓</span></span></div>
           <div class="msg out" style="--at:13.4">Av. Insurgentes Sur 1234
 Col. Del Valle<span class="t">19:19<span class="ck">✓✓</span></span></div>
           <div class="typing" style="--at:15;--dur:2.3"><i></i><i></i><i></i></div>
-          <div class="msg in mk" data-n="3" style="--at:17.5">¡Listo, Juan! 🎉 Tu póliza fue emitida exitosamente.<div class="sum"><b>Póliza</b> 0412-8837<br><b>Vehículo</b> HD 2020 · MXA-12-34<br><b>Cobertura</b> Amplia · vigencia anual<br><b>Prima</b> $8,940.00 MXN</div><span class="t">19:27</span></div>
+          <div class="msg in" style="--at:17.5">¡Listo, Juan! 🎉 Tu póliza fue emitida exitosamente.<div class="sum"><b>Póliza</b> 0412-8837<br><b>Vehículo</b> HD 2020 · MXA-12-34<br><b>Cobertura</b> Amplia · vigencia anual<br><b>Prima</b> $8,940.00 MXN</div><span class="t">19:27</span></div>
           </div>
         </div>
         
