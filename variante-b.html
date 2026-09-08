@@ -67,7 +67,7 @@ strong{font-weight:500}
 
 /* sections */
 section{padding:72px 0}
-@media (max-width:760px){section{padding:56px 0}html{scroll-padding-top:94px}}
+@media (max-width:760px){section{padding:56px 0}html{scroll-padding-top:94px}.close{min-height:calc(100svh - 94px);padding:56px 0}}
 .hero{padding:72px 0 88px}
 .grid2{display:grid;grid-template-columns:1.15fr .85fr;gap:64px;align-items:center}
 .hero .grid2{align-items:start;grid-template-columns:minmax(0,1.5fr) minmax(0,.82fr);gap:52px}
@@ -355,7 +355,7 @@ section{padding:72px 0}
 }
 
 /* close */
-.close{padding:120px 0;border-top:1px solid var(--line-soft)}
+.close{padding:80px 0;border-top:1px solid var(--line-soft);min-height:calc(100svh - 62px);display:grid;align-content:center}
 .close h2{max-width:14em}
 .close .mail{font-size:clamp(1.35rem,2.6vw,1.9rem);font-weight:300;letter-spacing:-0.02em;padding-bottom:6px}
 .close .cta{margin-top:32px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
@@ -367,12 +367,15 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 <a class="skip" href="#producto">Saltar al producto</a>
 <header class="nav">
   <div class="wrap">
-    <a class="logo" href="#">insurmind</a>
+    <a class="logo" href="#inicio">insurmind</a>
     <nav aria-label="Secciones"><ul>
+      <li><a href="#inicio">Home</a></li>
+      <li><a href="#problema">El problema</a></li>
       <li><a href="#producto">Capacidades</a></li>
       <li><a href="#ia">IA</a></li>
       <li><a href="#control">Dashboard</a></li>
       <li><a href="#encaja">Arquitectura</a></li>
+      <li><a href="#contacto">Contacto</a></li>
     </ul></nav>
     <a class="quiet" href="mailto:hola@insurmind.ai?subject=Insurmind%20%E2%80%94%20ver%20el%20recorrido%20completo&body=Hola%3A%0D%0A%0D%0AEscribo%20desde%20%5Bempresa%5D.%20Nos%20interesa%20ver%20el%20recorrido%20completo%20sobre%20una%20cotizaci%C3%B3n%20real.%0D%0A%0D%0AOperamos%20con%3A%20%5Baseguradora(s)%5D%0D%0ARamo%3A%20%5Bauto%2C%20otros%5D%0D%0A">hola@insurmind.ai</a>
   </div>
@@ -380,7 +383,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 
 <main>
 <!-- 1. HÉROE -->
-<section class="hero">
+<section class="hero" id="inicio">
   <div class="wrap grid2">
     <div>
       <h1 class="hero-title"><span class="hero-title__opening">Agentes de IA</span> <span class="hero-title__bridge">que se conectan a cualquier aseguradora en México para</span> <span class="hero-title__outcome">cotizar, resolver, emitir y cobrar.</span></h1>
@@ -423,7 +426,7 @@ Col. Del Valle<span class="t">19:19<span class="ck">✓✓</span></span></div>
 </section>
 
 <!-- 2. EL PROBLEMA -->
-<section class="problem">
+<section class="problem" id="problema">
   <div class="wrap">
     <p class="eyebrow">Dónde se pierde la venta</p>
     <h2>Hoy el embudo se rompe en los mismos <span class="hit">cinco sitios</span>. Siempre.</h2>
