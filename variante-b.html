@@ -28,8 +28,7 @@
 }
 :root{color-scheme:light}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-snap-type:y mandatory;scroll-padding-top:76px}
-main>section{scroll-snap-align:start;scroll-snap-stop:normal}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:"Hanken Grotesk",system-ui,sans-serif;font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
 a{color:inherit}
 h1,h2,h3{font-weight:300;letter-spacing:-0.02em;margin:0;line-height:1.08}
@@ -127,26 +126,23 @@ section{padding:72px 0;scroll-margin-top:76px}
 @keyframes pop{to{opacity:1;transform:none}}
 @keyframes typ{0%{opacity:0}8%{opacity:1}92%{opacity:1}100%{opacity:0}}
 @media (prefers-reduced-motion:reduce){
-  html{scroll-snap-type:none}
   .anim .msg{animation:none;opacity:1;transform:none}
   .anim .typing{display:none;animation:none}
   .ctl{display:none!important}
   html{scroll-behavior:auto}
 }
-.ctl{display:inline-flex;gap:5px;justify-content:center;vertical-align:middle;margin:0 9px 0 0}
-.demo .foot{display:flex;align-items:center;justify-content:center;margin-top:10px;flex-wrap:wrap;gap:4px 0}
+.ctl{display:inline-flex;gap:4px;justify-content:center;vertical-align:middle;margin:0}
+.demo .foot{display:flex;align-items:center;justify-content:center;margin-top:9px}
 .embudo-wrap>.ctl{display:flex;margin:14px auto 0}
-.ctl button{display:grid;place-items:center;width:28px;height:28px;padding:0;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--mute);cursor:pointer;transition:border-color .18s,color .18s,transform .18s}
-.ctl .i{width:13px;height:13px;fill:currentColor;display:block}
-.ctl .i-replay{fill:none;width:14px;height:14px}
+.ctl button{display:grid;place-items:center;width:24px;height:24px;padding:0;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--mute);cursor:pointer;transition:border-color .18s,color .18s,transform .18s}
+.ctl .i{width:11px;height:11px;fill:currentColor;display:block}
+.ctl .i-replay{fill:none;width:12px;height:12px}
 .ctl [data-pause] .i-play{display:none}
 .ctl [data-pause].is-paused .i-pause{display:none}
 .ctl [data-pause].is-paused .i-play{display:block}
 .ctl button:active{transform:scale(.94)}
 .ctl button:hover{border-color:var(--ink);color:var(--ink)}
 .demo{position:relative}
-.demo .cap{display:inline;vertical-align:middle;text-align:center;font-size:.85rem;color:var(--mute);margin-top:0}
-.demo .foot .cap{margin-top:0}
 
 /* problema / embudo */
 .problem .wrap{max-width:1320px}
@@ -423,7 +419,7 @@ Col. Del Valle<span class="t">19:19<span class="ck">✓✓</span></span></div>
           <div class="msg in" style="--at:17.5">¡Listo, Juan! 🎉 Tu póliza fue emitida exitosamente.<div class="sum"><b>Póliza</b> 0412-8837<br><b>Vehículo</b> HD 2020 · MXA-12-34<br><b>Cobertura</b> Amplia · vigencia anual<br><b>Prima</b> $8,940.00 MXN</div><span class="t">19:27</span></div>
         </div>
       </div>
-      <div class="foot"><div class="ctl"><button type="button" data-pause aria-label="Pausar la conversación de emisión"><svg class="i i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="4" width="3.6" height="16" rx="1.4"/><rect x="13.4" y="4" width="3.6" height="16" rx="1.4"/></svg><svg class="i i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5l12.5 7.5L7 19.5z"/></svg></button><button type="button" data-replay aria-label="Repetir la conversación de emisión"><svg class="i i-replay" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v6h6"/><path d="M3.6 14.5a9 9 0 1 0 2-9L3 8.2"/></svg></button></div><span class="cap">Conversación real de producción, sin intervención humana.</span></div>
+      <div class="foot"><div class="ctl"><button type="button" data-pause aria-label="Pausar la conversación de emisión"><svg class="i i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="4" width="3.6" height="16" rx="1.4"/><rect x="13.4" y="4" width="3.6" height="16" rx="1.4"/></svg><svg class="i i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5l12.5 7.5L7 19.5z"/></svg></button><button type="button" data-replay aria-label="Repetir la conversación de emisión"><svg class="i i-replay" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v6h6"/><path d="M3.6 14.5a9 9 0 1 0 2-9L3 8.2"/></svg></button></div></div>
     </div>
   </div>
 </section>
@@ -502,7 +498,7 @@ Col. Del Valle<span class="t">19:19<span class="ck">✓✓</span></span></div>
               <div class="msg in" style="--at:5.7">Sí, Juan. En tu cotización 2381, la cobertura de Daños Materiales lleva un deducible del 25 % sobre el valor del vehículo.<span class="t">18:31</span></div>
             </div>
           </div>
-          <div class="foot"><div class="ctl"><button type="button" data-pause aria-label="Pausar la conversación de la duda de cobertura"><svg class="i i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="4" width="3.6" height="16" rx="1.4"/><rect x="13.4" y="4" width="3.6" height="16" rx="1.4"/></svg><svg class="i i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5l12.5 7.5L7 19.5z"/></svg></button><button type="button" data-replay aria-label="Repetir la conversación de la duda de cobertura"><svg class="i i-replay" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v6h6"/><path d="M3.6 14.5a9 9 0 1 0 2-9L3 8.2"/></svg></button></div><span class="cap">Una duda de cobertura</span></div>
+          <div class="foot"><div class="ctl"><button type="button" data-pause aria-label="Pausar la conversación de la duda de cobertura"><svg class="i i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="4" width="3.6" height="16" rx="1.4"/><rect x="13.4" y="4" width="3.6" height="16" rx="1.4"/></svg><svg class="i i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5l12.5 7.5L7 19.5z"/></svg></button><button type="button" data-replay aria-label="Repetir la conversación de la duda de cobertura"><svg class="i i-replay" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v6h6"/><path d="M3.6 14.5a9 9 0 1 0 2-9L3 8.2"/></svg></button></div></div>
         </div>
         <div class="demo" data-seq="resuelve-b">
           <div class="phone">
@@ -517,7 +513,7 @@ Col. Del Valle<span class="t">19:19<span class="ck">✓✓</span></span></div>
               <div class="msg in" style="--at:11.8"><div class="file"><i>PDF</i><div><b>Cotizacion_2382_HD_2020_Descuento.pdf</b><small>1 página · PDF</small></div></div>Aquí tienes tu nueva cotización con descuento. ¿Continuamos con la contratación?<span class="t">18:42</span></div>
             </div>
           </div>
-          <div class="foot"><div class="ctl"><button type="button" data-pause aria-label="Pausar la conversación de la objeción de precio"><svg class="i i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="4" width="3.6" height="16" rx="1.4"/><rect x="13.4" y="4" width="3.6" height="16" rx="1.4"/></svg><svg class="i i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5l12.5 7.5L7 19.5z"/></svg></button><button type="button" data-replay aria-label="Repetir la conversación de la objeción de precio"><svg class="i i-replay" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v6h6"/><path d="M3.6 14.5a9 9 0 1 0 2-9L3 8.2"/></svg></button></div><span class="cap">Una objeción de precio, y el descuento</span></div>
+          <div class="foot"><div class="ctl"><button type="button" data-pause aria-label="Pausar la conversación de la objeción de precio"><svg class="i i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="4" width="3.6" height="16" rx="1.4"/><rect x="13.4" y="4" width="3.6" height="16" rx="1.4"/></svg><svg class="i i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5l12.5 7.5L7 19.5z"/></svg></button><button type="button" data-replay aria-label="Repetir la conversación de la objeción de precio"><svg class="i i-replay" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v6h6"/><path d="M3.6 14.5a9 9 0 1 0 2-9L3 8.2"/></svg></button></div></div>
         </div>
       </div>
     </div>
@@ -581,7 +577,7 @@ Col. Del Valle<span class="t">19:19<span class="ck">✓✓</span></span></div>
             <div class="msg in" style="--at:1">Hola Juan, tu recibo de la póliza vence el 21 de septiembre. Aquí tienes tu liga de pago para que tu cobertura siga vigente, sin interrupciones.<span class="link">pago.seguroauto-tumarca.com/r/0412-8837</span><span class="t">09:00</span></div>
           </div>
         </div>
-        <div class="foot"><div class="ctl"><button type="button" data-pause aria-label="Pausar la conversación de cobranza"><svg class="i i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="4" width="3.6" height="16" rx="1.4"/><rect x="13.4" y="4" width="3.6" height="16" rx="1.4"/></svg><svg class="i i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5l12.5 7.5L7 19.5z"/></svg></button><button type="button" data-replay aria-label="Repetir la conversación de cobranza"><svg class="i i-replay" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v6h6"/><path d="M3.6 14.5a9 9 0 1 0 2-9L3 8.2"/></svg></button></div><span class="cap">Un mensaje que el cliente no pidió, una semana antes de que venza el recibo</span></div>
+        <div class="foot"><div class="ctl"><button type="button" data-pause aria-label="Pausar la conversación de cobranza"><svg class="i i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="4" width="3.6" height="16" rx="1.4"/><rect x="13.4" y="4" width="3.6" height="16" rx="1.4"/></svg><svg class="i i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5l12.5 7.5L7 19.5z"/></svg></button><button type="button" data-replay aria-label="Repetir la conversación de cobranza"><svg class="i i-replay" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v6h6"/><path d="M3.6 14.5a9 9 0 1 0 2-9L3 8.2"/></svg></button></div></div>
       </div>
       <p class="note">Los datos del panel son ilustrativos.</p>
       </div>
@@ -677,7 +673,7 @@ Col. Del Valle<span class="t">19:19<span class="ck">✓✓</span></span></div>
             </div>
           </div>
         </div>
-        <div class="foot"><div class="ctl"><button type="button" data-pause aria-label="Pausar la demostración del dashboard"><svg class="i i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="4" width="3.6" height="16" rx="1.4"/><rect x="13.4" y="4" width="3.6" height="16" rx="1.4"/></svg><svg class="i i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5l12.5 7.5L7 19.5z"/></svg></button><button type="button" data-replay aria-label="Repetir la demostración del dashboard"><svg class="i i-replay" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v6h6"/><path d="M3.6 14.5a9 9 0 1 0 2-9L3 8.2"/></svg></button></div><span class="cap">Una persona entra, el asistente se calla; al devolverla, continúa.</span></div>
+        <div class="foot"><div class="ctl"><button type="button" data-pause aria-label="Pausar la demostración del dashboard"><svg class="i i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="4" width="3.6" height="16" rx="1.4"/><rect x="13.4" y="4" width="3.6" height="16" rx="1.4"/></svg><svg class="i i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5l12.5 7.5L7 19.5z"/></svg></button><button type="button" data-replay aria-label="Repetir la demostración del dashboard"><svg class="i i-replay" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v6h6"/><path d="M3.6 14.5a9 9 0 1 0 2-9L3 8.2"/></svg></button></div></div>
       </div>
     </div>
   </div>
