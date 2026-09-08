@@ -286,12 +286,6 @@ section{padding:72px 0}
 
 /* dashboard */
 .dash{border:1px solid var(--line);border-radius:14px;background:#fff;overflow:hidden;font-size:.82rem}
-.dash .kpi{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line-soft)}
-.dash .kpi div{padding:14px 18px;border-right:1px solid var(--line-soft)}
-.dash .kpi div:last-child{border-right:0}
-.dash .kpi small{display:block;color:var(--mute);font-size:.76rem}
-.dash .kpi b{display:block;font-size:1.5rem;font-weight:300;letter-spacing:-0.02em;margin-top:2px}
-.dash .kpi b em{font-style:normal;font-size:.8rem;color:var(--green);margin-left:6px}
 .dash .main{display:grid;grid-template-columns:230px 1fr;min-height:360px}
 .dash .list{border-right:1px solid var(--line-soft);padding:8px 0}
 .dash .list div{padding:10px 16px;display:flex;justify-content:space-between;gap:10px;align-items:center}
@@ -301,18 +295,22 @@ section{padding:72px 0}
 .dash .pill{font-size:.72rem;padding:2px 7px;border-radius:999px;border:1px solid var(--line);color:var(--mute);white-space:nowrap}
 .dash .pill.g{border-color:var(--green);color:var(--green)}
 .dash .conv{display:flex;flex-direction:column}
-.dash .chead{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-bottom:1px solid var(--line-soft)}
+.dash .chead{display:flex;justify-content:space-between;align-items:center;padding:8px 16px;border-bottom:1px solid var(--line-soft);background:#f6f5f3}
+.dash .chead .who{display:flex;align-items:center;gap:9px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.dash .chead .av{width:28px;height:28px;border-radius:50%;background:#c9d2cd;color:var(--ink);display:grid;place-items:center;font-weight:600;font-size:.72rem;flex:none}
+.dash .chead b{display:block;font-weight:600;font-size:.88rem;line-height:1.15}
+.dash .chead small{display:block;font-size:.76rem;color:var(--wa-time);line-height:1.2}
 .dash .chead b{font-weight:500}
 .dash .take{display:inline-block;font:500 .78rem "Hanken Grotesk",sans-serif;border:1px solid var(--ink);background:#fff;color:var(--ink);border-radius:999px;padding:6px 12px;position:relative}
-.dash .stream{flex:1;padding:14px 16px;display:flex;flex-direction:column;gap:7px;background:var(--wa-bg)}
-.dash .stream .msg{font-size:.8rem;max-width:78%}
+.dash .stream{flex:1;padding:14px 16px;display:flex;flex-direction:column;gap:6px;background:radial-gradient(circle at 20% 30%, rgba(0,0,0,.025) 0 1px, transparent 1.5px) 0 0/22px 22px, var(--wa-bg)}
+.dash .stream .msg{font-size:.86rem;max-width:64%;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 .dash .stream .msg.op{background:var(--green-soft);border:1px solid var(--green);align-self:flex-end;border-top-right-radius:2px}
 .dash .stream .msg.op::before{content:"Mariana · tu equipo";display:block;font-size:.72rem;font-weight:500;color:var(--green);margin-bottom:3px}
 .dash .banner{align-self:center;font-size:.76rem;color:var(--green);background:var(--green-soft);border-radius:999px;padding:4px 12px}
 .dash .banner.grey{color:var(--mute);background:#fff}
 .dash .cursor{position:absolute;width:14px;height:14px;left:50%;top:50%;pointer-events:none;opacity:0}
 .dash .cursor svg{display:block}
-@media (max-width:760px){.dash .main{grid-template-columns:1fr}.dash .list{display:none}.dash .kpi{grid-template-columns:1fr 1fr}.dash .kpi div:nth-child(2){border-right:0}.dash .kpi div:nth-child(-n+2){border-bottom:1px solid var(--line-soft)}}
+@media (max-width:760px){.dash .main{grid-template-columns:1fr}.dash .list{display:none}}
 /* dashboard timeline */
 .dash .take{position:relative}
 .dash .take .l2{position:absolute;inset:0;display:grid;place-items:center;opacity:0}
@@ -326,9 +324,13 @@ section{padding:72px 0}
 @keyframes fadeout{to{opacity:0}}
 @keyframes fadein{to{opacity:1}}
 @keyframes cur{0%{opacity:0;transform:translate(-140px,70px)}45%{opacity:1;transform:translate(0,0)}70%{opacity:1;transform:translate(0,0) scale(.8)}100%{opacity:0;transform:translate(0,0)}}
-.dash .end{font-size:.76rem;color:var(--mute);padding:8px 16px;border-top:1px solid var(--line-soft)}
-.control .grid2{grid-template-columns:1fr;gap:44px}
+.dash .end{font-size:.76rem;color:var(--mute);padding:7px 16px;border-top:1px solid var(--line-soft)}
+.control .grid2{grid-template-columns:1fr;gap:22px}
+.control .chead2{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:44px;align-items:end}
+.control .chead2 .lede{margin-top:0!important;max-width:48em}
+@media (max-width:900px){.control .chead2{grid-template-columns:1fr;gap:16px}}
 .control .lede{max-width:40em}
+.control{padding-top:40px;padding-bottom:40px}
 .dash .stream{min-height:300px}
 
 /* trust */
@@ -632,18 +634,12 @@ Col. Del Valle<span class="t">19:19<span class="ck">✓✓</span></span></div>
 <section class="control" id="control">
   <div class="wrap">
     <div class="grid2">
-      <div>
-        <h2>El control es tuyo. Siempre.</h2>
+        <div class="chead2">
+          <h2>El control es tuyo. Siempre.</h2>
         <p class="lede" style="margin-top:24px">Los verbos de arriba describen lo que el agente hace sin intervención. El dashboard es lo contrario: lo que tu equipo hace sobre él. Ves las conversaciones en curso, el estado de cada lead y el embudo. Y si una conversación lo pide, una persona la toma con un clic, el asistente se calla, y cuando la devuelve, el asistente continúa donde iba.</p>
       </div>
       <div class="demo" data-seq="dash">
-        <div class="dash" role="img" aria-label="Panel de operación: leads del día, embudo y una conversación en la que un operador toma el control y luego lo devuelve al asistente">
-          <div class="kpi">
-            <div><small>Leads hoy</small><b>34</b></div>
-            <div><small>Cotizados</small><b>27</b></div>
-            <div><small>En conversación</small><b>6</b></div>
-            <div><small>Emitidos</small><b>9<em>2 en pago</em></b></div>
-          </div>
+        <div class="dash" role="img" aria-label="Panel de operación: la lista de leads del día y una conversación de WhatsApp en la que un operador toma el control y luego lo devuelve al asistente">
           <div class="main">
             <div class="list">
               <div><span><b>Laura R.</b><small>Cotizada · 12:04</small></span><span class="pill">Cotizada</span></div>
@@ -653,19 +649,19 @@ Col. Del Valle<span class="t">19:19<span class="ck">✓✓</span></span></div>
               <div><span><b>Diego P.</b><small>Landing · 18:58</small></span><span class="pill">Lead</span></div>
             </div>
             <div class="conv">
-              <div class="chead"><b>Juan M. · Cotización 2382</b>
+              <div class="chead"><span class="who"><span class="av">JM</span><span><b>Juan M.</b><small>Cotización 2382 · en línea</small></span></span>
                 <span class="take" style="--at:5.2"><span class="l1">Tomar conversación</span><span class="l2">Devolver al asistente</span><span class="cursor" style="--at:4"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M1 1l4.5 12 1.8-4.7L12 6.5z" fill="#101917" stroke="#fff" stroke-width=".8"/></svg></span></span>
               </div>
               <div class="stream">
                 <div class="msg in" style="--at:0">el descuento se queda si pago en mensualidades?<span class="t">18:44</span></div>
-                <div class="msg out" style="--at:1.6">Sí, Juan: el descuento se mantiene en pago mensual. ¿Quieres que te mande la liga?<span class="t">18:44</span></div>
+                <div class="msg out" style="--at:1.6">Sí, Juan: el descuento se mantiene en pago mensual. ¿Quieres que te mande la liga?<span class="t">18:44<span class="ck">✓✓</span></span></div>
                 <div class="msg in" style="--at:3.1">prefiero que me lo confirme una persona antes de pagar<span class="t">18:45</span></div>
                 <div class="banner" style="--at:5.8">Tomaste la conversación · asistente en pausa</div>
-                <div class="msg op" style="--at:7.6">Hola Juan, soy Mariana, del equipo de tu aseguradora. Te lo confirmo: el descuento se queda igual si pagas mensual.<span class="t">18:46</span></div>
+                <div class="msg op" style="--at:7.6">Hola Juan, soy Mariana, del equipo de tu aseguradora. Te lo confirmo: el descuento se queda igual si pagas mensual.<span class="t">18:46<span class="ck">✓✓</span></span></div>
                 <div class="msg in" style="--at:9.8">perfecto, entonces sí, mándame la liga<span class="t">18:47</span></div>
-                <div class="msg op" style="--at:11.4">Te dejo de vuelta con el asistente para que te la mande ahora mismo.<span class="t">18:47</span></div>
+                <div class="msg op" style="--at:11.4">Te dejo de vuelta con el asistente para que te la mande ahora mismo.<span class="t">18:47<span class="ck">✓✓</span></span></div>
                 <div class="banner grey" style="--at:13.4">Devolviste la conversación al asistente</div>
-                <div class="msg out" style="--at:14.8">Aquí tienes tu liga de pago mensual, Juan. En cuanto se acredite, emitimos tu póliza.<span class="t">18:48</span></div>
+                <div class="msg out" style="--at:14.8">Aquí tienes tu liga de pago mensual, Juan. En cuanto se acredite, emitimos tu póliza.<span class="t">18:48<span class="ck">✓✓</span></span></div>
               </div>
               <div class="end">Cada mensaje del asistente pasa por las barreras de infraestructura antes de salir, también después de una toma de control.</div>
             </div>
