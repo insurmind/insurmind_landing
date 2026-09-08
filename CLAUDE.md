@@ -19,7 +19,7 @@ La web pública de **Insurmind**, **agentes de IA que se conectan a cualquier as
 - **`index.html`** es la página publicada: HTML, CSS y JS mínimo en un archivo. Sin frameworks, sin build, sin dependencias salvo Google Fonts.
 - **`variante-a.html`** guarda la dirección visual anterior («consultora sobria»: Hanken Grotesk en todo, sin banda oscura, sin NEGOCIA). Lleva `noindex, nofollow` y no está enlazada. Es archivo, no alternativa viva. No la mantengas al día.
 - **`assets/`**: `og-image.png` (1200×630) y `insurmind-tres-planos.svg` (el diagrama va inline en el HTML, el SVG suelto es la fuente).
-- Deploy en **Vercel** desde GitHub (`insurmind/insurmind_landing`). El dominio redirige `insurmind.ai` → `www.insurmind.ai`, y el canonical apunta a `www`.
+- Deploy en **Vercel** desde GitHub (`insurmind/insurmind_landing`). El dominio de producción es el ápice: `www.insurmind.ai` redirige con **308** a `insurmind.ai`, y el `canonical`, el `og:url` y el `og:image` apuntan al ápice. Si alguna vez vuelves a tocarlo, el orden importa: primero se quita la redirección del destino, luego se pone la nueva, o Vercel la rechaza por bucle.
 - Antes de tocar nada: **lee `index.html` completo y `DESIGN.md`**. `DESIGN.md` describe el sistema vigente con más detalle que este archivo y lleva una sección con las decisiones que se apartan de aquí.
 
 ## 3. Sistema visual — no lo cambies sin pedirlo
@@ -130,7 +130,6 @@ Ocho secciones. El menú apunta a siete:
 
 - Sustituir `[MÉTRICA POR CONFIRMAR]` y devolver la sección de prueba cuando Alberto entregue cifras verificadas.
 - Sustituir por copy real de producción, cuando se entregue: la respuesta del bot en RESUELVE (a), la confirmación de lectura de la tarjeta de circulación en EMITE y el resumen de póliza.
-- **Invertir la redirección del dominio** en Vercel para que `www.insurmind.ai` vaya a `insurmind.ai`, y devolver `canonical`, `og:url` y `og:image` a la versión sin `www`. Es ajuste de panel, no de repositorio. La URL sin `www` es la que lleva la marca.
 - Posible tercera puerta en el plano 1 del diagrama («Asistentes de IA») y sección para los servicios de consultoría.
 - Botón/flujo de «Ver una demo» cuando Alberto lo decida (hoy solo `mailto:`).
 
