@@ -108,3 +108,19 @@ Una tarea está terminada cuando:
 ## 10. Si tienes dudas
 
 Pregunta antes de asumir. En particular sobre: cambios de copy en cualquier titular, cualquier número, cualquier nombre de empresa, y cualquier cambio en el orden de secciones o en el sistema visual.
+
+## 11. Impeccable (skill de diseño instalada)
+
+El repo lleva la skill [Impeccable](https://github.com/pbakaus/impeccable) en `.claude/skills/impeccable` (Claude Code) y `.agents/skills/impeccable` (Codex). `PRODUCT.md` y `DESIGN.md` son su fuente de verdad; mantenlos al día cuando cambie algo de fondo.
+
+**Precedencia: este archivo gana.** Si una recomendación de Impeccable choca con las secciones 3, 4, 5 o 6 (paleta, copy, orden, animaciones, sin CTA de demo), se ignora y se anota en el PR.
+
+Comandos que sí se usan, siempre con aprobación previa del cambio:
+- `/impeccable audit` y `/impeccable critique` para revisar antes de un PR.
+- `/impeccable polish`, `/impeccable typeset`, `/impeccable layout`, `/impeccable adapt`, `/impeccable harden`, `/impeccable optimize`, `/impeccable clarify`.
+
+Comandos que **no** se usan sin que Alberto lo pida por escrito: `bolder`, `colorize`, `delight`, `overdrive`, `animate`, `craft` y cualquier cosa que introduzca un segundo acento, gradientes o efectos.
+
+Detector: `npx impeccable detect index.html`. La configuración en `.impeccable/config.json` ignora `nested-cards` y `pulsing-dot` porque las burbujas de WhatsApp y el indicador de «escribiendo…» son el producto real, no un patrón de IA. Lo demás se corrige: texto funcional por debajo de 11 px, contraste, bordes laterales de color, cadencia aforística repetida.
+
+Para instalar los hooks locales (el detector corre en cada edición): `npx impeccable install --scope=project` en tu máquina. Para actualizar la skill: `npx impeccable update`.
