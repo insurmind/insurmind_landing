@@ -195,11 +195,11 @@ section{padding:72px 0}
 @media (max-width:640px){.embudo{grid-auto-columns:86%}}
 @media (max-width:420px){.embudo{grid-auto-columns:88%}}
 /* animación: estado por defecto = estado final */
-.anim.embudo .mom__node::before{animation:linea .5s ease-out both;animation-delay:calc(var(--i) * .16s)}
-.anim.embudo .mom__node::after{animation:nodo .4s cubic-bezier(.16,1,.3,1) both;animation-delay:calc(.2s + var(--i) * .16s)}
-.anim.embudo .mom__head,.anim.embudo .wa{animation:sube .5s cubic-bezier(.16,1,.3,1) both;animation-delay:calc(.3s + var(--i) * .16s)}
-.anim.embudo .wa .msg,.anim.embudo .wa .gap{animation:sube .4s cubic-bezier(.16,1,.3,1) both;animation-delay:calc(1s + var(--i) * .72s + var(--j,0) * .46s)}
-.anim.embudo .mom__cons{animation:sube .5s cubic-bezier(.16,1,.3,1) both;animation-delay:calc(5.4s + var(--i) * .4s)}
+.anim.embudo .mom__node::before{animation:linea .55s ease-out both;animation-delay:calc(var(--i) * .28s)}
+.anim.embudo .mom__node::after{animation:nodo .45s cubic-bezier(.16,1,.3,1) both;animation-delay:calc(.25s + var(--i) * .28s)}
+.anim.embudo .mom__head,.anim.embudo .wa{animation:sube .55s cubic-bezier(.16,1,.3,1) both;animation-delay:calc(.35s + var(--i) * .28s)}
+.anim.embudo .wa .msg,.anim.embudo .wa .gap{animation:sube .4s cubic-bezier(.16,1,.3,1) both;animation-delay:calc(1.7s + var(--i) * 1.05s + var(--j,0) * .62s)}
+.anim.embudo .mom__cons{animation:sube .55s cubic-bezier(.16,1,.3,1) both;animation-delay:calc(7.6s + var(--i) * .42s)}
 .anim.embudo.paused *{animation-play-state:paused!important}
 @keyframes linea{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @keyframes nodo{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:none}}
