@@ -1,142 +1,102 @@
 # Design
 
-Dos direcciones vivas. **A es la landing**; B es una alternativa en evaluación.
+Sistema visual vigente de `index.html`. Refinar preserva esto; solo un rediseño aprobado por el fundador lo sustituye.
 
-| | Archivo | Estado |
-|---|---|---|
-| **A — «consultora»** | `index.html` | La página pública. Desplegada en `staging`. |
-| **B — «Inter Tight + embudo oscuro»** | `variante-b.html` | Variante para comparar. `noindex, nofollow`, sin enlazar. |
-
-Refinar preserva la dirección A. Solo un rediseño aprobado por el fundador la sustituye. Si B gana, este archivo se reescribe con B como sistema único.
+`variante-a.html` guarda la dirección anterior («consultora sobria»: Hanken Grotesk en todo, sin banda oscura, sin NEGOCIA). Lleva `noindex, nofollow` y no está enlazada. Es archivo, no alternativa viva.
 
 ---
 
-# A — la landing (`index.html`)
+## Tipografía
+
+Cuatro familias, cada una con un trabajo:
+
+| Familia | Dónde |
+|---|---|
+| **Inter Tight** (alt. Archivo) | Titular del héroe y titular del problema |
+| **Hanken Grotesk** | Todo lo demás: h2, cuerpo, UI |
+| **DM Mono** | Horas, numeración 01–05 y etiquetas de sistema del embudo |
+| Fuente del sistema | Dentro de las maquetas (WhatsApp, dashboard, landing de ejemplo) |
+
+- Héroe: `clamp(2.6rem,5.3vw,6.25rem)`, `line-height:.98`, tracking −0.035em, tres niveles dentro de un solo `h1` — «Agentes de IA» a 800, el puente a 500, «cotizar, resolver, emitir y cobrar.» a 800 en `#14634f`.
+- Resto: h2 `clamp(1.9rem,3.6vw,3rem)` a peso 300; verbos `.k` `clamp(3rem,7vw,5.5rem)` con el punto final en verde.
+- **Texto funcional nunca por debajo de 11 px reales.**
 
 ## Tokens
 
 ```
---paper:#F7F8F7    fondo
---paper-2:#EEF1EF  fondo alterno de sección
---ink:#101917      texto principal y franjas oscuras
---ink-2:#3B4A45    texto secundario
---mute:#5B6E68     texto atenuado (5.09:1 sobre --paper, 4.76:1 sobre --paper-2)
---line:#CFDBD6     líneas
---line-soft:#E1E8E5
---green:#0A6B58    único acento (6.06:1 sobre --paper)
---green-soft:#E3F0EB
---warn:#C8893F     solo en las escenas del problema
+--paper:#F7F8F7    fondo            --line:#CFDBD6     líneas
+--paper-2:#EEF1EF  fondo alterno    --line-soft:#E1E8E5
+--ink:#101917      texto            --green:#0A6B58    acento (6.06:1 sobre --paper)
+--ink-2:#3B4A45    secundario       --green-soft:#E3F0EB
+--mute:#5B6E68     atenuado         --warn:#C8893F     sin uso desde el rediseño del embudo
 --maxw:1120px
---tarjeta          la foto de la tarjeta de circulación, en base64, una sola vez
 ```
 
-Colores de WhatsApp (`--wa-bg`, `--wa-out`, `--wa-in`, `--wa-time`, `--wa-check`) únicamente dentro de los marcos de teléfono y del dashboard. `--tarjeta` se declara una vez en `:root` y se aplica como `background`: antes estaba inline dos veces y era el 49 % del archivo.
+Colores de WhatsApp (`--wa-*`) solo dentro de maquetas. El SVG del diagrama usa `var()`, no hexadecimales: cambiar un token repinta también el diagrama.
 
-El SVG del diagrama usa `var()`, no hexadecimales. Cambiar un token repinta también el diagrama.
+**La sección del problema tiene paleta propia**, declarada en `.problem`:
 
-`color-scheme: light` declarado. No hay modo oscuro y no se pretende.
+```
+#071a16  verde tinta, fondo de la banda
+#f4f2e9  blanco cálido sobre ella (16.03:1)
+#d6ff62  lima, acento de la sección (15.7:1)
+#dfc6a8  arena, tarjetas de consecuencia
+#10231f  texto sobre arena (9.97:1)
+```
 
-## Tipografía
+Más `#14634f` en los verbos del titular del héroe (6.74:1 sobre `--paper`).
 
-- Hanken Grotesk. 300 en titulares con tracking −0.02em; 400 en cuerpo (17 px, 1.55); 500 en UI.
-- Dentro de los mockups (WhatsApp, dashboard, landing de ejemplo): fuente del sistema, como en el producto real.
-- Escala: `h1 clamp(2rem,3.7vw,3.25rem)`; `h2 clamp(1.9rem,3.6vw,3rem)`; verbos `.k` `clamp(3rem,7vw,5.5rem)` con el punto final en verde; subtítulo del verbo `.vsub` 1.5rem/400.
-- **Texto funcional nunca por debajo de 11 px reales.** Verificado: cero elementos.
+**Deuda conocida:** son seis colores fuera del sistema base y `--warn` quedó sin uso. Si se consolida, `#14634f` debería fundirse con `--green`.
 
 ## Layout
 
-- Ancho máximo 1120 px, padding 24 px. Secciones a 96 px (64 en móvil), con `scroll-margin-top` de 76 px (104 en móvil) para que la nav pegajosa no tape las anclas.
-- Rejilla de dos columnas para héroe y verbos, alternando lado; una columna por debajo de 900 px. `align-items:start` en las dos: el texto no se recentra cuando el artefacto cambia de altura.
-- Líneas de 1 px como separadores. Sin tarjetas anidadas fuera de los mockups. Sin sombras.
-- Radios: 22 px el teléfono, 14 px las demás superficies.
-- Navegación: barra pegajosa de 60 px. Por debajo de 760 px los cuatro enlaces bajan a una segunda fila desplazable (93 px en total); el correo se queda arriba, siempre a un toque.
+- Ancho 1120 px, padding 24. **Excepción:** la banda del problema usa 1320 px; a 1120 las cinco columnas caían a 197 px y no admitían 14 px de texto.
+- Secciones a 72 px (56 en móvil). El problema a 44, el control a 40: son las dos que se apretaron para caber en pantalla.
+- `scroll-padding-top` de 62 px (94 en móvil) en `html`, y **ninguna sección lleva `scroll-margin-top`**: si están las dos, se suman y el ancla aterriza 152 px abajo.
+- Rejilla de dos columnas alternando lado; una columna por debajo de 900 px. `align-items:start` siempre.
+- Sin `scroll-snap` vertical: con secciones más altas que la pantalla generaba siete zonas muertas de ~737 px.
 
 ## Estructura
 
-`main` contiene siete secciones, en este orden:
+`main` contiene ocho secciones. El menú apunta a siete:
 
-1. Héroe, con la conversación de EMITE.
-2. El problema: cinco escenas ilustrativas con el fallo en ámbar `--warn`.
-3. Los cuatro verbos: COTIZA, RESUELVE, EMITE, COBRA. COBRA lleva además la franja de cobranza.
-4. Confianza / la IA (`#ia`): las cinco barreras.
-5. Por qué contesta bien (`#confianza`): correcciones antes/ahora.
-6. El control es tuyo (`#control`): dashboard con toma de control humano.
-7. Cómo encaja (`#encaja`): diagrama de tres planos.
-8. Cierre (`#contacto`): el correo.
-
-**Nota de deriva:** los comentarios del HTML todavía numeran «5.bis» antes de «4». El orden real de secciones 4 y 5 es el de arriba. La sección de prueba con `[MÉTRICA POR CONFIRMAR]` se retiró; vuelve cuando haya cifras verificadas.
+1. **Héroe** (`#inicio`) — titular Inter Tight, barra lima, conversación de EMITE.
+2. **El problema** (`#problema`) — banda verde tinta. `<ol>` de cinco momentos: número 01–05, hora, etiqueta, ventana de aplicación de WhatsApp, línea temporal con nodos y tarjeta arena con la consecuencia. Carrusel con `scroll-snap` horizontal por debajo de 1180 px.
+3. **Capacidades** (`#producto`) — COTIZA, RESUELVE + **NEGOCIA**, EMITE, COBRA. NEGOCIA vive dentro de RESUELVE, con su conversación al lado; no es un verbo canónico y no aparece ni en el titular ni en el diagrama.
+4. **IA** (`#ia`) — las cinco barreras.
+5. Por qué contesta bien (`#confianza`).
+6. **Dashboard** (`#control`) — titular y lede en paralelo, panel con lista de leads y conversación con toma de control.
+7. **Arquitectura** (`#encaja`) — diagrama de tres planos.
+8. **Contacto** (`#contacto`) — `min-height` de una pantalla, porque si no el documento se acaba antes de poder subirla bajo la nav.
 
 ## Componentes
 
-- **Teléfono** (`.phone > .bar + .chat`): borde 1 px, radio 22 px, sin sombras ni reflejos.
-- **Burbujas** (`.msg.in|.out`): copia fiel de WhatsApp. La hora y el doble check a 0.72rem, en el rango de 11–12 px que se acepta dentro de los mockups.
-- **Escenas del problema** (`.mini` + `.flag`): fondo apagado, señal ámbar sin borde lateral. El texto del `.flag` da 8.18:1 compuesto sobre `.mini`.
-- **Franja de cobranza** (`.cobmini`): cifra, estado y botón con glifo de WhatsApp en píldora `--ink`. Datos ilustrativos, marcados.
-- **Dashboard** (`.dash`): KPIs, lista de leads, conversación con toma de control. Las burbujas del operador llevan rótulo «Mariana · tu equipo»; sin él, la diferencia con el asistente era un borde de 1 px.
-- **Diagrama**: SVG inline de tres planos, en tokens. Por debajo de 900 px vive en un scroller horizontal con `min-width:760px`, porque escalado al ancho del móvil sus etiquetas caían a 3.9 px.
-- Botones: píldora de fondo `--ink`; enlace discreto `.quiet` con subrayado fino. **No hay CTA de demo.** El `mailto` va prellenado con asunto y cuerpo.
+- **Teléfono** (`.phone > .bar + .chat`): borde 1 px, radio 22, sin sombras. En EMITE ocupa toda la columna (504 px a 1440), sin columna de notas.
+- **Ventana de aplicación** (`.wa`) en el embudo: barra con avatar, nombre y estado; sin marco de teléfono.
+- **Dashboard** (`.dash`): sin KPIs. Papel pintado de puntos, burbujas al 64 %, doble check y cabecera con avatar, para que lea como WhatsApp y no como una tabla.
+- **Controles** (`.ctl`): dos iconos de 24 px —pausa/reproducir y repetir— en la misma línea que el pie. Sin texto visible: el `aria-label` es el único nombre accesible.
+- Botones: píldora `--ink`. **No hay CTA de demo.** El `mailto` va prellenado.
 
 ## Motion
 
 - Solo CSS. `--at` fija el segundo de entrada de cada burbuja; `--dur` la duración de «escribiendo…».
 - **Estado por defecto = estado final.** Con `prefers-reduced-motion` no hay animación y los controles se ocultan.
-- El indicador de «escribiendo…» anima **solo `opacity`** y lleva `margin-bottom:-30px`, que cancela su huella. Nunca cambia la altura del chat: animar `height` movía el teléfono 41 px y el titular 21 px.
-- Conversaciones de 8–18 s, pausables y repetibles. Cada control lleva `aria-label` con su conversación. Easing `ease-out`, nada elástico.
+- El indicador de «escribiendo…» anima **solo `opacity`** y lleva `margin-bottom:-30px` que cancela su huella. Animar `height` movía el teléfono 41 px y el titular 21.
+- Las animaciones del embudo usan `animation-fill-mode: both`, no `backwards`: la regla global `.anim .msg{opacity:0}` también las alcanza, y `backwards` no conserva el estado final. Con `backwards` quedaban 2 de 12 burbujas visibles.
+- **Arrancan al 60 %** del demo visible (o del alto de pantalla, si el demo es más alto). Al 45 % empezaban mientras la sección aún subía.
+- Embudo: 9.83 s. Conversaciones: 8–18 s. Todas pausables y repetibles.
 
 ## Accesibilidad
 
-- Outline `H1 · H2 ×2 · H3 ×4 · H2 ×5`, sin saltos. Un solo `h1`.
+- Outline `H1 · H2 ×2 · H3 ×5 · H2 ×5`, sin saltos. Un solo `h1`.
 - Landmarks `header`, `nav`, `main`, `footer`, más skip link.
-- Objetivos táctiles ≥ 24 px (WCAG 2.2 §2.5.8). Foco visible en los 23 elementos tabulables.
-- Contraste AA en todo el texto funcional. **Única excepción documentada:** el doble check de WhatsApp da 1.92:1. Es fidelidad literal al producto y es una decisión, no un descuido.
+- Objetivos táctiles ≥ 24 px. Foco visible en todos los tabulables.
+- Contraste AA en todo el texto funcional. **Excepción documentada:** el doble check de WhatsApp da 1.92:1; es fidelidad literal al producto.
 
----
+## Decisiones que se apartan de CLAUDE.md
 
-# B — variante en evaluación (`variante-b.html`)
+Anotadas aquí para que se encuentren, no para discutirlas:
 
-Copia de A con dos secciones rediseñadas. Todo lo demás —copy, conversaciones, emojis de producción, estructura, motion, accesibilidad— es idéntico, para que la comparación aísle la dirección visual.
-
-## Qué cambia
-
-**Héroe.** Titular en **Inter Tight** (alternativa: Archivo) con tres niveles dentro de un solo `h1`: «Agentes de IA» a 800, el puente a 500, y «cotizar, resolver, emitir y cobrar.» a 800 en `#14634f`. `clamp(2.6rem,5.3vw,6.25rem)`, `line-height:.98`, tracking −0.035em, `text-wrap:balance`. Barra corta de 72×4 px en lima sobre el titular. La rejilla del héroe pasa a `1.5fr/.82fr`: a 5.3vw el titular mide 76 px a 1440 y no cabía en la columna de A.
-
-**El problema.** Banda en verde tinta `#071a16`. Los cinco momentos son un `<ol>`, cada uno con 01–05, hora y etiqueta del problema, así que el orden no depende de las horas. Cada conversación vive en una **ventana de aplicación** —barra, avatar, nombre, estado—, no en un marco de teléfono. Línea temporal continua con cinco nodos. La consecuencia comercial sale de la ventana y baja a una tarjeta arena. Por debajo de 1180 px es un carrusel con `scroll-snap` nativo, botones anterior/siguiente y teclado. Animación de 6.26 s.
-
-## Tokens propios de B
-
-```
-#071a16  verde tinta, fondo de la banda del problema
-#f4f2e9  blanco cálido sobre esa banda (16.03:1)
-#d6ff62  lima, único acento de acento (15.7:1 sobre la banda)
-#dfc6a8  arena, tarjetas de consecuencia
-#10231f  texto oscuro sobre arena (9.97:1)
-#14634f  verde de los verbos del titular (6.74:1 sobre --paper)
-```
-
-Fuentes: **Inter Tight** (titulares), **DM Mono** (horas y numeración), Hanken Grotesk (resto), fuente del sistema (mensajes).
-
-La banda del problema usa 1320 px de ancho interior, no 1120: a 1120 las cinco columnas caían a 197 px y no admitían 14 px de texto.
-
-## Deudas conocidas de B
-
-- **B tiene cuatro familias tipográficas y seis colores fuera del sistema de A.** Si B gana, hay que consolidar: `#14634f` contra `--green`, y decidir si el lima es token o excepción de una sola sección.
-- **`--warn` queda sin uso en B**: el ámbar era «el único uso permitido de ese color» y su única sección pasó a arena.
-- El cromo de las maquetas de B (hora, estado, iniciales, checks) queda en 12.2–12.8 px, por debajo de los 14 px pedidos para esa sección pero por encima del piso de 11 px del proyecto.
-
----
-
-## Cómo comparar
-
-Sirve las dos con cualquier estático y ábrelas en el mismo dispositivo:
-
-```
-python3 -m http.server 8123
-# A: http://127.0.0.1:8123/index.html
-# B: http://127.0.0.1:8123/variante-b.html
-```
-
-La dirección anterior de B («producto vivo»: Outfit, bento, base clara fría) está en el commit `925d21d` y desplegada en `staging`. Para recuperarla como archivo:
-
-```
-git show 925d21d:variante-b.html > variante-outfit.html
-```
+1. **No hay marcas de «ilustrativo».** Se retiraron «Escenas ilustrativas…», «Los datos del panel son ilustrativos» (×2) y «Conversación real de producción, sin intervención humana». §4 y §5 las piden. La página presenta las cinco escenas del embudo y las cifras del panel sin distinguirlas de lo real. Reversible: `git revert 417fa35 93fdc91`.
+2. **Cuatro familias tipográficas y seis colores** fuera del sistema base.
+3. **La banda del problema rompe el ancho de 1120 px.**
