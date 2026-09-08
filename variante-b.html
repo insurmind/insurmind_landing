@@ -133,11 +133,20 @@ section{padding:72px 0;scroll-margin-top:76px}
   .ctl{display:none!important}
   html{scroll-behavior:auto}
 }
-.ctl{display:flex;gap:6px;justify-content:center;margin-top:12px}
-.ctl button{font:500 .8rem "Hanken Grotesk",sans-serif;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink-2);cursor:pointer}
+.ctl{display:inline-flex;gap:5px;justify-content:center;vertical-align:middle;margin:0 9px 0 0}
+.demo .foot{display:flex;align-items:center;justify-content:center;margin-top:10px;flex-wrap:wrap;gap:4px 0}
+.embudo-wrap>.ctl{display:flex;margin:14px auto 0}
+.ctl button{display:grid;place-items:center;width:28px;height:28px;padding:0;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--mute);cursor:pointer;transition:border-color .18s,color .18s,transform .18s}
+.ctl .i{width:13px;height:13px;fill:currentColor;display:block}
+.ctl .i-replay{fill:none;width:14px;height:14px}
+.ctl [data-pause] .i-play{display:none}
+.ctl [data-pause].is-paused .i-pause{display:none}
+.ctl [data-pause].is-paused .i-play{display:block}
+.ctl button:active{transform:scale(.94)}
 .ctl button:hover{border-color:var(--ink);color:var(--ink)}
 .demo{position:relative}
-.demo .cap{display:block;text-align:center;font-size:.85rem;color:var(--mute);margin-top:10px}
+.demo .cap{display:inline;vertical-align:middle;text-align:center;font-size:.85rem;color:var(--mute);margin-top:0}
+.demo .foot .cap{margin-top:0}
 
 /* problema / embudo */
 .problem .wrap{max-width:1320px}
@@ -414,8 +423,7 @@ Col. Del Valle<span class="t">19:19<span class="ck">✓✓</span></span></div>
           <div class="msg in" style="--at:17.5">¡Listo, Juan! 🎉 Tu póliza fue emitida exitosamente.<div class="sum"><b>Póliza</b> 0412-8837<br><b>Vehículo</b> HD 2020 · MXA-12-34<br><b>Cobertura</b> Amplia · vigencia anual<br><b>Prima</b> $8,940.00 MXN</div><span class="t">19:27</span></div>
         </div>
       </div>
-      <div class="ctl"><button type="button" data-pause aria-label="Pausar la conversación de emisión">Pausar</button><button type="button" data-replay aria-label="Repetir la conversación de emisión">Repetir</button></div>
-      <span class="cap">Conversación real de producción, sin intervención humana.</span>
+      <div class="foot"><div class="ctl"><button type="button" data-pause aria-label="Pausar la conversación de emisión"><svg class="i i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="4" width="3.6" height="16" rx="1.4"/><rect x="13.4" y="4" width="3.6" height="16" rx="1.4"/></svg><svg class="i i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5l12.5 7.5L7 19.5z"/></svg></button><button type="button" data-replay aria-label="Repetir la conversación de emisión"><svg class="i i-replay" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v6h6"/><path d="M3.6 14.5a9 9 0 1 0 2-9L3 8.2"/></svg></button></div><span class="cap">Conversación real de producción, sin intervención humana.</span></div>
     </div>
   </div>
 </section>
@@ -438,7 +446,7 @@ Col. Del Valle<span class="t">19:19<span class="ck">✓✓</span></span></div>
         <button type="button" data-prev aria-label="Momento anterior">←</button>
         <button type="button" data-next aria-label="Momento siguiente">→</button>
       </div>
-      <div class="ctl"><button type="button" data-pause aria-label="Pausar la animación del embudo">Pausar</button><button type="button" data-replay aria-label="Repetir la animación del embudo">Repetir</button></div>
+      <div class="ctl"><button type="button" data-pause aria-label="Pausar la animación del embudo"><svg class="i i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="4" width="3.6" height="16" rx="1.4"/><rect x="13.4" y="4" width="3.6" height="16" rx="1.4"/></svg><svg class="i i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5l12.5 7.5L7 19.5z"/></svg></button><button type="button" data-replay aria-label="Repetir la animación del embudo"><svg class="i i-replay" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v6h6"/><path d="M3.6 14.5a9 9 0 1 0 2-9L3 8.2"/></svg></button></div>
     </div>
     <p class="scenes-note">Escenas ilustrativas: un embudo sin agente, o con un chatbot genérico. Las conversaciones reales de producción empiezan abajo.</p>
   </div>
@@ -494,8 +502,7 @@ Col. Del Valle<span class="t">19:19<span class="ck">✓✓</span></span></div>
               <div class="msg in" style="--at:5.7">Sí, Juan. En tu cotización 2381, la cobertura de Daños Materiales lleva un deducible del 25 % sobre el valor del vehículo.<span class="t">18:31</span></div>
             </div>
           </div>
-          <div class="ctl"><button type="button" data-pause aria-label="Pausar la conversación de la duda de cobertura">Pausar</button><button type="button" data-replay aria-label="Repetir la conversación de la duda de cobertura">Repetir</button></div>
-          <span class="cap">Una duda de cobertura</span>
+          <div class="foot"><div class="ctl"><button type="button" data-pause aria-label="Pausar la conversación de la duda de cobertura"><svg class="i i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="4" width="3.6" height="16" rx="1.4"/><rect x="13.4" y="4" width="3.6" height="16" rx="1.4"/></svg><svg class="i i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5l12.5 7.5L7 19.5z"/></svg></button><button type="button" data-replay aria-label="Repetir la conversación de la duda de cobertura"><svg class="i i-replay" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v6h6"/><path d="M3.6 14.5a9 9 0 1 0 2-9L3 8.2"/></svg></button></div><span class="cap">Una duda de cobertura</span></div>
         </div>
         <div class="demo" data-seq="resuelve-b">
           <div class="phone">
@@ -510,8 +517,7 @@ Col. Del Valle<span class="t">19:19<span class="ck">✓✓</span></span></div>
               <div class="msg in" style="--at:11.8"><div class="file"><i>PDF</i><div><b>Cotizacion_2382_HD_2020_Descuento.pdf</b><small>1 página · PDF</small></div></div>Aquí tienes tu nueva cotización con descuento. ¿Continuamos con la contratación?<span class="t">18:42</span></div>
             </div>
           </div>
-          <div class="ctl"><button type="button" data-pause aria-label="Pausar la conversación de la objeción de precio">Pausar</button><button type="button" data-replay aria-label="Repetir la conversación de la objeción de precio">Repetir</button></div>
-          <span class="cap">Una objeción de precio, y el descuento</span>
+          <div class="foot"><div class="ctl"><button type="button" data-pause aria-label="Pausar la conversación de la objeción de precio"><svg class="i i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="4" width="3.6" height="16" rx="1.4"/><rect x="13.4" y="4" width="3.6" height="16" rx="1.4"/></svg><svg class="i i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5l12.5 7.5L7 19.5z"/></svg></button><button type="button" data-replay aria-label="Repetir la conversación de la objeción de precio"><svg class="i i-replay" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v6h6"/><path d="M3.6 14.5a9 9 0 1 0 2-9L3 8.2"/></svg></button></div><span class="cap">Una objeción de precio, y el descuento</span></div>
         </div>
       </div>
     </div>
@@ -575,8 +581,7 @@ Col. Del Valle<span class="t">19:19<span class="ck">✓✓</span></span></div>
             <div class="msg in" style="--at:1">Hola Juan, tu recibo de la póliza vence el 21 de septiembre. Aquí tienes tu liga de pago para que tu cobertura siga vigente, sin interrupciones.<span class="link">pago.seguroauto-tumarca.com/r/0412-8837</span><span class="t">09:00</span></div>
           </div>
         </div>
-        <div class="ctl"><button type="button" data-pause aria-label="Pausar la conversación de cobranza">Pausar</button><button type="button" data-replay aria-label="Repetir la conversación de cobranza">Repetir</button></div>
-        <span class="cap">Un mensaje que el cliente no pidió, una semana antes de que venza el recibo</span>
+        <div class="foot"><div class="ctl"><button type="button" data-pause aria-label="Pausar la conversación de cobranza"><svg class="i i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="4" width="3.6" height="16" rx="1.4"/><rect x="13.4" y="4" width="3.6" height="16" rx="1.4"/></svg><svg class="i i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5l12.5 7.5L7 19.5z"/></svg></button><button type="button" data-replay aria-label="Repetir la conversación de cobranza"><svg class="i i-replay" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v6h6"/><path d="M3.6 14.5a9 9 0 1 0 2-9L3 8.2"/></svg></button></div><span class="cap">Un mensaje que el cliente no pidió, una semana antes de que venza el recibo</span></div>
       </div>
       <p class="note">Los datos del panel son ilustrativos.</p>
       </div>
@@ -672,8 +677,7 @@ Col. Del Valle<span class="t">19:19<span class="ck">✓✓</span></span></div>
             </div>
           </div>
         </div>
-        <div class="ctl"><button type="button" data-pause aria-label="Pausar la demostración del dashboard">Pausar</button><button type="button" data-replay aria-label="Repetir la demostración del dashboard">Repetir</button></div>
-        <span class="cap">Una persona entra, el asistente se calla; al devolverla, continúa.</span>
+        <div class="foot"><div class="ctl"><button type="button" data-pause aria-label="Pausar la demostración del dashboard"><svg class="i i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="4" width="3.6" height="16" rx="1.4"/><rect x="13.4" y="4" width="3.6" height="16" rx="1.4"/></svg><svg class="i i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5l12.5 7.5L7 19.5z"/></svg></button><button type="button" data-replay aria-label="Repetir la demostración del dashboard"><svg class="i i-replay" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v6h6"/><path d="M3.6 14.5a9 9 0 1 0 2-9L3 8.2"/></svg></button></div><span class="cap">Una persona entra, el asistente se calla; al devolverla, continúa.</span></div>
       </div>
     </div>
   </div>
@@ -805,7 +809,7 @@ Col. Del Valle<span class="t">19:19<span class="ck">✓✓</span></span></div>
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var demos = document.querySelectorAll('[data-seq]');
   function target(d){ return d.querySelector('.chat') || d.querySelector('.dash') || d.querySelector('.embudo'); }
-  function label(b,verb){ var a=b.getAttribute('aria-label')||''; b.textContent=verb; b.setAttribute('aria-label', verb+' '+a.replace(/^\S+\s/,'')); }
+  function label(b,verb){ var a=b.getAttribute('aria-label')||''; b.setAttribute('aria-label', verb+' '+a.replace(/^\S+\s/,'')); b.classList.toggle('is-paused', verb==='Continuar'); }
   function play(d){ var t=target(d); t.classList.remove('paused'); t.classList.remove('anim'); void t.offsetWidth; t.classList.add('anim'); var b=d.querySelector('[data-pause]'); if(b) label(b,'Pausar'); }
   demos.forEach(function(d){
     var t=target(d);
