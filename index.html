@@ -3600,6 +3600,249 @@
           transform: none;
         }
       }
+    
+      /* ======================================================
+         Formulario de demo. Patrón tomado de usehandle.ai/getdemo:
+         pantalla partida, tres pasos y correo empresarial obligatorio.
+         Copy del panel izquierdo reutilizado del cierre de esta misma
+         página: no introduce ninguna afirmación nueva.
+         ====================================================== */
+      .demo-dialog {
+        width: min(62rem, calc(100vw - 2rem));
+        max-height: min(46rem, calc(100vh - 2rem));
+        padding: 0;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 1.4rem;
+        background: var(--white);
+        color: var(--ink);
+        box-shadow: 0 40px 110px rgba(28, 22, 70, 0.34);
+      }
+      .demo-dialog::backdrop {
+        background: rgba(21, 21, 38, 0.55);
+      }
+      .dd-grid {
+        display: grid;
+        max-height: inherit;
+        grid-template-columns: 19rem minmax(0, 1fr);
+      }
+      .dd-aside {
+        display: flex;
+        flex-direction: column;
+        gap: 1.4rem;
+        padding: 2.1rem 1.8rem;
+        background: linear-gradient(160deg, #262246, #151526 62%);
+        color: #ffffff;
+      }
+      .dd-aside-mark {
+        display: inline-flex;
+        width: 2.1rem;
+        height: 2.1rem;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.7rem;
+        background: var(--indigo);
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+      }
+      .dd-aside h2 {
+        margin: 0;
+        font-family: var(--heading);
+        font-size: 1.5rem;
+        line-height: 1.18;
+        letter-spacing: -0.02em;
+      }
+      .dd-aside p {
+        margin: 0;
+        color: #c8c5dd;
+        font-size: 0.88rem;
+        line-height: 1.55;
+      }
+      .dd-aside ul {
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .dd-aside li {
+        display: flex;
+        gap: 0.6rem;
+        align-items: flex-start;
+        font-size: 0.84rem;
+        line-height: 1.45;
+      }
+      .dd-aside li b {
+        display: block;
+        font-weight: 600;
+      }
+      .dd-aside li span {
+        color: #b4b0cc;
+      }
+      .dd-aside li::before {
+        margin-top: 0.15rem;
+        color: #a5f3d0;
+        content: "\2713";
+        font-size: 0.8rem;
+      }
+      .dd-aside-foot {
+        margin-top: auto;
+        color: #9a96b8;
+        font-size: 0.74rem;
+        line-height: 1.5;
+      }
+      .dd-aside-foot a {
+        display: inline-flex;
+        min-height: 24px;
+        align-items: center;
+        color: #ffffff;
+      }
+
+      .dd-main {
+        position: relative;
+        overflow-y: auto;
+        padding: 2.1rem 2rem 1.9rem;
+      }
+      .dd-close {
+        position: absolute;
+        top: 0.9rem;
+        right: 0.9rem;
+        display: inline-flex;
+        width: 2.4rem;
+        height: 2.4rem;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: var(--white);
+        color: #4a4860;
+        cursor: pointer;
+        font-size: 1.05rem;
+        line-height: 1;
+      }
+      .dd-close:hover { border-color: #b9b4d8; color: var(--ink); }
+
+      .dd-steps {
+        display: grid;
+        gap: 0.55rem;
+        margin: 0 0 1.5rem;
+        padding: 0;
+        grid-template-columns: repeat(3, 1fr);
+        list-style: none;
+      }
+      .dd-steps li {
+        padding-top: 0.5rem;
+        border-top: 2px solid var(--line);
+        color: #6b687a;
+        font-size: 0.72rem;
+        font-weight: 600;
+      }
+      .dd-steps li[aria-current="step"] { border-top-color: var(--indigo); color: var(--indigo); }
+      .dd-steps li.is-done { border-top-color: var(--indigo); color: var(--ink); }
+
+      .dd-main h3 {
+        margin: 0;
+        font-family: var(--heading);
+        font-size: 1.6rem;
+        line-height: 1.15;
+        letter-spacing: -0.025em;
+      }
+      .dd-lead { margin: 0.5rem 0 1.4rem; color: var(--muted); font-size: 0.92rem; }
+
+      .dd-fields { display: grid; gap: 0.85rem; }
+      .dd-row { display: grid; gap: 0.85rem; grid-template-columns: 1fr 1fr; }
+      .dd-field { display: grid; gap: 0.3rem; min-width: 0; }
+      .dd-field label { color: #3c3a52; font-size: 0.78rem; font-weight: 600; }
+      .dd-field .dd-opt { color: #6b687a; font-weight: 500; }
+      .dd-field input,
+      .dd-field select,
+      .dd-field textarea {
+        width: 100%;
+        min-height: 2.75rem;
+        padding: 0.6rem 0.8rem;
+        border: 1px solid #d7d4e8;
+        border-radius: 0.65rem;
+        background: var(--white);
+        color: var(--ink);
+        font-family: var(--body);
+        font-size: 0.92rem;
+      }
+      .dd-field textarea { min-height: 5.5rem; resize: vertical; }
+      .dd-field input:focus-visible,
+      .dd-field select:focus-visible,
+      .dd-field textarea:focus-visible {
+        border-color: var(--indigo);
+        outline: 2px solid rgba(79, 70, 229, 0.35);
+        outline-offset: 1px;
+      }
+      .dd-field .dd-error { color: #ab1f31; font-size: 0.75rem; }
+      .dd-field.is-invalid input,
+      .dd-field.is-invalid select,
+      .dd-field.is-invalid textarea { border-color: #ab1f31; }
+
+      .dd-consent { display: flex; gap: 0.6rem; align-items: flex-start; }
+      .dd-consent input { width: 1.1rem; min-height: 1.1rem; height: 1.1rem; margin-top: 0.15rem; flex: none; }
+      .dd-consent label { color: var(--muted); font-size: 0.78rem; font-weight: 500; line-height: 1.5; }
+
+      .dd-actions { display: flex; gap: 0.7rem; align-items: center; margin-top: 1.4rem; }
+      .dd-actions .button { min-height: 2.75rem; }
+      .dd-back {
+        border: 0;
+        background: none;
+        color: var(--muted);
+        cursor: pointer;
+        font-family: var(--body);
+        font-size: 0.85rem;
+        font-weight: 600;
+        min-height: 2.75rem;
+        padding: 0 0.4rem;
+      }
+      .dd-back:hover { color: var(--ink); }
+      .dd-note { margin-top: 0.9rem; color: #6b687a; font-size: 0.74rem; line-height: 1.5; }
+
+      .dd-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+      .dd-done { display: grid; gap: 0.7rem; padding: 2rem 0 1rem; text-align: left; }
+      .dd-done .dd-tick {
+        display: inline-flex;
+        width: 2.6rem;
+        height: 2.6rem;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        background: #e3f6ee;
+        color: #0f6a4a;
+        font-size: 1.2rem;
+      }
+      .dd-alert {
+        margin-top: 1rem;
+        padding: 0.7rem 0.85rem;
+        border: 1px solid #f0c7cd;
+        border-radius: 0.6rem;
+        background: #fff6f7;
+        color: #8d1a29;
+        font-size: 0.82rem;
+        line-height: 1.5;
+      }
+      [hidden] { display: none !important; }
+
+      @media (max-width: 860px) {
+        .dd-grid { grid-template-columns: 1fr; }
+        .dd-aside { display: none; }
+        .dd-main { padding: 1.7rem 1.2rem 1.5rem; }
+        .demo-dialog { width: calc(100vw - 1.5rem); max-height: calc(100vh - 1.5rem); }
+      }
+      @media (max-width: 520px) {
+        .dd-row { grid-template-columns: 1fr; }
+        .dd-main h3 { font-size: 1.35rem; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .demo-dialog { animation: none !important; }
+      }
+
     </style>
   </head>
   <body>
@@ -3618,7 +3861,7 @@
           <a href="#arquitectura">Arquitectura</a>
         </nav>
         <div class="nav-cta">
-          <a class="button button-primary" href="#producto">Solicitar un demo <span class="arrow" aria-hidden="true">→</span></a>
+          <button type="button" class="button button-primary" data-demo-open>Solicitar un demo <span class="arrow" aria-hidden="true">→</span></button>
         </div>
       </div>
     </header>
@@ -3631,7 +3874,7 @@
             <h1 id="hero-title">Tu proceso de seguros, gestionado por <span class="gradient-text">agentes de IA.</span></h1>
             <p class="hero-copy">InsurMind convierte conversaciones, datos y acciones en procesos que avanzan. Hoy opera agentes especializados para venta, seguimiento, cartera y cobranza, y supervisión de calidad, todos sobre un mismo core operativo.</p>
             <div class="hero-actions">
-              <a class="button button-primary" href="#producto">Solicitar un demo <span class="arrow" aria-hidden="true">→</span></a>
+              <button type="button" class="button button-primary" data-demo-open>Solicitar un demo <span class="arrow" aria-hidden="true">→</span></button>
               <a class="button button-secondary" href="#agentes">Explorar la plataforma</a>
             </div>
             <p class="hero-note"><span class="check" aria-hidden="true">✓</span>Disponibles hoy: agentes comercial, seguimiento, cartera y cobranza, y supervisión.</p>
@@ -4156,7 +4399,7 @@
               </div>
               <div class="closing-action">
                 <p>Empecemos por un recorrido concreto. Diseñamos el agente, definimos sus herramientas, fijamos sus límites y conectamos las acciones que debe ejecutar.</p>
-                <a class="button button-primary" href="#producto">Solicitar un demo <span class="arrow" aria-hidden="true">→</span></a>
+                <button type="button" class="button button-primary" data-demo-open>Solicitar un demo <span class="arrow" aria-hidden="true">→</span></button>
               </div>
             </div>
           </div>
@@ -4168,6 +4411,156 @@
         </div>
       </section>
     </main>
+
+    <dialog class="demo-dialog" id="demo-dialog" aria-labelledby="dd-title">
+      <div class="dd-grid">
+        <aside class="dd-aside">
+          <span class="dd-aside-mark" aria-hidden="true">IM</span>
+          <h2>Veamos tu proceso en movimiento.</h2>
+          <p>Empecemos por un recorrido concreto. Diseñamos el agente, definimos sus herramientas, fijamos sus límites y conectamos las acciones que debe ejecutar.</p>
+          <ul>
+            <li><span><b>Objetivos visibles</b>Cada agente expone qué intenta lograr y qué acciones está ejecutando.</span></li>
+            <li><span><b>Excepciones explicadas</b>El equipo ve por qué se detuvo un caso y qué recomienda hacer.</span></li>
+            <li><span><b>Control humano inmediato</b>Una persona puede revisar, validar o tomar el control sin perder contexto.</span></li>
+          </ul>
+          <p class="dd-aside-foot">¿Prefieres escribirnos? <a href="mailto:hola@insurmind.ai">hola@insurmind.ai</a></p>
+        </aside>
+
+        <div class="dd-main">
+          <button type="button" class="dd-close" data-dd-close aria-label="Cerrar el formulario">&#10005;</button>
+
+          <ol class="dd-steps" id="dd-steps">
+            <li data-dd-dot="1" aria-current="step">1 &middot; Tú</li>
+            <li data-dd-dot="2">2 &middot; Tu empresa</li>
+            <li data-dd-dot="3">3 &middot; Tu operación</li>
+          </ol>
+
+          <form class="dd-form" id="dd-form" novalidate>
+            <div class="dd-hp" aria-hidden="true">
+              <label for="dd-web">No rellenes este campo</label>
+              <input type="text" id="dd-web" name="_gotcha" tabindex="-1" autocomplete="off">
+            </div>
+
+            <section data-dd-step="1">
+              <h3 id="dd-title">Agenda una demo</h3>
+              <p class="dd-lead">Cuéntanos un poco sobre ti.</p>
+              <div class="dd-fields">
+                <div class="dd-row">
+                  <div class="dd-field">
+                    <label for="dd-nombre">Nombre</label>
+                    <input id="dd-nombre" name="nombre" type="text" autocomplete="given-name" required>
+                    <p class="dd-error" data-dd-error hidden></p>
+                  </div>
+                  <div class="dd-field">
+                    <label for="dd-apellido">Apellido</label>
+                    <input id="dd-apellido" name="apellido" type="text" autocomplete="family-name" required>
+                    <p class="dd-error" data-dd-error hidden></p>
+                  </div>
+                </div>
+                <div class="dd-field">
+                  <label for="dd-correo">Correo empresarial</label>
+                  <input id="dd-correo" name="correo" type="email" autocomplete="email" inputmode="email" required data-dd-work-email>
+                  <p class="dd-error" data-dd-error hidden></p>
+                </div>
+                <div class="dd-field">
+                  <label for="dd-tel">Teléfono o WhatsApp <span class="dd-opt">(opcional)</span></label>
+                  <input id="dd-tel" name="telefono" type="tel" autocomplete="tel" inputmode="tel">
+                  <p class="dd-error" data-dd-error hidden></p>
+                </div>
+              </div>
+            </section>
+
+            <section data-dd-step="2" hidden>
+              <h3>Tu empresa</h3>
+              <p class="dd-lead">Para llegar con el contexto preparado.</p>
+              <div class="dd-fields">
+                <div class="dd-field">
+                  <label for="dd-empresa">Empresa</label>
+                  <input id="dd-empresa" name="empresa" type="text" autocomplete="organization" required>
+                  <p class="dd-error" data-dd-error hidden></p>
+                </div>
+                <div class="dd-row">
+                  <div class="dd-field">
+                    <label for="dd-tipo">Tipo de operación</label>
+                    <select id="dd-tipo" name="tipo" required>
+                      <option value="">Selecciona…</option>
+                      <option>Aseguradora</option>
+                      <option>Broker</option>
+                      <option>Agente</option>
+                      <option>Otro</option>
+                    </select>
+                    <p class="dd-error" data-dd-error hidden></p>
+                  </div>
+                  <div class="dd-field">
+                    <label for="dd-cargo">Tu cargo</label>
+                    <input id="dd-cargo" name="cargo" type="text" autocomplete="organization-title" required>
+                    <p class="dd-error" data-dd-error hidden></p>
+                  </div>
+                </div>
+                <div class="dd-field">
+                  <label for="dd-pais">País</label>
+                  <select id="dd-pais" name="pais" required>
+                    <option value="">Selecciona…</option>
+                    <option selected>México</option>
+                    <option>Colombia</option>
+                    <option>Chile</option>
+                    <option>Perú</option>
+                    <option>Argentina</option>
+                    <option>España</option>
+                    <option>Estados Unidos</option>
+                    <option>Otro</option>
+                  </select>
+                  <p class="dd-error" data-dd-error hidden></p>
+                </div>
+              </div>
+            </section>
+
+            <section data-dd-step="3" hidden>
+              <h3>Tu operación</h3>
+              <p class="dd-lead">Así la demo va sobre tu proceso, no sobre uno genérico.</p>
+              <div class="dd-fields">
+                <div class="dd-field">
+                  <label for="dd-proceso">¿Qué proceso quieres poner en movimiento?</label>
+                  <textarea id="dd-proceso" name="proceso" required placeholder="Por ejemplo: cotización y emisión de auto por WhatsApp, o recuperación de cartera vencida."></textarea>
+                  <p class="dd-error" data-dd-error hidden></p>
+                </div>
+                <div class="dd-row">
+                  <div class="dd-field">
+                    <label for="dd-ramo">Ramo <span class="dd-opt">(opcional)</span></label>
+                    <input id="dd-ramo" name="ramo" type="text" placeholder="Auto, daños, vida…">
+                    <p class="dd-error" data-dd-error hidden></p>
+                  </div>
+                  <div class="dd-field">
+                    <label for="dd-aseguradoras">¿Con cuántas aseguradoras operas? <span class="dd-opt">(opcional)</span></label>
+                    <input id="dd-aseguradoras" name="aseguradoras" type="text" placeholder="Una, varias…">
+                    <p class="dd-error" data-dd-error hidden></p>
+                  </div>
+                </div>
+                <div class="dd-field dd-consent">
+                  <input id="dd-consent" name="consentimiento" type="checkbox" required>
+                  <label for="dd-consent">Acepto que InsurMind use estos datos para contactarme sobre la demo.</label>
+                </div>
+                <p class="dd-error" data-dd-error hidden data-dd-consent-error></p>
+              </div>
+            </section>
+
+            <div class="dd-actions" data-dd-actions>
+              <button type="button" class="dd-back" data-dd-back hidden>&larr; Atrás</button>
+              <button type="submit" class="button button-primary" data-dd-next>Continuar <span class="arrow" aria-hidden="true">&rarr;</span></button>
+            </div>
+            <p class="dd-note" data-dd-note>Solo usamos estos datos para preparar y agendar la demo.</p>
+            <p class="dd-alert" data-dd-alert hidden role="alert"></p>
+          </form>
+
+          <div class="dd-done" data-dd-done hidden>
+            <span class="dd-tick" aria-hidden="true">&#10003;</span>
+            <h3>Gracias. Lo tenemos.</h3>
+            <p class="dd-lead">Te escribimos al correo que nos dejaste para cuadrar la demo sobre el proceso que nos contaste.</p>
+            <div class="dd-actions"><button type="button" class="button button-secondary" data-dd-close>Cerrar</button></div>
+          </div>
+        </div>
+      </div>
+    </dialog>
 
     <script>
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -4208,6 +4601,142 @@
       window.addEventListener("scroll", updateHeader, { passive: true });
 
       document.getElementById("year").textContent = new Date().getFullYear();
+    
+      /* ---- Formulario de demo: tres pasos, sin dependencias ----
+         Para activar el envío real, pega aquí el endpoint del servicio de
+         formularios (Formspree, Basin…). Mientras esté vacío, el formulario
+         cae a un mailto a hola@insurmind.ai para que nunca quede muerto. */
+      const DEMO_ENDPOINT = "";
+
+      (function () {
+        const dlg = document.getElementById("demo-dialog");
+        if (!dlg || typeof dlg.showModal !== "function") return;
+
+        const form = document.getElementById("dd-form");
+        const steps = Array.from(form.querySelectorAll("[data-dd-step]"));
+        const dots = Array.from(document.querySelectorAll("[data-dd-dot]"));
+        const back = form.querySelector("[data-dd-back]");
+        const next = form.querySelector("[data-dd-next]");
+        const alertBox = form.querySelector("[data-dd-alert]");
+        const done = dlg.querySelector("[data-dd-done]");
+        const actions = form.querySelector("[data-dd-actions]");
+        const note = form.querySelector("[data-dd-note]");
+        const FREE = /@(gmail|hotmail|outlook|live|yahoo|icloud|proton(mail)?|aol|msn)\./i;
+        let current = 1;
+        let opener = null;
+
+        function fieldOf(el) { return el.closest(".dd-field"); }
+
+        function setError(el, msg) {
+          const f = fieldOf(el);
+          if (!f) return;
+          const p = f.querySelector("[data-dd-error]") ||
+                    form.querySelector("[data-dd-consent-error]");
+          f.classList.toggle("is-invalid", Boolean(msg));
+          if (!p) return;
+          p.textContent = msg || "";
+          p.hidden = !msg;
+          el.setAttribute("aria-invalid", msg ? "true" : "false");
+          if (msg) { el.setAttribute("aria-describedby", p.id || (p.id = el.id + "-err")); }
+        }
+
+        function validate(section) {
+          let first = null;
+          section.querySelectorAll("input, select, textarea").forEach(function (el) {
+            if (el.name === "_gotcha") return;
+            let msg = "";
+            const val = el.type === "checkbox" ? el.checked : el.value.trim();
+            if (el.required && !val) {
+              msg = el.type === "checkbox" ? "Necesitamos tu permiso para escribirte." : "Falta este dato.";
+            } else if (el.type === "email" && val && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(val)) {
+              msg = "Ese correo no parece válido.";
+            } else if (el.hasAttribute("data-dd-work-email") && val && FREE.test(val)) {
+              msg = "Usa tu correo de empresa, por favor.";
+            }
+            setError(el, msg);
+            if (msg && !first) first = el;
+          });
+          return first;
+        }
+
+        function show(n) {
+          current = n;
+          steps.forEach(function (s) { s.hidden = Number(s.dataset.ddStep) !== n; });
+          dots.forEach(function (d) {
+            const i = Number(d.dataset.ddDot);
+            d.classList.toggle("is-done", i < n);
+            if (i === n) { d.setAttribute("aria-current", "step"); } else { d.removeAttribute("aria-current"); }
+          });
+          back.hidden = n === 1;
+          next.firstChild.nodeValue = n === 3 ? "Enviar " : "Continuar ";
+          const focusable = steps[n - 1].querySelector("input, select, textarea");
+          if (focusable) focusable.focus();
+        }
+
+        function open(trigger) {
+          opener = trigger || null;
+          alertBox.hidden = true;
+          dlg.showModal();
+          show(1);
+        }
+
+        document.querySelectorAll("[data-demo-open]").forEach(function (b) {
+          b.addEventListener("click", function (e) { e.preventDefault(); open(b); });
+        });
+        dlg.querySelectorAll("[data-dd-close]").forEach(function (b) {
+          b.addEventListener("click", function () { dlg.close(); });
+        });
+        dlg.addEventListener("click", function (e) { if (e.target === dlg) dlg.close(); });
+        dlg.addEventListener("close", function () { if (opener) opener.focus(); });
+        back.addEventListener("click", function () { show(current - 1); });
+
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          const bad = validate(steps[current - 1]);
+          if (bad) { bad.focus(); return; }
+          if (current < 3) { show(current + 1); return; }
+
+          if (form.querySelector('[name="_gotcha"]').value) { dlg.close(); return; }
+
+          const data = new FormData(form);
+          data.append("_subject", "Solicitud de demo — InsurMind");
+          next.disabled = true;
+          next.firstChild.nodeValue = "Enviando… ";
+
+          function succeeded() {
+            form.hidden = true;
+            done.hidden = false;
+            done.querySelector("h3").focus && done.querySelector("h3").focus();
+          }
+          function failed() {
+            next.disabled = false;
+            next.firstChild.nodeValue = "Enviar ";
+            alertBox.textContent = "No pudimos enviarlo. Escríbenos a hola@insurmind.ai y lo vemos igual.";
+            alertBox.hidden = false;
+          }
+
+          if (!DEMO_ENDPOINT) {
+            const lines = [];
+            data.forEach(function (v, k) { if (k !== "_gotcha" && k !== "_subject") lines.push(k + ": " + v); });
+            window.location.href = "mailto:hola@insurmind.ai?subject=" +
+              encodeURIComponent("Solicitud de demo — InsurMind") +
+              "&body=" + encodeURIComponent(lines.join("\n"));
+            succeeded();
+            return;
+          }
+
+          fetch(DEMO_ENDPOINT, { method: "POST", body: data, headers: { Accept: "application/json" } })
+            .then(function (r) { if (r.ok) { succeeded(); } else { failed(); } })
+            .catch(failed);
+        });
+
+        form.addEventListener("input", function (e) {
+          if (fieldOf(e.target) && fieldOf(e.target).classList.contains("is-invalid")) setError(e.target, "");
+        });
+      })();
+
     </script>
+  
+
   </body>
 </html>
