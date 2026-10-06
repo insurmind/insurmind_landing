@@ -3830,6 +3830,11 @@
         color: #0f6a4a;
         font-size: 1.2rem;
       }
+      .dd-alert.is-info {
+        border-color: #d7d4e8;
+        background: var(--soft);
+        color: #3c3a52;
+      }
       .dd-alert {
         margin-top: 1rem;
         padding: 0.7rem 0.85rem;
@@ -4725,6 +4730,7 @@
           function failed() {
             next.disabled = false;
             next.firstChild.nodeValue = "Enviar ";
+            alertBox.className = "dd-alert";
             alertBox.textContent = "No pudimos enviarlo. Escríbenos a hola@insurmind.ai y lo vemos igual.";
             alertBox.hidden = false;
           }
@@ -4735,7 +4741,15 @@
             window.location.href = "mailto:hola@insurmind.ai?subject=" +
               encodeURIComponent("Solicitud de demo — Insurmind") +
               "&body=" + encodeURIComponent(lines.join("\n"));
-            succeeded();
+            // El navegador no deja saber si el programa de correo llegó a abrirse.
+            // Así que no afirmamos que se ha enviado: damos instrucciones, dejamos
+            // el formulario vivo y enseñamos la dirección para que nadie se quede
+            // creyendo que ha contactado cuando no lo ha hecho.
+            next.disabled = false;
+            next.firstChild.nodeValue = "Enviar ";
+            alertBox.className = "dd-alert is-info";
+            alertBox.textContent = "Te hemos abierto tu programa de correo con los datos ya escritos; solo tienes que enviarlo. Si no se ha abierto, escríbenos a hola@insurmind.ai y lo vemos igual.";
+            alertBox.hidden = false;
             return;
           }
 
