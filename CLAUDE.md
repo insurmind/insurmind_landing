@@ -71,7 +71,12 @@ La web pública de **Insurmind**, **agentes de IA que se conectan a cualquier as
 - Tecnología: **Anthropic / Claude, sí**. Proveedores de orquestación, no. Versiones de modelo, nunca. «IA» no es una caja en ningún diagrama.
 - Idioma: español de México, registro directo, sin tuteo empalagoso ni jerga de startup.
 
-**Decisión vigente sobre las marcas de «ilustrativo».** La página **no** distingue lo real de lo ilustrativo. Se retiraron a petición expresa de Alberto, tras revisar el detalle: «Escenas ilustrativas…», «Los datos del panel son ilustrativos» (×2) y «Conversación real de producción, sin intervención humana». En consecuencia, las cinco escenas del embudo —incluida la de las 18:52, un chatbot afirmando una cobertura que el cliente no contrató— y las cifras del dashboard se presentan al mismo nivel que las conversaciones reales. **No lo reviertas por tu cuenta ni lo vuelvas a plantear**: está decidido. Si Alberto lo cambia de opinión: `git revert 417fa35 93fdc91`.
+**Decisión vigente sobre las marcas de «ilustrativo». Cambió, y depende de la página.**
+
+- **En `variante-a.html` y en la landing de los cuatro verbos**, las marcas se retiraron a petición expresa de Alberto tras revisar el detalle: «Escenas ilustrativas…», «Los datos del panel son ilustrativos» (×2) y «Conversación real de producción, sin intervención humana». Si hiciera falta recuperarlas ahí: `git revert 417fa35 93fdc91`.
+- **En el rediseño de agentes por proceso, las marcas se quedan.** Alberto lo decidió el 2026-10-06, al elegir entre mantenerlas o defender las cifras del panel. Son cuatro, todas visibles y ninguna solo para lector de pantalla: el chip «Entorno demostrativo» en la barra del mock del héroe y en la del centro de control, «Vista demostrativa del centro de control de InsurMind» sobre la sección de producto, y «Escenas representativas basadas en mensajes y reglas verificadas de InsurMind. Datos anonimizados» sobre las conversaciones.
+
+**Regla que se deriva de esto:** en esa página, cualquier cifra sin verificar tiene que quedar dentro de un bloque que lleve una marca **visible**. Si añades números fuera de los mocks ya marcados, o marcas el bloque o usas `[MÉTRICA POR CONFIRMAR]`. Un `aria-label` no cuenta: el héroe tenía dos y sus siete cifras se leían como reales para cualquiera que viese la página.
 
 ## 5. Estructura de la página — mantener el orden
 
