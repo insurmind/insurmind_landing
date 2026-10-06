@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Flujo de trabajo de insurmind-landing. El agente puede ejecutar el merge, pero cada uno pide confirmación explícita a Alberto. Ver CLAUDE.md §7.",
+  "permissions": {
+    "ask": [
+      "Bash(gh pr merge:*)"
+    ]
+  }
+}
