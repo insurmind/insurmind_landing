@@ -123,7 +123,7 @@ La web pública de **Insurmind**, **agentes de IA que se conectan a cualquier as
 3. Antes de abrir PR: prueba a 1440 y 390 px, con y sin `prefers-reduced-motion`, y comprueba que las animaciones arrancan, pausan y repiten.
 4. `dev` → PR a `staging` → PR a `main`. **Nunca commits directos a `main`.**
 5. `main` está protegida: exige PR, con **cero aprobaciones** (Alberto trabaja solo y no puede auto-aprobar). Push directo, force push y borrado de rama, bloqueados.
-6. **El merge lo ejecuta siempre Alberto**, no el agente.
+6. **El merge lo puede ejecutar el agente, pero pidiendo autorización a Alberto en cada caso.** Decidido el 2026-10-06; antes lo ejecutaba siempre Alberto. La regla está implementada en `.claude/settings.json` como `permissions.ask` sobre `Bash(gh pr merge:*)`, de modo que cada merge abre una confirmación explícita. No la muevas a `allow`: el punto es que nadie mergee a `main` sin que una persona lo vea, porque la protección de rama exige **cero** aprobaciones.
 
 **Verifica midiendo, no mirando.** Inyecta un `<script>` en una copia del HTML y mide con `getBoundingClientRect`, `getComputedStyle` y `getAnimations().finish()` en Chrome headless. Chrome recorta la ventana por debajo de 500 px, así que para anchos móviles reales hace falta un iframe. Regenera el archivo de sonda tras cada edición. Casi todos los bugs de este repo se encontraron así, no en capturas.
 
