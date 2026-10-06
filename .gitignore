@@ -22,3 +22,4 @@ node_modules/
 .impeccable/live/*.png
 # impeccable-ignore-end
 .claude/settings.local.json
+.vercel

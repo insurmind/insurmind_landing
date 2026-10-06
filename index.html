@@ -4621,11 +4621,12 @@
 
       document.getElementById("year").textContent = new Date().getFullYear();
     
-      /* ---- Formulario de demo: tres pasos, sin dependencias ----
-         Para activar el envío real, pega aquí el endpoint del servicio de
-         formularios (Formspree, Basin…). Mientras esté vacío, el formulario
-         cae a un mailto a hola@insurmind.ai para que nunca quede muerto. */
-      const DEMO_ENDPOINT = "";
+      /* ---- Formulario de demo: tres pasos, sin dependencias en el cliente ----
+         Envía a una función del mismo proyecto Vercel, que manda el correo por
+         el SMTP de Google Workspace. Mismo origen, así que no hace falta CORS.
+         Si alguna vez se vacía esta constante, el formulario cae a un mailto
+         que NO afirma haber enviado nada. */
+      const DEMO_ENDPOINT = "/api/demo";
 
       (function () {
         const dlg = document.getElementById("demo-dialog");
@@ -4692,9 +4693,24 @@
           if (focusable) focusable.focus();
         }
 
+        let enviado = false;
+
         function open(trigger) {
           opener = trigger || null;
+          // Reabrir tiene que devolver un formulario utilizable. Sin esto, tras
+          // un envío correcto el modal se queda clavado en la pantalla de
+          // «gracias» y nadie más puede escribir desde ese navegador.
+          if (enviado) { form.reset(); enviado = false; }
+          form.hidden = false;
+          done.hidden = true;
+          next.disabled = false;
           alertBox.hidden = true;
+          alertBox.className = "dd-alert";
+          form.querySelectorAll(".dd-field").forEach(function (f) {
+            f.classList.remove("is-invalid");
+            const p = f.querySelector("[data-dd-error]");
+            if (p) { p.textContent = ""; p.hidden = true; }
+          });
           dlg.showModal();
           show(1);
         }
@@ -4717,12 +4733,14 @@
 
           if (form.querySelector('[name="_gotcha"]').value) { dlg.close(); return; }
 
+          // urlencoded en lugar de multipart: así la función lo lee sin parser
+          // extra. El asunto lo pone el servidor, no el cliente.
           const data = new FormData(form);
-          data.append("_subject", "Solicitud de demo — Insurmind");
           next.disabled = true;
           next.firstChild.nodeValue = "Enviando… ";
 
           function succeeded() {
+            enviado = true;
             form.hidden = true;
             done.hidden = false;
             done.querySelector("h3").focus && done.querySelector("h3").focus();
@@ -4737,7 +4755,7 @@
 
           if (!DEMO_ENDPOINT) {
             const lines = [];
-            data.forEach(function (v, k) { if (k !== "_gotcha" && k !== "_subject") lines.push(k + ": " + v); });
+            data.forEach(function (v, k) { if (k !== "_gotcha") lines.push(k + ": " + v); });
             window.location.href = "mailto:hola@insurmind.ai?subject=" +
               encodeURIComponent("Solicitud de demo — Insurmind") +
               "&body=" + encodeURIComponent(lines.join("\n"));
@@ -4753,7 +4771,11 @@
             return;
           }
 
-          fetch(DEMO_ENDPOINT, { method: "POST", body: data, headers: { Accept: "application/json" } })
+          fetch(DEMO_ENDPOINT, {
+            method: "POST",
+            body: new URLSearchParams(data),
+            headers: { Accept: "application/json" }
+          })
             .then(function (r) { if (r.ok) { succeeded(); } else { failed(); } })
             .catch(failed);
         });
