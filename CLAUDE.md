@@ -13,11 +13,12 @@ La web pública de **Insurmind**, **agentes de IA que se conectan a cualquier as
 - **Comprador**: director comercial o de sistemas de una aseguradora o broker. No el asegurado.
 - **Estrategia de la página**: enseñar el producto funcionando, no describirlo. **Qué hace de prueba cambió el 2026-10-06**: antes eran las conversaciones de WhatsApp animadas, y el resto de la página existía para enmarcarlas; ahora la prueba es el **centro de control**, y las conversaciones lo sostienen. Alberto firmó el cambio al aprobar el orden de secciones del rediseño. Si vuelve a invertirse, se anota aquí con fecha.
 - **Hay formulario de demo** desde el 2026-10-06. Los tres botones «Solicitar un demo» abren un `<dialog>` modal de tres pasos. Esto **revierte** la decisión anterior de no tener CTA de demo. El correo hola@insurmind.ai sigue siendo contacto válido y vive dentro del propio formulario. No añadas más CTAs sin que se pida.
-- **Envío del formulario**: `const DEMO_ENDPOINT` en el `<script>`. Mientras esté vacío, cae a `mailto:`. Al pegar el endpoint del servicio de formularios pasa a `POST` con `fetch`.
+- **Envío del formulario**: `const DEMO_ENDPOINT = "/api/demo"`, una función del propio proyecto Vercel que envía el correo **desde `hola@insurmind.ai` a `hola@insurmind.ai`** por el SMTP de Google Workspace, con el correo del visitante en `Reply-To`. Decisión de Alberto del 2026-10-06, frente a un servicio de formularios alojado y frente a Django. **El remitente tiene que ser la cuenta de Workspace autenticada**: `insurmind.ai` no tiene SPF ni DKIM publicados, así que cualquier otro remitente «desde» el dominio acabaría en spam. Las variables `SMTP_USER` y `SMTP_APP_PASSWORD` las pone Alberto en Vercel; el agente no las ve ni las pide. Si se vacía la constante, el formulario cae a un `mailto:` que **no** afirma haber enviado nada.
 
 ## 2. Estado actual y punto de partida
 
-- **`index.html`** es la página publicada: HTML, CSS y JS mínimo en un archivo. Sin frameworks, sin build, sin dependencias salvo Google Fonts.
+- **`index.html`** es la página publicada: HTML, CSS y JS en un archivo. Sin frameworks y sin build.
+- **La landing dejó de ser un único archivo el 2026-10-06**, por decisión de Alberto, para que el formulario de demo envíe sin abrir el cliente de correo del visitante. Se añadieron **`api/demo.js`** (función de Vercel) y **`package.json`** (una sola dependencia, `nodemailer`, con versión fijada). `index.html` sigue sin dependencias de cliente salvo Google Fonts, y la regla de fondo no cambia: **nada nuevo entra sin que Alberto lo decida**.
 - **`variante-a.html`** guarda la dirección visual anterior («consultora sobria»: Hanken Grotesk en todo, sin banda oscura, sin NEGOCIA). Lleva `noindex, nofollow` y no está enlazada. Es archivo, no alternativa viva. No la mantengas al día.
 - **`assets/`**: `og-image.png` (1200×630) y `insurmind-tres-planos.svg` (el diagrama va inline en el HTML, el SVG suelto es la fuente).
 - Deploy en **Vercel** desde GitHub (`insurmind/insurmind_landing`). El dominio de producción es el ápice: `www.insurmind.ai` redirige con **308** a `insurmind.ai`, y el `canonical`, el `og:url` y el `og:image` apuntan al ápice. Si alguna vez vuelves a tocarlo, el orden importa: primero se quita la redirección del destino, luego se pone la nueva, o Vercel la rechaza por bucle.
@@ -142,7 +143,6 @@ La web pública de **Insurmind**, **agentes de IA que se conectan a cualquier as
 - Sustituir `[MÉTRICA POR CONFIRMAR]` y devolver la sección de prueba cuando Alberto entregue cifras verificadas.
 - Sustituir por copy real de producción, cuando se entregue: la respuesta del bot en RESUELVE (a), la confirmación de lectura de la tarjeta de circulación en EMITE y el resumen de póliza.
 - Posible tercera puerta en el plano 1 del diagrama («Asistentes de IA») y sección para los servicios de consultoría.
-- Botón/flujo de «Ver una demo» cuando Alberto lo decida (hoy solo `mailto:`).
 
 **Ojo con la tarjeta social**: WhatsApp, Facebook y LinkedIn cachean `og-image.png` de forma agresiva. Si cambia, no basta con reemplazar el archivo — hay que renombrarlo o purgar con el depurador de Facebook.
 

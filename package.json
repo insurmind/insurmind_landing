@@ -1,0 +1,8 @@
+{
+  "name": "insurmind-landing",
+  "private": true,
+  "description": "Landing de insurmind.ai. La página sigue siendo un único index.html; la dependencia es solo de la función api/demo.js.",
+  "dependencies": {
+    "nodemailer": "10.0.15"
+  }
+}
