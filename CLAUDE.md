@@ -11,8 +11,9 @@ Este archivo gobierna a cualquier agente de código que trabaje en este reposito
 La web pública de **Insurmind**, **agentes de IA que se conectan a cualquier aseguradora en México para cotizar, resolver, emitir y cobrar**, por canales conversacionales, sobre la tarificación, emisión y pagos que el cliente ya tiene — una o varias aseguradoras a la vez.
 
 - **Comprador**: director comercial o de sistemas de una aseguradora o broker. No el asegurado.
-- **Estrategia de la página**: enseñar el producto funcionando, no describirlo. Las conversaciones de WhatsApp animadas son la prueba; el resto de la página existe para enmarcarlas.
-- **Sin botón de «Ver una demo» por ahora** (decisión de Alberto). El único contacto es el correo hola@insurmind.ai en el menú y en el cierre. No añadas CTAs sin que se pida.
+- **Estrategia de la página**: enseñar el producto funcionando, no describirlo. **Qué hace de prueba cambió el 2026-10-06**: antes eran las conversaciones de WhatsApp animadas, y el resto de la página existía para enmarcarlas; ahora la prueba es el **centro de control**, y las conversaciones lo sostienen. Alberto firmó el cambio al aprobar el orden de secciones del rediseño. Si vuelve a invertirse, se anota aquí con fecha.
+- **Hay formulario de demo** desde el 2026-10-06. Los tres botones «Solicitar un demo» abren un `<dialog>` modal de tres pasos. Esto **revierte** la decisión anterior de no tener CTA de demo. El correo hola@insurmind.ai sigue siendo contacto válido y vive dentro del propio formulario. No añadas más CTAs sin que se pida.
+- **Envío del formulario**: `const DEMO_ENDPOINT` en el `<script>`. Mientras esté vacío, cae a `mailto:`. Al pegar el endpoint del servicio de formularios pasa a `POST` con `fetch`.
 
 ## 2. Estado actual y punto de partida
 
@@ -23,6 +24,8 @@ La web pública de **Insurmind**, **agentes de IA que se conectan a cualquier as
 - Antes de tocar nada: **lee `index.html` completo y `DESIGN.md`**. `DESIGN.md` describe el sistema vigente con más detalle que este archivo y lleva una sección con las decisiones que se apartan de aquí.
 
 ## 3. Sistema visual — no lo cambies sin pedirlo
+
+> **⚠️ Esta sección está desactualizada desde el 2026-10-06.** Describe la página de los cuatro verbos —verde `#0A6B58`, Hanken Grotesk, Inter Tight—, que ahora vive en `variante-b.html`. La página publicada usa la dirección del rediseño: índigo `#4f46e5`, violeta `#7c3aed`, Manrope e Inter, y gradientes. **No «corrijas» la página publicada para que encaje con lo de abajo.** Pendiente de reescribir con Alberto; hasta entonces, lo de abajo gobierna solo las variantes archivadas.
 
 **Cuatro familias, cada una con un trabajo:**
 
@@ -80,22 +83,25 @@ La web pública de **Insurmind**, **agentes de IA que se conectan a cualquier as
 
 ## 5. Estructura de la página — mantener el orden
 
-Ocho secciones. El menú apunta a siete:
+**Orden vigente desde el 2026-10-06.** Nueve bloques; el menú apunta a cuatro.
 
 | # | Sección | id | Menú |
 |---|---|---|---|
-| 1 | Héroe, con la conversación de EMITE | `inicio` | Home |
-| 2 | El problema: cinco momentos en banda oscura | `problema` | El problema |
-| 3 | Los verbos: COTIZA, RESUELVE + **NEGOCIA**, EMITE, COBRA | `producto` | Capacidades |
-| 4 | Confianza: las cinco barreras | `ia` | IA |
-| 5 | Por qué contesta bien: correcciones antes/ahora | `confianza` | — |
-| 6 | El control es tuyo: dashboard | `control` | Dashboard |
-| 7 | Cómo encaja: diagrama de tres planos | `encaja` | Arquitectura |
-| 8 | Cierre: contacto por correo | `contacto` | Contacto |
+| 1 | Héroe: titular canónico + mock del centro de control | `top` | — |
+| — | Franja de proceso: cotiza · responde · recopila · valida · emite | — | — |
+| 2 | Un chatbot responde, un agente hace avanzar el proceso | `agentes` | Agentes |
+| 3 | Producto en operación: el centro de control completo | `producto` | Producto |
+| 4 | El agente en acción: tres conversaciones de WhatsApp | `en-accion` | WhatsApp |
+| 5 | Plataforma: seis agentes, disponibles hoy o extensibles | `plataforma` | — |
+| 6 | IA con control: agente · reglas · sistemas · personas | `control` | — |
+| 7 | Arquitectura: canales → agentes → core → integraciones | `arquitectura` | Arquitectura |
+| 8 | Preguntas frecuentes | `preguntas` | — |
+| 9 | Cierre + formulario de demo | `contacto` | — |
 
-- La sección de prueba con `[MÉTRICA POR CONFIRMAR]` está retirada; vuelve cuando haya cifras verificadas.
-- El problema son cinco **ventanas de aplicación de WhatsApp** —barra, avatar, nombre, estado—, no marcos de teléfono, en un `<ol>` con número, hora y etiqueta, línea temporal con nodos y tarjeta arena con la consecuencia. Carrusel horizontal por debajo de 1180 px.
-- Cambiar el orden requiere justificación escrita en el PR.
+**Justificación del cambio, firmada por Alberto el 2026-10-06** (lo que §5 exige): el orden anterior abría por el problema y dejaba el dashboard en sexto lugar. Este abre por la distinción de categoría —chatbot frente a agente— y pone el centro de control en tercero, antes que las conversaciones. Es un cambio de estrategia, no de maquetación: **mueve la prueba del chat al panel**. Se acepta porque el comprador es un director comercial o de sistemas, y a ese perfil le convence antes una consola de operación que una conversación.
+
+- Las cinco escenas del embudo y los cuatro verbos como secciones **ya no existen** en esta página. Siguen en `variante-a.html` y en `variante-b.html`, que son archivo.
+- Cambiar el orden sigue requiriendo justificación escrita en el PR.
 
 ## 6. Animaciones — requisitos no negociables
 
