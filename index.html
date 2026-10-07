@@ -251,7 +251,7 @@
         position: relative;
         min-height: 100svh;
         display: flex;
-        align-items: flex-start;
+        align-items: center;
         padding: 7rem 0 4.5rem;
         overflow: hidden;
         background:
@@ -271,20 +271,24 @@
         content: "";
       }
 
-      /* Una sola columna desde que el diagrama del núcleo sustituyó al SVG
-         anterior: aquel era casi cuadrado y cabía al lado del titular; este es
-         apaisado (1120x706) y en tres columnas solo se lee a ancho completo.
-         Decisión de Alberto del 7 oct 2026. */
+      /* Dos columnas, con el patrón del héroe de LiteLLM: titular y copy a la
+         izquierda, diagrama a la derecha. Decisión de Alberto del 7 oct 2026,
+         tras ver montada la versión a una columna.
+
+         El reparto no es mitad y mitad. El diagrama necesita unos 620 px para
+         mantener sus tres columnas —medido—, así que se lleva 1,15 contra 0,85
+         del texto: a 1180 de contenedor son 478 para el titular y 646 para el
+         diagrama. Si estrechas la derecha por debajo de 520 px, el diagrama se
+         apila y se pierde la lectura izquierda → núcleo → derecha, que es
+         justo lo que el gráfico cuenta. */
       .hero-grid {
         position: relative;
         z-index: 1;
         display: grid;
-        grid-template-columns: minmax(0, 1fr);
-        gap: clamp(2.6rem, 5vw, 3.6rem);
-        align-items: start;
+        grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+        gap: clamp(2rem, 3.5vw, 3.5rem);
+        align-items: center;
       }
-
-      .hero-content { max-width: 56rem; }
 
       .eyebrow {
         display: inline-flex;
@@ -314,7 +318,10 @@
         max-width: none;
         margin: 0;
         font-family: var(--heading);
-        font-size: clamp(1.95rem, 2.95vw, 2.7rem);
+        /* 103 caracteres en una columna de 478 px. Con los 2,7rem de la versión
+           a ancho completo salían siete líneas. Hay una segunda regla .hero h1
+           más abajo que pisa a esta: si cambias el tamaño, cámbialo en las dos. */
+        font-size: clamp(1.75rem, 2.45vw, 2rem);
         font-weight: 700;
         letter-spacing: -0.03em;
         line-height: 1.05;
@@ -757,9 +764,10 @@
       }
 
       /* Product story: agents, proof and operating architecture */
+      /* Pisa a la regla .hero h1 de más arriba. Mantener los dos valores iguales. */
       .hero h1 {
         max-width: none;
-        font-size: clamp(1.95rem, 2.95vw, 2.7rem);
+        font-size: clamp(1.75rem, 2.45vw, 2rem);
       }
 
       .bubble {
@@ -1940,6 +1948,7 @@
       }
 
       @media (max-width: 980px) {
+        .hero-grid,
         .ai-panel {
           grid-template-columns: 1fr;
         }
@@ -2844,19 +2853,49 @@
       .nx-board:not(.cableado) .nx-entrada::after { bottom: -2.5rem; }
       .nx-board:not(.cableado) .nx-salida::after { top: -2.5rem; }
 
-      @container (min-width: 700px) {
+      /* Tres columnas desde 520 px de caja, no desde 700. Con el héroe a dos
+         columnas el diagrama vive en unos 646 px y nunca llegaría a 700: con
+         el corte anterior se quedaba apilado justo en la pantalla grande, que
+         es donde la lectura izquierda → núcleo → derecha más se nota.
+         Medido a 646: laterales de 162 px y núcleo de 219, y «Recordatorios de
+         pago» sigue entrando en una línea. */
+      @container (min-width: 520px) {
+        .nx { padding: 1.2rem 1.3rem 1.2rem; }
+        .nx-board { grid-template-columns: minmax(0, 1fr) minmax(9.5rem, 1.35fr) minmax(0, 1fr); gap: 1.9rem; padding: 2rem 0 1.2rem; }
+        .nx-lado { grid-template-columns: minmax(0, 1fr); gap: 1.4rem; }
+        .nx-rotulo, .nx-salida .nx-rotulo { top: -1.7rem; bottom: auto; }
+        .nx-cuerpo { gap: 0.5rem; min-height: 5.6rem; padding: 0.7rem 0.35rem; }
+        .nx-nombre { font-size: 13px; }
+        .nx-icono { width: 2rem; height: 2rem; }
+        .nx-icono svg { width: 1.05rem; height: 1.05rem; }
+        .nx-core { margin: 0; padding: 1.2rem 0.8rem 1.1rem; }
+        .nx-marca { margin-bottom: 0.5rem; padding: 0.45rem 0.7rem; font-size: 1rem; }
+        .nx-core-rotulo { margin-bottom: 0.8rem; }
+        .nx-caps { grid-template-columns: minmax(0, 1fr); gap: 0.4rem; }
+        .nx-cap { min-height: 2.4rem; padding: 0.5rem 0.55rem; font-size: 12px; }
+        .nx-board:not(.cableado) .nx-lado::after { top: 50%; bottom: auto; left: auto; width: 1.6rem; height: 1px; }
+        .nx-board:not(.cableado) .nx-entrada::after { right: -2rem; }
+        .nx-board:not(.cableado) .nx-salida::after { left: -2rem; }
+      }
+
+      /* A partir de aquí el diagrama ya no está en la columna del héroe: es el
+         héroe apilado por debajo de 980 px de pantalla, donde ocupa el ancho
+         entero del contenedor. */
+      @container (min-width: 820px) {
         .nx { padding: 1.5rem 1.6rem 1.4rem; }
         .nx-board { grid-template-columns: minmax(0, 1fr) minmax(13rem, 1.4fr) minmax(0, 1fr); gap: 3rem; padding: 2rem 0 1.2rem; }
-        .nx-lado { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
-        .nx-rotulo, .nx-salida .nx-rotulo { top: -1.75rem; bottom: auto; }
+        .nx-lado { gap: 2rem; }
+        .nx-rotulo, .nx-salida .nx-rotulo { top: -1.75rem; }
         .nx-cuerpo { gap: 0.65rem; min-height: 7.2rem; padding: 0.9rem 0.5rem; }
         .nx-nombre { font-size: 15px; }
         .nx-icono { width: 2.3rem; height: 2.3rem; }
         .nx-icono svg { width: 1.2rem; height: 1.2rem; }
-        .nx-core { margin: 0; padding: 1.6rem 1.1rem 1.4rem; }
-        .nx-caps { grid-template-columns: minmax(0, 1fr); gap: 0.55rem; }
-        .nx-cap { min-height: 2.75rem; font-size: 12px; }
-        .nx-board:not(.cableado) .nx-lado::after { top: 50%; bottom: auto; left: auto; width: 2rem; height: 1px; }
+        .nx-core { padding: 1.6rem 1.1rem 1.4rem; }
+        .nx-marca { margin-bottom: 0.6rem; padding: 0.55rem 0.8rem; font-size: 1.1rem; }
+        .nx-core-rotulo { margin-bottom: 0.95rem; }
+        .nx-caps { gap: 0.55rem; }
+        .nx-cap { min-height: 2.75rem; padding: 0.55rem 0.6rem; }
+        .nx-board:not(.cableado) .nx-lado::after { width: 2rem; }
         .nx-board:not(.cableado) .nx-entrada::after { right: -2.5rem; }
         .nx-board:not(.cableado) .nx-salida::after { left: -2.5rem; }
       }
