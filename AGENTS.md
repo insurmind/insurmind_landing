@@ -60,10 +60,15 @@ La web pública de **Insurmind**, **agentes de IA que se conectan a cualquier as
 
 ## 4. Copy — reglas duras
 
-- **El titular está decidido y no se toca**:
+- **El eslogan está decidido y no se toca. Cambió el 2026-10-07**, dictado por Alberto. Vigente:
   > Agentes de IA que se conectan a cualquier aseguradora en México para cotizar, resolver, emitir y cobrar.
-  > Sin intervención, de principio a fin.
-  > Tú ves cada conversación, mides la conversión y tomas el control cuando el negocio lo pida.
+  > Una plataforma que puede trabajar mano a mano con tu equipo para acelerar las ventas.
+
+  La primera línea es el `h1` y **no se ha movido ni una coma** desde el principio. Lo que cambió es la segunda. La anterior decía: «Sin intervención, de principio a fin. Tú ves cada conversación, mides la conversión y tomas el control cuando el negocio lo pida.»
+
+  **El giro es de posicionamiento, no de redacción.** La segunda línea antes vendía autonomía —el agente trabaja y tú miras—; ahora vende colaboración: la plataforma trabaja *con* el equipo. Si alguien propone «recuperar» la frase anterior, esto es deliberado.
+
+  **«Sin intervención» sigue siendo la fórmula obligatoria** del punto siguiente, y sigue viva en la `meta description` y en el `og:description`, que Alberto no pidió cambiar. Si algún día se unifican, que sea una decisión consciente y no un arrastre.
 - «Cotiza, resuelve, emite y cobra, sin intervención» sigue siendo la frase interna de los cuatro verbos y del diagrama; no vuelve al titular. **NEGOCIA no es un verbo canónico**: vive dentro de RESUELVE y no aparece ni en el titular ni en el diagrama.
 - **Nunca «vende y cobra solo»**: en español «solo» se lee como *solamente*. Usa «sin intervención», «sin que nadie lo empuje», «de principio a fin».
 - **Nunca «entrenado»**. Di «afinado», «corregido con conversaciones reales», «aprendido en producción». *(El h2 de la sección `.moat` dice «No lo entrenamos en un laboratorio»: es negación deliberada, no un descuido.)*
