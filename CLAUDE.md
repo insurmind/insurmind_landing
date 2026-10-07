@@ -103,11 +103,21 @@ La web pública de **Insurmind**, **agentes de IA que se conectan a cualquier as
 | 2 | **Dónde actuamos: el ciclo de venta y postventa** | `donde-actuamos` | Dónde actuamos |
 | 3 | Un chatbot responde, un agente hace avanzar el proceso | `agentes` | Agentes |
 | 4 | Producto en operación: el centro de control completo | `producto` | Producto |
-| 5 | Plataforma: seis agentes, disponibles hoy o extensibles | `plataforma` | — |
-| 6 | IA con control: agente · reglas · sistemas · personas | `control` | — |
-| 7 | Arquitectura: canales → agentes → core → integraciones | `arquitectura` | Arquitectura |
-| 8 | Preguntas frecuentes | `preguntas` | — |
-| 9 | Cierre + formulario de demo | `contacto` | — |
+| 5 | **Tomar la conversación: el equipo entra y la devuelve** | `tomar` | — |
+| 6 | Plataforma: seis agentes, disponibles hoy o extensibles | `plataforma` | — |
+| 7 | IA con control: agente · reglas · sistemas · personas | `control` | — |
+| 8 | Arquitectura: canales → agentes → core → integraciones | `arquitectura` | Arquitectura |
+| 9 | Preguntas frecuentes | `preguntas` | — |
+| 10 | Cierre + formulario de demo | `contacto` | — |
+
+**Bloque 5 añadido el 2026-10-07, a petición de Alberto** (lo que §5 exige por escrito): «es importante que una sección de la landing muestre cómo es tomar una conversación, con un ejemplo real animado». Va **justo después del centro de control** porque la toma se hace desde ahí: primero la consola, y acto seguido qué pasa cuando alguien la usa. Es el bloque que convierte en prueba lo que la sección «IA con control» ya afirmaba dos veces sin enseñarlo.
+
+- **La conversación es copy de producción entregado por Alberto y se usa literal**, con su ortografía: «Hable con uds por telefono», «tu poliza», «Muchas gracias de verdad fue de mucha ayuda!». §4 lo manda: no se corrige. Lo único que no es suyo son los dos avisos de sistema, y usan sus verbos —tomar y liberar—.
+- **Quién dispara la toma no se dice.** Alberto eligió no comprometerse: la escena enseña la toma y la devolución, no si entró un supervisor o escaló una regla.
+- **La atribución del agradecimiento la confirmó Alberto**: «Muchas gracias de verdad fue de mucha ayuda!» lo dice Juan Carlos, no Adela, pese a que en el guion venía etiquetado como «Humano».
+- **En el teléfono del cliente, la persona y el agente son la misma cuenta.** Por eso la burbuja de Adela es idéntica a la del agente —mismo lado, mismo blanco— y lo que las distingue es el nombre dentro de la burbuja, que es lo que hace WhatsApp Business. Si alguien le pone otro color de burbuja, está contando una mentira sobre lo que ve el cliente.
+- **El teléfono de estas maquetas es el del cliente**: sus mensajes van a la derecha en verde `#d9fdd3` y los del negocio a la izquierda en blanco. Es fácil equivocarse al revés.
+- El motor de animación es el del ciclo: `--at` en segundos y `ciclo-sube`. Ciclo de 13,5 s. Sin JS, el hilo se ve entero y los indicadores de «escribiendo» no aparecen.
 
 **Justificación del cambio, firmada por Alberto el 2026-10-06** (lo que §5 exige): el orden anterior abría por el problema y dejaba el dashboard en sexto lugar. Este abre por la distinción de categoría —chatbot frente a agente— y pone el centro de control en tercero, antes que las conversaciones. Es un cambio de estrategia, no de maquetación: **mueve la prueba del chat al panel**. Se acepta porque el comprador es un director comercial o de sistemas, y a ese perfil le convence antes una consola de operación que una conversación.
 
