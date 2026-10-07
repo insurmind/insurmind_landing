@@ -251,8 +251,8 @@
         position: relative;
         min-height: 100svh;
         display: flex;
-        align-items: center;
-        padding: 8.5rem 0 5.5rem;
+        align-items: flex-start;
+        padding: 7rem 0 4.5rem;
         overflow: hidden;
         background:
           radial-gradient(circle at 84% 18%, rgba(124, 58, 237, 0.1), transparent 25rem),
@@ -271,14 +271,20 @@
         content: "";
       }
 
+      /* Una sola columna desde que el diagrama del núcleo sustituyó al SVG
+         anterior: aquel era casi cuadrado y cabía al lado del titular; este es
+         apaisado (1120x706) y en tres columnas solo se lee a ancho completo.
+         Decisión de Alberto del 7 oct 2026. */
       .hero-grid {
         position: relative;
         z-index: 1;
         display: grid;
-        grid-template-columns: minmax(0, 0.92fr) minmax(28rem, 1.08fr);
-        gap: clamp(3rem, 7vw, 7rem);
-        align-items: center;
+        grid-template-columns: minmax(0, 1fr);
+        gap: clamp(2.6rem, 5vw, 3.6rem);
+        align-items: start;
       }
+
+      .hero-content { max-width: 56rem; }
 
       .eyebrow {
         display: inline-flex;
@@ -360,30 +366,6 @@
       .product-visual {
         position: relative;
         min-width: 0;
-      }
-
-      .product-visual::before,
-      .product-visual::after {
-        position: absolute;
-        border-radius: 50%;
-        content: "";
-        filter: blur(4px);
-      }
-
-      .product-visual::before {
-        top: -2.5rem;
-        right: -2rem;
-        width: 8rem;
-        height: 8rem;
-        background: rgba(124, 58, 237, 0.12);
-      }
-
-      .product-visual::after {
-        bottom: -2rem;
-        left: -2.5rem;
-        width: 6rem;
-        height: 6rem;
-        background: rgba(79, 70, 229, 0.1);
       }
 
       .live {
@@ -1958,7 +1940,6 @@
       }
 
       @media (max-width: 980px) {
-        .hero-grid,
         .ai-panel {
           grid-template-columns: 1fr;
         }
@@ -2019,7 +2000,7 @@
         }
 
         .product-visual {
-          width: min(100%, 42rem);
+          width: 100%;
           margin-inline: auto;
         }
 
@@ -2753,30 +2734,148 @@
       .cm-puntos button[aria-current="true"]::before { background: var(--indigo); }
 
     
-      /* --- Diagrama de encaje del héroe ---
-         Patrón tomado del diagrama de LiteLLM: quién opera a la izquierda, el
-         producto en medio, con qué se conecta a la derecha. Cajas neutras, sin
-         un solo logo: §4 lo exige para aseguradoras y aquí se aplica a todos.
-         Decisión de Alberto del 7 oct 2026. */
-      .encaje { max-width: 34rem; margin: 0 auto; }
-      .encaje svg { display: block; width: 100%; height: auto; }
-      .enc-rotulo text { font-family: var(--body); font-size: 15px; font-weight: 700; letter-spacing: 1.6px; fill: #8b87a8; text-anchor: middle; }
-      .enc-caja rect { fill: var(--white); stroke: #dedaf6; stroke-width: 1.5; }
-      .enc-titulo text { font-family: var(--heading); font-size: 21px; font-weight: 700; fill: var(--ink); text-anchor: middle; letter-spacing: -0.3px; }
-      .enc-marca-txt { font-family: var(--heading); font-size: 17px; font-weight: 800; fill: var(--white); text-anchor: middle; letter-spacing: 1.2px; }
-      .enc-fila rect { fill: var(--white); stroke: #e6e2f8; stroke-width: 1.5; }
-      .enc-fila-txt text { font-family: var(--body); font-size: 18px; font-weight: 600; fill: #3c3a52; text-anchor: middle; }
-      .encaje-pie { max-width: 34rem; margin: 1rem auto 0; color: var(--muted); font-size: 0.85rem; line-height: 1.5; text-align: center; }
-      /* Por debajo de 900 px el diagrama no cabe sin encoger su texto por
-         debajo del suelo de 11 px. En vez de deformarlo, se desplaza en
-         horizontal con un ancho mínimo: el mismo patrón que ya usa el
-         diagrama de arquitectura de esta página. */
-      @media (max-width: 900px) {
-        .encaje { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        .encaje svg { min-width: 30rem; }
-        .encaje-pista { display: block; }
+      /* --- Diagrama del héroe: el núcleo conectado ---
+         Sustituye al SVG estático de encaje (PR #28) por la versión que entregó
+         Alberto el 7 oct 2026 (insurmind-nucleo-conectado.html). La lectura no
+         cambia: quién opera a la izquierda, el núcleo en medio, lo que ya tienes
+         a la derecha, y cajas neutras sin un solo logo, que es lo que exige §4.
+         Lo que cambia es el medio: HTML con iconos en vez de un SVG dibujado a
+         mano, y los cables en un SVG que se recalcula cuando cambia el ancho.
+
+         Dos decisiones que conviene no deshacer:
+         1. Los cortes van con @container, no con @media. El diagrama vive dentro
+            de una caja cuyo ancho no es el del viewport; medido con @media, los
+            laterales se quedaban en 27 px dentro de una columna de 540.
+         2. Las reglas base describen el estado estrecho y van ANTES de los
+            @container. @container no suma especificidad, igual que @media: una
+            regla base escrita después lo pisa. Ya ha pasado dos veces aquí. */
+      .nucleo { container-type: inline-size; max-width: 70rem; margin: 0 auto; }
+
+      .nx {
+        position: relative;
+        isolation: isolate;
+        padding: 1.1rem 1rem 1.2rem;
+        border: 1px solid rgba(205, 201, 229, 0.75);
+        border-radius: 1.65rem;
+        background:
+          radial-gradient(ellipse at 50% 38%, rgba(221, 216, 255, 0.4), transparent 58%),
+          radial-gradient(ellipse at 96% 88%, rgba(29, 154, 108, 0.1), transparent 46%),
+          rgba(255, 255, 255, 0.92);
+        box-shadow: 0 18px 50px rgba(44, 38, 94, 0.08);
       }
-      .encaje-pista { display: none; margin-top: 0.6rem; color: var(--muted); font-size: 0.8rem; text-align: center; }
+
+      .nx-top { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+      .nx-eyebrow { margin: 0; color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: 0.14em; line-height: 1.4; text-transform: uppercase; }
+      .nx-pausa {
+        flex-shrink: 0; min-height: 36px; padding: 0.5rem 0.8rem;
+        border: 1px solid var(--line); border-radius: 999px;
+        background: rgba(255, 255, 255, 0.8); color: var(--muted);
+        font-family: var(--body); font-size: 12px; font-weight: 600; white-space: nowrap; cursor: pointer;
+        transition: color 0.2s, border-color 0.2s;
+      }
+      .nx-pausa:hover { border-color: var(--lavender); color: var(--ink); }
+
+      .nx-board { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); gap: 3.4rem; align-items: center; padding: 1.8rem 0 2rem; }
+      .nx-wires { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+      .nx-wire { fill: none; stroke: #cdc6f0; stroke-width: 1.6; }
+      .nx-wire.sal { stroke: #b4ddca; }
+      .nx-puerto { fill: var(--white); stroke: #b3a3ef; stroke-width: 1.7; }
+      .nx-puerto.sal { stroke: #86bfa6; }
+      .nx-punto { fill: var(--indigo); }
+      .nx-punto.sal { fill: var(--success); }
+
+      .nx-lado { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.55rem; }
+      .nx-rotulo { position: absolute; top: -1.6rem; right: 0; left: 0; color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-align: center; white-space: nowrap; }
+      .nx-salida .nx-rotulo { top: auto; bottom: -1.6rem; }
+
+      .nx-nodo {
+        border: 1px solid #c9bbf6; border-radius: 1.15rem; padding: 4px;
+        background: linear-gradient(145deg, #faf8ff, #e2daf9);
+        box-shadow: 0 6px 14px rgba(53, 34, 104, 0.05), inset 0 1px 0 #fff;
+        transition: border-color 0.5s, box-shadow 0.5s, transform 0.5s;
+      }
+      .nx-cuerpo {
+        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem;
+        min-height: 6.5rem; padding: 0.75rem 0.3rem;
+        border: 1px solid var(--line); border-radius: 0.85rem; background: var(--white); box-shadow: inset 0 1px 0 #fff;
+      }
+      .nx-nombre { font-family: var(--heading); font-size: 12px; font-weight: 700; line-height: 1.25; letter-spacing: -0.01em; text-align: center; }
+      .nx-icono { display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 0.7rem; background: linear-gradient(150deg, var(--violet), var(--indigo)); color: var(--white); }
+      .nx-icono svg { width: 1.05rem; height: 1.05rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+      .nx-salida .nx-nodo { border-color: #b4d7c6; background: linear-gradient(145deg, #f4fdf8, #dcece3); }
+      .nx-salida .nx-icono { background: linear-gradient(150deg, #c8e9d9, #a6d4bf); color: #14664a; }
+      .nx-nodo.activo { border-color: var(--indigo); box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.08), 0 8px 22px rgba(79, 70, 229, 0.14); transform: translateY(-2px); }
+      .nx-salida .nx-nodo.activo { border-color: var(--success); box-shadow: 0 0 0 4px rgba(29, 154, 108, 0.09), 0 8px 22px rgba(29, 154, 108, 0.13); }
+
+      .nx-core {
+        position: relative; z-index: 1; margin: 0 0.5rem; padding: 1.25rem 0.9rem 1.1rem;
+        border: 1.5px solid #b7a6f1; border-radius: 1.5rem;
+        background: linear-gradient(150deg, rgba(255, 255, 255, 0.96), rgba(247, 245, 252, 0.92));
+        box-shadow: 0 14px 32px rgba(80, 54, 124, 0.08), inset 0 1px 0 #fff;
+      }
+      .nx-marca {
+        display: flex; align-items: center; gap: 0.5rem; width: max-content; max-width: 100%; margin: 0 auto 0.6rem;
+        padding: 0.55rem 0.8rem; border: 1px solid var(--line); border-radius: 999px; background: var(--white);
+        box-shadow: 0 5px 14px rgba(50, 36, 77, 0.1);
+        font-family: var(--heading); font-size: 1.1rem; font-weight: 800; letter-spacing: -0.03em;
+      }
+      .nx-monograma { display: grid; place-items: center; flex-shrink: 0; width: 1.5rem; height: 1.5rem; border-radius: 0.5rem; background: linear-gradient(140deg, var(--indigo), var(--violet)); color: var(--white); font-size: 11px; font-weight: 700; letter-spacing: -0.02em; }
+      .nx-core-rotulo { margin: 0 0 0.95rem; color: var(--muted); font-size: 11px; font-weight: 600; letter-spacing: 0.17em; text-align: center; text-transform: uppercase; }
+      .nx-caps { display: grid; grid-template-columns: 1fr 1fr; gap: 0.45rem; }
+      .nx-cap {
+        display: flex; align-items: center; gap: 0.45rem; min-height: 2.6rem; padding: 0.55rem 0.6rem;
+        border: 1px solid #e2daf9; border-radius: 0.95rem; background: var(--white); color: #5f5a73;
+        box-shadow: 0 2px 4px rgba(68, 52, 94, 0.04), inset 0 0 0 3px #f7f5fd;
+        font-size: 11px; font-weight: 600; line-height: 1.3;
+        transition: background 0.5s, border-color 0.5s, color 0.5s;
+      }
+      .nx-cap svg { flex-shrink: 0; width: 0.9rem; height: 0.9rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; opacity: 0.65; }
+      .nx-cap.activo { border-color: #b7a6f1; background: var(--soft); color: var(--indigo-dark); }
+      .nx-cap.activo svg { opacity: 1; }
+
+      .nx-strip { display: flex; justify-content: center; align-items: center; gap: 0.5rem; margin-top: 0.7rem; color: var(--muted); font-size: 12px; }
+      .nx-senal { width: 6px; height: 6px; border-radius: 50%; background: var(--indigo); box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1); }
+      .nx-pie { max-width: 44rem; margin: 1rem auto 0; color: var(--muted); font-size: 0.85rem; line-height: 1.5; text-align: center; }
+
+      /* Los cables los dibuja el script a partir de la posición real de cada
+         caja, así que sin JS no habría ninguno. Mientras no esté cableado, un
+         trazo sobrio mantiene legible la relación entre los tres bloques. */
+      .nx-board:not(.cableado) .nx-lado::after { position: absolute; left: 50%; width: 1px; height: 1.7rem; background: var(--lavender); content: ""; }
+      .nx-board:not(.cableado) .nx-entrada::after { bottom: -2.5rem; }
+      .nx-board:not(.cableado) .nx-salida::after { top: -2.5rem; }
+
+      @container (min-width: 700px) {
+        .nx { padding: 1.5rem 1.6rem 1.4rem; }
+        .nx-board { grid-template-columns: minmax(0, 1fr) minmax(13rem, 1.4fr) minmax(0, 1fr); gap: 3rem; padding: 2rem 0 1.2rem; }
+        .nx-lado { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+        .nx-rotulo, .nx-salida .nx-rotulo { top: -1.75rem; bottom: auto; }
+        .nx-cuerpo { gap: 0.65rem; min-height: 7.2rem; padding: 0.9rem 0.5rem; }
+        .nx-nombre { font-size: 15px; }
+        .nx-icono { width: 2.3rem; height: 2.3rem; }
+        .nx-icono svg { width: 1.2rem; height: 1.2rem; }
+        .nx-core { margin: 0; padding: 1.6rem 1.1rem 1.4rem; }
+        .nx-caps { grid-template-columns: minmax(0, 1fr); gap: 0.55rem; }
+        .nx-cap { min-height: 2.75rem; font-size: 12px; }
+        .nx-board:not(.cableado) .nx-lado::after { top: 50%; bottom: auto; left: auto; width: 2rem; height: 1px; }
+        .nx-board:not(.cableado) .nx-entrada::after { right: -2.5rem; }
+        .nx-board:not(.cableado) .nx-salida::after { left: -2.5rem; }
+      }
+
+      @container (min-width: 1000px) {
+        .nx { padding: 1.9rem 2.6rem 1.6rem; }
+        .nx-board { gap: 4.6rem; }
+        .nx-cuerpo { min-height: 8.2rem; }
+        .nx-nombre { font-size: 17px; }
+        .nx-marca { font-size: 1.35rem; }
+        .nx-cap { min-height: 3rem; font-size: 13px; }
+      }
+
+      /* §6: sin movimiento, el diagrama se ve completo y quieto, y el control
+         desaparece porque ya no controla nada. */
+      @media (prefers-reduced-motion: reduce) {
+        .nx-nodo, .nx-cap { transition: none; }
+        .nx-pausa { display: none; }
+      }
 
     </style>
   </head>
@@ -2816,77 +2915,73 @@
           </div>
 
           <div class="product-visual reveal">
-            <div class="encaje">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 540" role="img" aria-labelledby="encaje-t encaje-d">
-  <title id="encaje-t">Dónde encaja Insurmind en tu organización</title>
-  <desc id="encaje-d">Tres columnas. A la izquierda, quién opera: tus clientes, los agentes de IA y tu equipo. En el centro, Insurmind: contexto, reglas, estados, evidencia, descuentos y recordatorios de pago. A la derecha, lo que ya tienes: aseguradoras, brokers e insurtech.</desc>
-  <defs>
-    <linearGradient id="enc-marca" x1="0" y1="0" x2="1" y2="1">
-      <stop stop-color="#4f46e5"/><stop offset="1" stop-color="#7c3aed"/>
-    </linearGradient>
-  </defs>
-
-  <g class="enc-rotulo">
-    <text x="84" y="26">QUIÉN OPERA</text>
-    <text x="536" y="26" text-anchor="end">LO QUE YA TIENES</text>
-  </g>
-
-  <g fill="none" stroke="#cdc6f0" stroke-width="2">
-    <path d="M160 124 H182 Q192 124 192 134 V270"/>
-    <path d="M160 270 H192"/>
-    <path d="M160 416 H182 Q192 416 192 406 V270"/>
-    <path d="M192 270 H228"/>
-    <path d="M392 270 H428 Q438 270 438 260 V134 Q438 124 448 124 H470"/>
-    <path d="M438 270 H470"/>
-    <path d="M438 270 V406 Q438 416 448 416 H470"/>
-  </g>
-  <g fill="#cdc6f0"><circle cx="192" cy="270" r="5"/><circle cx="438" cy="270" r="5"/></g>
-
-  <g class="enc-caja">
-    <rect x="8" y="90" width="152" height="68" rx="16"/>
-    <rect x="8" y="236" width="152" height="68" rx="16"/>
-    <rect x="8" y="382" width="152" height="68" rx="16"/>
-  </g>
-  <g class="enc-titulo">
-    <text x="84" y="131">Tus clientes</text>
-    <text x="84" y="277">Agentes de IA</text>
-    <text x="84" y="423">Tu equipo</text>
-  </g>
-
-  <rect x="228" y="46" width="164" height="448" rx="22" fill="#fbfaff" stroke="#dedaf6"/>
-  <rect x="244" y="64" width="132" height="34" rx="12" fill="url(#enc-marca)"/>
-  <text x="310" y="87" class="enc-marca-txt">INSURMIND</text>
-  <g class="enc-fila">
-    <rect x="244" y="116" width="132" height="46" rx="13"/>
-    <rect x="244" y="172" width="132" height="46" rx="13"/>
-    <rect x="244" y="228" width="132" height="46" rx="13"/>
-    <rect x="244" y="284" width="132" height="46" rx="13"/>
-    <rect x="244" y="340" width="132" height="46" rx="13"/>
-    <rect x="244" y="396" width="132" height="62" rx="13"/>
-  </g>
-  <g class="enc-fila-txt">
-    <text x="310" y="145">Contexto</text>
-    <text x="310" y="201">Reglas</text>
-    <text x="310" y="257">Estados</text>
-    <text x="310" y="313">Evidencia</text>
-    <text x="310" y="369">Descuentos</text>
-    <text x="310" y="420">Recordatorios</text><text x="310" y="443">de pago</text>
-  </g>
-
-  <g class="enc-caja">
-    <rect x="460" y="90" width="152" height="68" rx="16"/>
-    <rect x="460" y="236" width="152" height="68" rx="16"/>
-    <rect x="460" y="382" width="152" height="68" rx="16"/>
-  </g>
-  <g class="enc-titulo">
-    <text x="536" y="131">Aseguradoras</text>
-    <text x="536" y="277">Brokers</text>
-    <text x="536" y="423">Insurtech</text>
-  </g>
-</svg>
-            </div>
-            <p class="encaje-pista">Desliza el diagrama para verlo completo &rarr;</p>
-            <p class="encaje-pie">Los agentes y tu equipo trabajan sobre un mismo núcleo, y ese núcleo habla con los sistemas que ya usas.</p>
+              <div class="nucleo">
+                <div class="nx" id="nucleo-conectado">
+                  <div class="nx-top">
+                    <p class="nx-eyebrow">Un núcleo. Toda tu operación.</p>
+                    <button type="button" class="nx-pausa" data-nx-pausa aria-pressed="false">Pausar animación</button>
+                        </div>
+                  <div class="nx-board" role="group" aria-label="Tus clientes, los agentes de IA y tu equipo se conectan a través del núcleo de Insurmind con las aseguradoras, los brokers y las insurtech que ya usas.">
+                    <svg class="nx-wires" aria-hidden="true"></svg>
+                    <div class="nx-lado nx-entrada">
+                      <span class="nx-rotulo">QUIÉN OPERA</span>
+                      <div class="nx-nodo" data-nodo="ent-0">
+                        <div class="nx-cuerpo">
+                          <span class="nx-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg></span>
+                          <span class="nx-nombre">Tus clientes</span>
+                        </div>
+                      </div>
+                      <div class="nx-nodo" data-nodo="ent-1">
+                        <div class="nx-cuerpo">
+                          <span class="nx-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></span>
+                          <span class="nx-nombre">Agentes de IA</span>
+                        </div>
+                      </div>
+                      <div class="nx-nodo" data-nodo="ent-2">
+                        <div class="nx-cuerpo">
+                          <span class="nx-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+                          <span class="nx-nombre">Tu equipo</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="nx-core">
+                      <p class="nx-marca"><span class="nx-monograma" aria-hidden="true">IM</span>Insurmind</p>
+                      <p class="nx-core-rotulo">Núcleo compartido</p>
+                      <div class="nx-caps">
+                        <div class="nx-cap" data-nx-cap><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/></svg><span>Contexto</span></div>
+                        <div class="nx-cap" data-nx-cap><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/></svg><span>Reglas</span></div>
+                        <div class="nx-cap" data-nx-cap><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="6" x2="6" y1="3" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg><span>Estados</span></div>
+                        <div class="nx-cap" data-nx-cap><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="m9 15 2 2 4-4"/></svg><span>Evidencia</span></div>
+                        <div class="nx-cap" data-nx-cap><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m15 9-6 6"/><path d="M9 9h.01"/><path d="M15 15h.01"/></svg><span>Descuentos</span></div>
+                        <div class="nx-cap" data-nx-cap><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M22 8c0-2.3-.8-4.3-2-6"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/><path d="M4 2C2.8 3.7 2 5.7 2 8"/></svg><span>Recordatorios de pago</span></div>
+                      </div>
+                    </div>
+                    <div class="nx-lado nx-salida">
+                      <span class="nx-rotulo">LO QUE YA TIENES</span>
+                      <div class="nx-nodo" data-nodo="sal-0">
+                        <div class="nx-cuerpo">
+                          <span class="nx-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span>
+                          <span class="nx-nombre">Aseguradoras</span>
+                        </div>
+                      </div>
+                      <div class="nx-nodo" data-nodo="sal-1">
+                        <div class="nx-cuerpo">
+                          <span class="nx-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg></span>
+                          <span class="nx-nombre">Brokers</span>
+                        </div>
+                      </div>
+                      <div class="nx-nodo" data-nodo="sal-2">
+                        <div class="nx-cuerpo">
+                          <span class="nx-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></svg></span>
+                          <span class="nx-nombre">Insurtech</span>
+                        </div>
+                      </div>
+                    </div>
+                        </div>
+                  <p class="nx-strip"><span class="nx-senal" aria-hidden="true"></span>Contexto compartido · Operación conectada</p>
+                      </div>
+                <p class="nx-pie">Los agentes y tu equipo trabajan sobre un mismo núcleo, y ese núcleo habla con los sistemas que ya usas.</p>
+              </div>
           </div>
         </div>
       </section>
@@ -3939,5 +4034,231 @@
     </script>
   
 
-  </body>
+      <script>
+      /* Diagrama del héroe: cables y pulsos del núcleo conectado.
+         Reparto de tareas, que importa para no romper §6:
+         - dibujar() es geometría, no animación. Corre siempre, también con
+           prefers-reduced-motion, porque si no corre no hay cables.
+         - pintar() mueve los puntos y enciende las cajas. Solo corre cuando el
+           diagrama está en pantalla y el movimiento está permitido.
+         - En reposo —pausado, fuera de pantalla o sin movimiento— los puntos se
+           esconden y todo queda quieto y completo. */
+      (function () {
+        var raiz = document.getElementById("nucleo-conectado");
+        if (!raiz) return;
+
+        var tablero = raiz.querySelector(".nx-board");
+        var svg = raiz.querySelector(".nx-wires");
+        var core = raiz.querySelector(".nx-core");
+        var boton = raiz.querySelector("[data-nx-pausa]");
+        var caps = Array.prototype.slice.call(raiz.querySelectorAll("[data-nx-cap]"));
+        var menos = window.matchMedia("(prefers-reduced-motion: reduce)");
+        var NS = "http://www.w3.org/2000/svg";
+
+        var CICLO = 7200; // un viaje completo de ida y vuelta, en ms
+        var TRAMO = 0.18; // fracción del ciclo que tarda un punto en recorrer su cable
+        var rutas = [];
+        var reloj = 0;
+        var anterior = 0;
+        var pausado = menos.matches;
+        var visible = false;
+        var raf = null;
+
+        function crear(nombre, atributos) {
+          var nodo = document.createElementNS(NS, nombre);
+          for (var clave in atributos) nodo.setAttribute(clave, atributos[clave]);
+          svg.appendChild(nodo);
+          return nodo;
+        }
+
+        /* Cada ruta lleva dos tramos: la ida y la respuesta. Los de entrada
+           salen primero; los de salida arrancan cuando la ida ya llegó. El
+           desfase por fila evita que los tres puntos viajen pegados. */
+        function tramos(salida, indice) {
+          var d = indice * 0.05;
+          return salida
+            ? [{ t0: 0.24 + d, vuelta: false }, { t0: 0.46 + d, vuelta: true }]
+            : [{ t0: 0.0 + d, vuelta: false }, { t0: 0.66 + d, vuelta: true }];
+        }
+
+        function dibujar() {
+          var b = tablero.getBoundingClientRect();
+          var c = core.getBoundingClientRect();
+          if (!b.width) return;
+          svg.setAttribute("viewBox", "0 0 " + b.width + " " + b.height);
+          svg.replaceChildren();
+          rutas = [];
+
+          var apilado = window.getComputedStyle(tablero).gridTemplateColumns.split(" ").length === 1;
+
+          ["ent", "sal"].forEach(function (lado) {
+            var salida = lado === "sal";
+            for (var i = 0; i < 3; i++) {
+              var nodo = raiz.querySelector('[data-nodo="' + lado + "-" + i + '"]');
+              if (!nodo) continue;
+              var r = nodo.getBoundingClientRect();
+              var x1, y1, x2, y2, d, medio;
+
+              if (apilado) {
+                x1 = (salida ? c.left + c.width / 2 : r.left + r.width / 2) - b.left;
+                y1 = (salida ? c.bottom : r.bottom) - b.top;
+                x2 = (salida ? r.left + r.width / 2 : c.left + c.width / 2) - b.left;
+                y2 = (salida ? r.top : c.top) - b.top;
+                medio = (y1 + y2) / 2;
+                d = "M" + x1 + "," + y1 + " C" + x1 + "," + medio + " " + x2 + "," + medio + " " + x2 + "," + y2;
+              } else {
+                x1 = (salida ? c.right : r.right) - b.left;
+                y1 = (salida ? c.top + c.height / 2 : r.top + r.height / 2) - b.top;
+                x2 = (salida ? r.left : c.left) - b.left;
+                y2 = (salida ? r.top + r.height / 2 : c.top + c.height / 2) - b.top;
+                medio = (x1 + x2) / 2;
+                d = "M" + x1 + "," + y1 + " C" + medio + "," + y1 + " " + medio + "," + y2 + " " + x2 + "," + y2;
+              }
+
+              var cable = crear("path", { d: d, class: "nx-wire" + (salida ? " sal" : "") });
+              crear("circle", {
+                cx: salida ? x2 : x1,
+                cy: salida ? y2 : y1,
+                r: 3.6,
+                class: "nx-puerto" + (salida ? " sal" : "")
+              });
+              var punto = crear("circle", { r: 3.2, class: "nx-punto" + (salida ? " sal" : "") });
+              punto.style.opacity = "0";
+              rutas.push({
+                cable: cable,
+                punto: punto,
+                nodo: nodo,
+                salida: salida,
+                largo: cable.getTotalLength(),
+                tramos: tramos(salida, i)
+              });
+            }
+          });
+
+          tablero.classList.add("cableado");
+          // Si no toca animar —reducción de movimiento, pausa o fuera de
+          // pantalla— el diagrama queda en reposo, no congelado en el
+          // fotograma cero con un punto suelto a mitad de cable.
+          if (pausado || !visible) reposo();
+          else pintar();
+        }
+
+        function reposo() {
+          rutas.forEach(function (ruta) {
+            ruta.punto.style.opacity = "0";
+            ruta.nodo.classList.remove("activo");
+          });
+          caps.forEach(function (cap) {
+            cap.classList.remove("activo");
+          });
+        }
+
+        function pintar() {
+          var t = (reloj % CICLO) / CICLO;
+          rutas.forEach(function (ruta) {
+            var avance = null;
+            for (var i = 0; i < ruta.tramos.length; i++) {
+              var p = (t - (ruta.tramos[i].t0 % 1)) / TRAMO;
+              if (p >= 0 && p <= 1) {
+                avance = ruta.tramos[i].vuelta ? 1 - p : p;
+                break;
+              }
+            }
+            if (avance === null) {
+              ruta.punto.style.opacity = "0";
+              ruta.nodo.classList.remove("activo");
+              return;
+            }
+            var punto = ruta.cable.getPointAtLength(avance * ruta.largo);
+            ruta.punto.setAttribute("cx", punto.x);
+            ruta.punto.setAttribute("cy", punto.y);
+            ruta.punto.style.opacity = "1";
+            // La caja se enciende cuando el punto está en su extremo del cable.
+            ruta.nodo.classList.toggle("activo", ruta.salida ? avance > 0.78 : avance < 0.22);
+          });
+          var cual = Math.floor((reloj % (caps.length * 800)) / 800);
+          caps.forEach(function (cap, i) {
+            cap.classList.toggle("activo", i === cual);
+          });
+        }
+
+        function latido(ahora) {
+          raf = null;
+          // Pintar siempre, también en el primer fotograma tras reanudar: si
+          // solo se pintara al avanzar el reloj, el diagrama se quedaría un
+          // fotograma en el estado de reposo que dejó la pausa.
+          if (anterior && !document.hidden) reloj += Math.min(ahora - anterior, 80);
+          anterior = ahora;
+          pintar();
+          arrancar();
+        }
+
+        function arrancar() {
+          if (pausado || !visible || raf !== null) return;
+          raf = window.requestAnimationFrame(latido);
+        }
+
+        function parar() {
+          if (raf !== null) window.cancelAnimationFrame(raf);
+          raf = null;
+          anterior = 0;
+        }
+
+        function rotular() {
+          if (!boton) return;
+          boton.textContent = pausado ? "Reproducir animación" : "Pausar animación";
+          boton.setAttribute("aria-pressed", String(pausado));
+        }
+
+        if (boton) {
+          boton.addEventListener("click", function () {
+            pausado = !pausado;
+            rotular();
+            if (pausado) {
+              parar();
+              reposo();
+            } else {
+              arrancar();
+            }
+          });
+        }
+
+        menos.addEventListener("change", function (e) {
+          pausado = e.matches;
+          rotular();
+          if (pausado) {
+            parar();
+            reposo();
+          } else {
+            arrancar();
+          }
+        });
+
+        document.addEventListener("visibilitychange", function () {
+          if (document.hidden) parar();
+          else arrancar();
+        });
+
+        if (window.ResizeObserver) new ResizeObserver(dibujar).observe(tablero);
+        else window.addEventListener("resize", dibujar);
+
+        if (window.IntersectionObserver) {
+          new IntersectionObserver(function (entradas) {
+            visible = entradas[0].isIntersecting;
+            if (visible) arrancar();
+            else {
+              parar();
+              reposo();
+            }
+          }, { threshold: 0.2 }).observe(raiz);
+        } else {
+          visible = true;
+        }
+
+        rotular();
+        dibujar();
+        arrancar();
+      })();
+    </script>
+</body>
 </html>
