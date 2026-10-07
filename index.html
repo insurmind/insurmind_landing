@@ -2772,6 +2772,98 @@
       .cm-puntos button[aria-current="true"]::before { background: var(--indigo); }
 
     
+
+      /* --- Tomar la conversación ---
+         La página afirmaba dos veces, en «IA con control», que las personas
+         «toman la conversación cuando el caso o el cliente lo requiere», y no
+         lo enseñaba en ninguna parte. Esta sección lo enseña.
+
+         La conversación es copy de producción entregado por Alberto el 7 oct
+         2026 y se usa literal, con su ortografía: «Hable con uds por telefono»,
+         «tu poliza», «Muchas gracias de verdad fue de mucha ayuda!». §4 lo
+         manda: no se corrige. Lo único que no es suyo son los dos avisos de
+         sistema, y usan sus verbos: tomar y liberar.
+
+         Las piezas de WhatsApp —.phone-screen, .bubble, .ciclo-typing— son las
+         mismas que usa el ciclo. Solo se añade lo que no existía: el aviso de
+         sistema, la etiqueta de autor y la burbuja de la persona. */
+      .toma-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2.6rem; align-items: start; }
+
+      .toma-pasos { display: grid; gap: 1.5rem; margin: 0; padding: 0; list-style: none; }
+      .toma-paso { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0.9rem; align-items: start; }
+      .toma-num {
+        display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 50%;
+        border: 1px solid var(--lavender); background: var(--white); color: var(--indigo);
+        font-family: var(--heading); font-size: 0.8rem; font-weight: 800;
+      }
+      .toma-paso h3 { margin: 0.2rem 0 0.3rem; font-family: var(--heading); font-size: 1.05rem; font-weight: 700; }
+      .toma-paso p { margin: 0; color: var(--muted); font-size: 0.92rem; line-height: 1.55; }
+
+      .toma-escena .phone-screen { max-width: 23rem; margin: 0 auto; }
+      .toma-escena .phone-thread { min-height: 27rem; align-content: end; }
+
+      /* Aviso de sistema: la línea centrada que WhatsApp usa para los cambios
+         de estado. Es lo que hace visible la toma y la devolución. */
+      .toma-sistema {
+        justify-self: center;
+        max-width: 92%;
+        margin: 0.15rem 0;
+        padding: 0.4rem 0.7rem;
+        border-radius: 0.6rem;
+        background: #eceaf4;
+        color: #55526a;
+        font-size: 0.69rem;
+        font-weight: 600;
+        line-height: 1.4;
+        text-align: center;
+      }
+      .toma-sistema b { color: var(--indigo-dark); font-weight: 800; }
+
+      /* La persona escribe por la MISMA cuenta de empresa, así que su burbuja
+         es idéntica a la del agente: mismo lado y mismo blanco. En el teléfono
+         del cliente no aparece otra cuenta, aparece otra persona. Lo que las
+         distingue es el nombre dentro de la burbuja, que es exactamente lo que
+         hace WhatsApp Business cuando contesta un agente humano. */
+      .phone-screen .bubble-humano {
+        align-self: flex-start;
+        border-top-left-radius: 0.15rem;
+        border-top-right-radius: 0.48rem;
+        border-bottom-right-radius: 0.48rem;
+        background: #ffffff;
+      }
+      .toma-autor { display: block; margin-bottom: 0.18rem; color: #15795c; font-size: 0.69rem; font-weight: 800; letter-spacing: 0.01em; }
+
+      .toma-controles { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; margin-top: 1.1rem; }
+      .toma-controles button {
+        min-height: 36px; padding: 0.5rem 0.9rem;
+        border: 1px solid var(--line); border-radius: 999px;
+        background: var(--white); color: var(--muted);
+        font-family: var(--body); font-size: 12px; font-weight: 600; cursor: pointer;
+        transition: border-color 0.2s, color 0.2s;
+      }
+      .toma-controles button:hover { border-color: var(--lavender); color: var(--ink); }
+      .toma-pie { max-width: 30rem; margin: 0.9rem auto 0; color: var(--muted); font-size: 0.85rem; line-height: 1.5; text-align: center; }
+
+      @media (min-width: 900px) {
+        .toma-grid { grid-template-columns: minmax(0, 0.82fr) minmax(0, 1fr); gap: clamp(2.5rem, 5vw, 4.5rem); }
+      }
+
+      /* Mismo motor que el ciclo: la burbuja entra cuando le toca su --at.
+         Sin la clase, y sin JS, el hilo se ve entero y quieto. */
+      .toma-escena.is-active .bubble,
+      .toma-escena.is-active .toma-sistema,
+      .toma-escena.is-active .ciclo-typing {
+        animation: ciclo-sube 0.32s ease-out both;
+        animation-delay: calc(var(--at) * 1s);
+      }
+      .toma-escena.is-active .ciclo-typing { animation-name: ciclo-typ; animation-duration: 1.1s; animation-timing-function: linear; }
+
+      @media (prefers-reduced-motion: reduce) {
+        .toma-escena.is-active .bubble,
+        .toma-escena.is-active .toma-sistema { animation: none; opacity: 1; transform: none; }
+        .toma-controles { display: none; }
+      }
+
       /* --- Diagrama del héroe: el núcleo conectado ---
          Sustituye al SVG estático de encaje (PR #28) por la versión que entregó
          Alberto el 7 oct 2026 (insurmind-nucleo-conectado.html). La lectura no
@@ -3414,6 +3506,77 @@
         </div>
       </section>
 
+
+          <section class="section section-soft" id="tomar" aria-labelledby="tomar-title">
+            <div class="container">
+              <div class="section-head reveal">
+                <span class="section-label">Tomar la conversación</span>
+                <div>
+                  <h2 class="section-title" id="tomar-title">Tu equipo toma la conversación. Y la devuelve.</h2>
+                  <p class="section-intro">El agente lleva la conversación. En cualquier momento alguien de tu equipo puede tomarla para empujar la venta o resolver lo que solo una persona resuelve, y soltársela de vuelta al agente.</p>
+                </div>
+              </div>
+              <div class="toma-grid">
+                <ol class="toma-pasos reveal">
+                  <li class="toma-paso">
+                    <span class="toma-num" aria-hidden="true">01</span>
+                    <div>
+                      <h3>Tu equipo la toma</h3>
+                      <p>Adela entra en el hilo que ya existe. No empieza una conversación nueva ni pide al cliente que repita nada.</p>
+                    </div>
+                  </li>
+                  <li class="toma-paso">
+                    <span class="toma-num" aria-hidden="true">02</span>
+                    <div>
+                      <h3>Resuelve el caso</h3>
+                      <p>Escribe por la misma cuenta de empresa, con su nombre a la vista. El cliente sabe en todo momento con quién habla.</p>
+                    </div>
+                  </li>
+                  <li class="toma-paso">
+                    <span class="toma-num" aria-hidden="true">03</span>
+                    <div>
+                      <h3>Y la libera</h3>
+                      <p>La conversación vuelve al agente, que sigue desde donde la persona la dejó.</p>
+                    </div>
+                  </li>
+                </ol>
+                <div class="toma-visual reveal">
+                  <div class="toma-escena" data-toma-escena>
+                    <div class="phone-screen">
+                      <div class="android-status" aria-hidden="true"><span>12:04</span><span>5G&nbsp;&nbsp;◔&nbsp;&nbsp;▰</span></div>
+                      <div class="phone-bar">
+                        <span class="wa-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"></path></svg></span>
+                        <span class="agent-avatar">IM</span>
+                        <div><strong>Insurmind</strong><span class="agent-status">Cuenta de empresa</span></div>
+                        <span class="wa-actions" aria-hidden="true"><span class="wa-icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"></rect><path d="m16 10 5-3v10l-5-3"></path></svg></span><span class="wa-icon"><svg viewBox="0 0 24 24"><path d="M21 16.4v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 1.1 3.7 2 2 0 0 1 3.1 1.5h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L7 9.5a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5 13 13 0 0 0 2.9.7 2 2 0 0 1 1.7 2Z"></path></svg></span><span class="wa-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"></circle><circle cx="12" cy="19" r="1" fill="currentColor" stroke="none"></circle></svg></span></span>
+                      </div>
+                      <div class="phone-thread">
+                        <div class="bubble bubble-customer" style="--at:0.00">Hable con uds por telefono para comentarles mi caso en particular sobre la renovación de mi póliza.<span class="message-meta">12:02 <span class="checks">✓✓</span></span></div>
+                        <p class="toma-sistema" style="--at:1.70"><b>Adela</b>, del equipo de renovaciones, tomó la conversación</p>
+                        <div class="ciclo-typing" style="--at:2.60" aria-hidden="true"><i></i><i></i><i></i></div>
+                                                <div class="bubble bubble-humano" style="--at:3.70"><span class="toma-autor">Adela · Renovaciones</span>Hola Juan Carlos, soy Adela del equipo especial de renovaciones. Voy a revisar tu caso y regreso a la brevedad.<span class="message-meta">12:03</span></div>
+                        <div class="ciclo-typing" style="--at:5.90" aria-hidden="true"><i></i><i></i><i></i></div>
+                        <div class="bubble bubble-humano" style="--at:7.10"><span class="toma-autor">Adela · Renovaciones</span>Listo Juan Carlos, tu renovación quedó desbloqueada y ya puedes disfrutar de tu poliza con tranquilidad.<span class="message-meta">12:07</span></div>
+                        <p class="toma-sistema" style="--at:8.70"><b>Adela</b> liberó la conversación. El agente retoma el hilo</p>
+                        <div class="bubble bubble-customer" style="--at:9.80">Muchas gracias de verdad fue de mucha ayuda!<span class="message-meta">12:08 <span class="checks">✓✓</span></span></div>
+                        <div class="ciclo-typing" style="--at:10.80" aria-hidden="true"><i></i><i></i><i></i></div>
+                        <div class="bubble bubble-agent" style="--at:11.90">De qué Juan Carlos estamos para servirte.<span class="message-meta">12:08</span></div>
+                      </div>
+                      <div class="phone-composer" aria-hidden="true">
+                        <div class="composer-field"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M8.5 10h.01M15.5 10h.01M8.5 14c1 1 2.2 1.5 3.5 1.5s2.5-.5 3.5-1.5"></path></svg><span>Mensaje</span><span class="composer-clip"><svg viewBox="0 0 24 24"><path d="m21.4 11.6-8.8 8.8a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"></path></svg></span></div>
+                        <span class="composer-mic"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"></path></svg></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="toma-controles">
+                    <button type="button" data-toma-pausa aria-pressed="false">Pausar</button>
+                    <button type="button" data-toma-repetir>Repetir</button>
+                  </div>
+                  <p class="toma-pie">Conversación de producción. La persona y el agente escriben por la misma cuenta.</p>
+                </div>
+              </div>
+            </div>
+          </section>
 
       <section class="section" id="plataforma" aria-labelledby="platform-title">
         <div class="container">
@@ -4325,6 +4488,123 @@
         rotular();
         dibujar();
         arrancar();
+      })();
+    </script>
+    <script>
+      /* Tomar la conversación: arranque, repetición y pausa.
+         Mismo contrato que el resto (§6): la clase .is-active es lo único que
+         dispara las animaciones; sin ella, y sin JS, el hilo se ve entero y
+         quieto. Arranca cuando se ve el 60 % de la escena. */
+      (function () {
+        var escena = document.querySelector("[data-toma-escena]");
+        if (!escena) return;
+
+        var pausa = document.querySelector("[data-toma-pausa]");
+        var repetir = document.querySelector("[data-toma-repetir]");
+        var menos = window.matchMedia("(prefers-reduced-motion: reduce)");
+        var CICLO = 13500; // el último mensaje entra a 11,9 s; el resto es lectura
+        var temporizador = null;
+        var pausado = menos.matches;
+        var visible = false;
+
+        function arrancar() {
+          // Quitar y reponer la clase reinicia los animation-delay. El reflow
+          // forzado entre medias es imprescindible: sin él el navegador agrupa
+          // los dos cambios y la animación no se reinicia.
+          escena.classList.remove("is-active");
+          void escena.offsetWidth;
+          escena.classList.add("is-active");
+        }
+
+        /* Dos puertas distintas a propósito. reproducir() es lo que piden los
+           botones: si alguien los pulsa es que está mirando la escena, así que
+           no se consulta el observador. programar() es lo que pide el
+           observador, y ese sí mira si la escena está en pantalla. Juntarlas
+           dejaba «Repetir» sin efecto mientras el observador no hubiera
+           disparado todavía. */
+        function reproducir() {
+          detener();
+          if (pausado) return;
+          arrancar();
+          temporizador = window.setInterval(arrancar, CICLO);
+        }
+
+        function programar() {
+          if (!visible) {
+            detener();
+            return;
+          }
+          reproducir();
+        }
+
+        function detener() {
+          if (temporizador !== null) window.clearInterval(temporizador);
+          temporizador = null;
+        }
+
+        function rotular() {
+          if (!pausa) return;
+          pausa.textContent = pausado ? "Reproducir" : "Pausar";
+          pausa.setAttribute("aria-pressed", String(pausado));
+        }
+
+        if (pausa) {
+          pausa.addEventListener("click", function () {
+            pausado = !pausado;
+            rotular();
+            if (pausado) {
+              detener();
+              // Al pausar, el hilo se queda completo y quieto, no congelado a
+              // medias: es lo que pide «estado por defecto = estado final».
+              escena.classList.remove("is-active");
+            } else {
+              visible = true;
+              reproducir();
+            }
+          });
+        }
+
+        if (repetir) {
+          repetir.addEventListener("click", function () {
+            if (pausado) {
+              pausado = false;
+              rotular();
+            }
+            visible = true;
+            reproducir();
+          });
+        }
+
+        menos.addEventListener("change", function (e) {
+          pausado = e.matches;
+          rotular();
+          if (pausado) {
+            detener();
+            escena.classList.remove("is-active");
+          } else {
+            programar();
+          }
+        });
+
+        document.addEventListener("visibilitychange", function () {
+          if (document.hidden) detener();
+          else programar();
+        });
+
+        if (window.IntersectionObserver) {
+          new IntersectionObserver(
+            function (entradas) {
+              visible = entradas[0].isIntersecting;
+              if (visible) programar();
+              else detener();
+            },
+            { threshold: Math.min(0.6, (window.innerHeight || 800) / Math.max(escena.offsetHeight || 1, 1) * 0.6) }
+          ).observe(escena);
+        } else {
+          visible = true;
+        }
+
+        rotular();
       })();
     </script>
 </body>
