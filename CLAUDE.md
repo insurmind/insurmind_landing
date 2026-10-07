@@ -71,6 +71,13 @@ La web pública de **Insurmind**, **agentes de IA que se conectan a cualquier as
   **«Sin intervención» sigue siendo la fórmula obligatoria** del punto siguiente, y sigue viva en la `meta description` y en el `og:description`, que Alberto no pidió cambiar. Si algún día se unifican, que sea una decisión consciente y no un arrastre.
 - «Cotiza, resuelve, emite y cobra, sin intervención» sigue siendo la frase interna de los cuatro verbos y del diagrama; no vuelve al titular. **NEGOCIA no es un verbo canónico**: vive dentro de RESUELVE y no aparece ni en el titular ni en el diagrama.
 - **Nunca «vende y cobra solo»**: en español «solo» se lee como *solamente*. Usa «sin intervención», «sin que nadie lo empuje», «de principio a fin».
+- **Pero «sin intervención» nunca como absoluto. Cambió el 2026-10-07.** Alberto señaló que la frase de las metaetiquetas —«Sin intervención, de principio a fin, y con el control siempre de tu lado»— **no es verdad**, y la retiró. Queda prohibido acompañar «sin intervención» de «de principio a fin», «siempre», «todo» o cualquier otro absoluto, en cualquier parte de la página.
+
+  **Lo que sí es cierto, y es lo que hay que potenciar:** el agente lleva la conversación por defecto, y **el equipo puede tomarla en cualquier momento para empujar la venta y volver a soltársela al agente.** Las dos direcciones importan: entrar y salir.
+
+  «Sin intervención» sigue valiendo para una métrica concreta —el centro de control dice «Resueltos sin intervención · 96,4%»— porque ahí describe un porcentaje medido, no una promesa. Un 96,4% implica un 3,6% que sí la necesitó, que es exactamente el punto.
+
+  Lo que no se tocó al corregirlo: «Venta y postventa, de principio a fin», que habla de cobertura del proceso y no de ausencia de personas.
 - **Nunca «entrenado»**. Di «afinado», «corregido con conversaciones reales», «aprendido en producción». *(El h2 de la sección `.moat` dice «No lo entrenamos en un laboratorio»: es negación deliberada, no un descuido.)*
 - **Ninguna cifra inventada.** Conversiones, clientes, tiempos, porcentajes: si no está verificada y aprobada por Alberto, se deja `[MÉTRICA POR CONFIRMAR]`.
 - **Ningún logo ni nombre de aseguradora real** salvo instrucción explícita. Cajas neutras.
@@ -109,6 +116,7 @@ La web pública de **Insurmind**, **agentes de IA que se conectan a cualquier as
 El diagrama tuvo dos versiones el mismo día. La primera era un SVG estático con el patrón de LiteLLM (PR #28). La segunda, la vigente, la entregó Alberto en `insurmind-nucleo-conectado.html`: la misma lectura, pero en HTML con iconos y con los cables animados. Lo que cambió al adoptarla:
 
 - **El héroe es de dos columnas: titular y copy a la izquierda, diagrama a la derecha**, con el patrón del héroe de LiteLLM. Alberto lo decidió el 7 oct 2026 **después** de ver montada una versión a una sola columna, que él mismo había elegido unas horas antes. Si alguien se encuentra el commit de en medio, ese es el motivo.
+- **El diagrama no lleva marco.** Ni borde, ni fondo propio, ni sombra: flota sobre el fondo del héroe y las únicas cajas con borde son las de dentro. Alberto lo pidió el 7 oct 2026 sobre la referencia de Juan: «el nuestro se ve como un frame incrustado». El control de pausa bajó al pie junto a la frase de estado, porque un botón arriba a la derecha era lo que más delataba el widget. Si alguna vez le devuelves un fondo propio, ten en cuenta que las etiquetas se midieron contra el fondo que tengan debajo: `--muted` da 5,32:1 sobre el fondo del héroe.
 - **El héroe es la única franja que no respeta `--container`.** Llega a `min(1440px, max(var(--container), calc(100% - 5rem)))`, tomado de la referencia de Juan (`insurmind-after-dark`), que Alberto pasó el 7 oct 2026 pidiendo que el héroe fluyera hasta los costados. A 1440 de pantalla da 530 px de texto y 763 de diagrama, contra los 478 y 646 de antes.
 
   **El `max()` contra `--container` no es decorativo.** La referencia usa `calc(100% - 5rem)` a secas, y así entre 1100 y 1260 px de pantalla el héroe queda **más estrecho** que las secciones de abajo, porque 5rem de aire es más que los 3rem de `--container`. Con el `max` nunca encoge por debajo del contenedor.
