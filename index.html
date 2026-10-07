@@ -3861,6 +3861,175 @@
         .demo-dialog { animation: none !important; }
       }
 
+    
+      /* ======================================================
+         Dónde actuamos: el ciclo de venta y postventa.
+         La rueda dice en qué etapa estamos; el panel de la derecha
+         enseña la prueba de esa etapa. Las conversaciones son copy de
+         producción, reutilizado de las maquetas que ya tenía la página.
+         Gráfico base entregado por Alberto el 7 oct 2026.
+         ====================================================== */
+      .ciclo-grid {
+        display: grid;
+        margin-top: 3rem;
+        gap: clamp(2rem, 4vw, 3.5rem);
+        grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+        align-items: center;
+      }
+      .ciclo-rueda { min-width: 0; }
+      .ciclo-rueda svg { display: block; width: 100%; height: auto; }
+      .ciclo-rueda .stage { transition: fill 0.45s ease; }
+      .ciclo-rueda .stage.active { fill: #d8caff; }
+      .ciclo-rueda .stage.post.active { fill: #bde5d0; }
+
+      .ciclo-estado {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.6rem;
+        min-height: 2.75rem;
+        margin-top: 0.5rem;
+        text-align: center;
+      }
+      .ciclo-fase {
+        flex: 0 0 auto;
+        padding: 0.35rem 0.7rem;
+        border-radius: 999px;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .ciclo-fase.venta { background: var(--soft); color: var(--indigo); }
+      .ciclo-fase.postventa { background: #e8f6ef; color: #1f6b51; }
+      .ciclo-nombre { font-weight: 600; font-size: 1rem; }
+
+      .ciclo-controles { display: flex; justify-content: center; gap: 0.7rem; margin-top: 1rem; flex-wrap: wrap; }
+      .ciclo-controles .button { min-height: 2.75rem; padding: 0.7rem 1.2rem; font-size: 0.9rem; }
+
+      /* panel de la derecha: alto fijo para que la rueda no dé saltos */
+      .ciclo-escena { position: relative; min-height: 30rem; min-width: 0; }
+      .ciclo-panel { display: none; }
+      .ciclo-panel.is-active { display: block; }
+      .ciclo-panel .phone-screen { max-width: 23rem; margin: 0 auto; }
+      .ciclo-panel .phone-thread { min-height: 16.5rem; align-content: end; }
+
+      .ciclo-pie {
+        max-width: 23rem;
+        margin: 1rem auto 0;
+        color: var(--muted);
+        font-size: 0.85rem;
+        line-height: 1.5;
+        text-align: center;
+      }
+
+      /* etapas sin conversación todavía: tarjeta descriptiva, nunca un chat falso */
+      .ciclo-ficha {
+        max-width: 23rem;
+        margin: 0 auto;
+        padding: 1.75rem;
+        border: 1px solid var(--line);
+        border-radius: 1.4rem;
+        background: var(--white);
+        box-shadow: 0 20px 48px -28px rgba(45, 38, 99, 0.22);
+      }
+      .ciclo-ficha h3 {
+        margin: 0;
+        font-family: var(--heading);
+        font-size: 1.35rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.2;
+      }
+      .ciclo-ficha p { margin-top: 0.75rem; color: var(--muted); font-size: 0.95rem; line-height: 1.6; }
+      .ciclo-ficha ul { margin: 1rem 0 0; padding: 0; list-style: none; display: grid; gap: 0.6rem; }
+      .ciclo-ficha li { display: flex; gap: 0.6rem; align-items: flex-start; font-size: 0.92rem; color: var(--muted); }
+      .ciclo-ficha li::before { content: "\2713"; color: #1f8f68; font-weight: 700; }
+
+      /* la burbuja aparece cuando le toca; sin JS se ven todas */
+      .ciclo-panel.is-active .bubble,
+      .ciclo-panel.is-active .ciclo-typing {
+        animation: ciclo-sube 0.32s ease-out both;
+        animation-delay: calc(var(--at) * 1s);
+      }
+      .ciclo-typing {
+        align-self: flex-start;
+        display: inline-flex;
+        gap: 4px;
+        margin-bottom: -1.7rem;
+        padding: 0.6rem 0.75rem;
+        border-radius: 0.9rem;
+        background: #fff;
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
+        opacity: 0;
+      }
+      .ciclo-typing i { width: 6px; height: 6px; border-radius: 50%; background: #9aa5a0; }
+      .ciclo-panel.is-active .ciclo-typing { animation-name: ciclo-typ; animation-duration: 1.1s; animation-timing-function: linear; }
+      @keyframes ciclo-sube { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+      @keyframes ciclo-typ { 0% { opacity: 0 } 12% { opacity: 1 } 88% { opacity: 1 } 100% { opacity: 0 } }
+
+      @media (prefers-reduced-motion: reduce) {
+        .ciclo-rueda .stage { transition: none; }
+        .ciclo-panel.is-active .bubble { animation: none; opacity: 1; transform: none; }
+        .ciclo-panel.is-active .ciclo-typing { display: none; }
+      }
+
+      @media (max-width: 980px) {
+        .ciclo-grid { grid-template-columns: 1fr; gap: 2rem; }
+        .ciclo-rueda { max-width: 32rem; margin: 0 auto; }
+        .ciclo-escena { min-height: 0; }
+      }
+      @media (max-width: 540px) {
+        .ciclo-rueda svg .label { display: none; }
+        .ciclo-rueda svg .number { font-size: 34px; }
+        .ciclo-nombre { font-size: 0.95rem; }
+        .ciclo-estado { flex-direction: column; gap: 0.4rem; }
+      }
+
+      /* adjunto dentro de una burbuja (la cotización en PDF) */
+      .ciclo-adjunto {
+        display: flex;
+        gap: 0.6rem;
+        align-items: center;
+        margin: -0.1rem -0.15rem 0.5rem;
+        padding: 0.55rem 0.6rem;
+        border-radius: 0.55rem;
+        background: rgba(0, 0, 0, 0.05);
+      }
+      .ciclo-adjunto i {
+        flex: none;
+        display: grid;
+        width: 1.95rem;
+        height: 2.2rem;
+        place-items: center;
+        border-radius: 0.2rem;
+        background: #c9302a;
+        color: #fff;
+        font-size: 0.7rem;
+        font-style: normal;
+        font-weight: 700;
+      }
+      .ciclo-adjunto b { display: block; font-size: 0.78rem; font-weight: 600; word-break: break-all; }
+      .ciclo-adjunto small { color: #667781; font-size: 0.72rem; }
+      .ciclo-enlace {
+        display: block;
+        margin-top: 0.45rem;
+        padding: 0.5rem 0.6rem;
+        border-radius: 0.45rem;
+        background: rgba(0, 0, 0, 0.05);
+        color: var(--indigo);
+        font-size: 0.78rem;
+        text-decoration: underline;
+        word-break: break-all;
+      }
+
+      /* Tipografía del SVG. Venía como hoja embebida dentro del propio gráfico,
+         con selectores que apuntaban a un contenedor que ya no existe. Vive
+         aquí, con los selectores buenos. */
+      .ciclo-rueda svg text { font-family: var(--heading), system-ui, sans-serif; text-anchor: middle; fill: #151526; }
+      .ciclo-rueda svg .label { font-size: 22px; font-weight: 600; }
+      .ciclo-rueda svg .number { font-size: 13px; letter-spacing: 2px; fill: #6b687a; }
+
     </style>
   </head>
   <body>
@@ -3875,7 +4044,7 @@
         <nav class="site-nav" aria-label="Secciones">
           <a href="#agentes">Agentes</a>
           <a href="#producto">Producto</a>
-          <a href="#en-accion">WhatsApp</a>
+          <a href="#donde-actuamos">Dónde actuamos</a>
           <a href="#arquitectura">Arquitectura</a>
         </nav>
         <div class="nav-cta">
@@ -3932,15 +4101,157 @@
         </div>
       </section>
 
-      <div class="process-rail" aria-label="Etapas gestionadas por el agente comercial de Insurmind">
-        <div class="container process-inner">
-          <div class="process-item"><span>01</span>Cotiza</div>
-          <div class="process-item"><span>02</span>Responde</div>
-          <div class="process-item"><span>03</span>Recopila</div>
-          <div class="process-item"><span>04</span>Valida</div>
-          <div class="process-item"><span>05</span>Emite</div>
+      <section class="section ciclo" id="donde-actuamos" aria-labelledby="ciclo-title">
+        <div class="container">
+          <div class="section-head reveal">
+            <span class="section-label">Dónde actuamos</span>
+            <div>
+              <h2 class="section-title" id="ciclo-title">Venta y postventa, de principio a fin.</h2>
+              <p class="section-intro">El agente no entra en un punto suelto del proceso: recorre el ciclo completo, desde que la campaña trae el lead hasta que la póliza se renueva. A la derecha, lo que ocurre en cada etapa.</p>
+              <p class="demo-disclaimer"><span aria-hidden="true">✓</span>Las proporciones del gráfico organizan servicios; no representan métricas.</p>
+            </div>
+          </div>
+
+          <div class="ciclo-grid reveal">
+            <div class="ciclo-rueda">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewBox="0 132 1000 790" role="img" aria-labelledby="ciclo-svg-title ciclo-svg-desc">
+<title id="ciclo-svg-title">Agentes híbridos para la venta y postventa en seguros</title>
+<desc id="ciclo-svg-desc">Venta ocupa tres cuartas partes con seis servicios: medición de inversión de campaña, captura de datos, cotización de pólizas, resolución de dudas, emisión y cobro. Postventa ocupa un cuarto con atención al cliente y recordatorios de pago. Las proporciones organizan servicios y no representan métricas.</desc>
+<defs><linearGradient id="ciclo-brand" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#4f46e5"/><stop offset="1" stop-color="#7c3aed"/></linearGradient><radialGradient id="ciclo-core"><stop stop-color="#ffffff"/><stop offset="1" stop-color="#f4efff"/></radialGradient></defs>
+
+
+
+<rect x="165" y="151" width="170" height="40" rx="20" fill="url(#ciclo-brand)"/><text x="250" y="178" style="fill:#fff" font-size="18" font-weight="700">VENTAS</text>
+<rect x="670" y="151" width="170" height="40" rx="20" fill="#e8f6ef" stroke="#c6e7d7"/><text x="755" y="178" style="fill:#28775c" font-size="18" font-weight="700">POSTVENTA</text>
+<path class="stage" d="M 248.346 277.570 A 360 360 0 0 1 495.916 175.023 L 497.958 355.012 A 180 180 0 0 0 374.173 406.285 Z" fill="#f3efff"/>
+<text x="396.68" y="242.55" class="number">01</text>
+<text x="396.68" y="265.55" class="label">Medimos la</text>
+<text x="396.68" y="292.55" class="label">inversión de</text>
+<text x="396.68" y="319.55" class="label">tu campaña</text>
+<path class="stage" d="M 140.023 530.916 A 360 360 0 0 1 242.570 283.346 L 371.285 409.173 A 180 180 0 0 0 320.012 532.958 Z" fill="#eee8ff"/>
+<text x="250.55" y="388.68" class="number">02</text>
+<text x="250.55" y="425.18" class="label">Capturamos</text>
+<text x="250.55" y="452.18" class="label">datos</text>
+<path class="stage" d="M 242.570 786.654 A 360 360 0 0 1 140.023 539.084 L 320.012 537.042 A 180 180 0 0 0 371.285 660.827 Z" fill="#f3efff"/>
+<text x="250.55" y="595.32" class="number">03</text>
+<text x="250.55" y="631.82" class="label">Cotizamos</text>
+<text x="250.55" y="658.82" class="label">pólizas</text>
+<path class="stage" d="M 495.916 894.977 A 360 360 0 0 1 248.346 792.430 L 374.173 663.715 A 180 180 0 0 0 497.958 714.988 Z" fill="#eee8ff"/>
+<text x="396.68" y="741.45" class="number">04</text>
+<text x="396.68" y="777.95" class="label">Resolvemos</text>
+<text x="396.68" y="804.95" class="label">dudas</text>
+<path class="stage" d="M 751.654 792.430 A 360 360 0 0 1 504.084 894.977 L 502.042 714.988 A 180 180 0 0 0 625.827 663.715 Z" fill="#f3efff"/>
+<text x="603.32" y="741.45" class="number">05</text>
+<text x="603.32" y="777.95" class="label">Emitimos</text>
+<text x="603.32" y="804.95" class="label">pólizas</text>
+<path class="stage" d="M 859.977 539.084 A 360 360 0 0 1 757.430 786.654 L 628.715 660.827 A 180 180 0 0 0 679.988 537.042 Z" fill="#eee8ff"/>
+<text x="749.45" y="595.32" class="number">06</text>
+<text x="749.45" y="645.32" class="label">Cobramos</text>
+<path class="stage post" d="M 757.430 283.346 A 360 360 0 0 1 859.977 530.916 L 679.988 532.958 A 180 180 0 0 0 628.715 409.173 Z" fill="#eaf6ef"/>
+<text x="749.45" y="388.68" class="number">07</text>
+<text x="749.45" y="411.68" class="label">Atención</text>
+<text x="749.45" y="438.68" class="label">al cliente</text>
+<text x="749.45" y="465.68" class="label" style="font-size:17px;font-weight:400">Dudas de tu póliza</text>
+<path class="stage post" d="M 504.084 175.023 A 360 360 0 0 1 751.654 277.570 L 625.827 406.285 A 180 180 0 0 0 502.042 355.012 Z" fill="#e1f1e8"/>
+<text x="603.32" y="242.55" class="number">08</text>
+<text x="603.32" y="279.05" class="label">Recordatorios</text>
+<text x="603.32" y="306.05" class="label">de pago</text>
+<path d="M 878.000 535.000 A 378 378 0 1 1 500.000 157.000 L 500.000 166.000 A 369 369 0 1 0 869.000 535.000 Z" fill="url(#ciclo-brand)"/>
+<path d="M 500.000 157.000 A 378 378 0 0 1 878.000 535.000 L 869.000 535.000 A 369 369 0 0 0 500.000 166.000 Z" fill="#91cab6"/>
+<circle cx="500" cy="535" r="165" fill="url(#ciclo-core)" stroke="#e2dafa"/>
+<text x="500" y="502" font-size="20" style="fill:#4f46e5" font-weight="700" letter-spacing="1">INSURMIND</text>
+<text x="500" y="541" font-size="31" font-weight="700">Agentes</text>
+<text x="500" y="579" font-size="31" font-weight="700">híbridos</text>
+<circle data-halo="" cx="357.07" cy="189.94" r="24" fill="#4f46e5" opacity=".16"/><circle data-dot="" cx="357.07" cy="189.94" r="10" fill="#4f46e5" stroke="#fff" stroke-width="4"/></svg>
+              <p class="ciclo-estado" data-ciclo-estado role="status">
+                <span class="ciclo-fase venta" data-ciclo-fase>Ventas</span>
+                <span class="ciclo-nombre" data-ciclo-nombre>Medimos la inversión de tu campaña</span>
+              </p>
+              <div class="ciclo-controles">
+                <button type="button" class="button button-secondary" data-ciclo-pausa aria-pressed="false">Pausar</button>
+                <button type="button" class="button button-secondary" data-ciclo-siguiente>Siguiente etapa <span class="arrow" aria-hidden="true">&rarr;</span></button>
+              </div>
+            </div>
+
+            <div class="ciclo-escena">
+              <div class="ciclo-panel is-active" data-escena="1" role="tabpanel" aria-label="Medimos la inversión de tu campaña"><div class="ciclo-ficha"><h3>Medimos la inversión de tu campaña</h3><p>Antes de la primera conversación ya hay trabajo: saber qué campaña trae cada lead y cuánto cuesta.</p><ul><li>Cada lead llega con su origen</li><li>El coste por oportunidad, a la vista</li><li>El mismo embudo, por marca o por campaña</li></ul></div></div>
+              <div class="ciclo-panel" data-escena="2" role="tabpanel" aria-label="Capturamos datos"><div class="phone-screen"><div class="android-status" aria-hidden="true"><span>10:41</span><span>5G&nbsp;&nbsp;◔&nbsp;&nbsp;▰</span></div>
+                <div class="phone-bar">
+                  <span class="wa-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"></path></svg></span>
+                  <span class="agent-avatar">IM</span>
+                  <div><strong>Insurmind</strong><span class="agent-status">Cuenta de empresa</span></div>
+                  <span class="wa-actions" aria-hidden="true">
+                    <span class="wa-icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"></rect><path d="m16 10 5-3v10l-5-3"></path></svg></span>
+                    <span class="wa-icon"><svg viewBox="0 0 24 24"><path d="M21 16.4v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 1.1 3.7 2 2 0 0 1 3.1 1.5h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L7 9.5a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5 13 13 0 0 0 2.9.7 2 2 0 0 1 1.7 2Z"></path></svg></span>
+                    <span class="wa-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"></circle><circle cx="12" cy="19" r="1" fill="currentColor" stroke="none"></circle></svg></span>
+                  </span>
+                </div><div class="phone-thread"><div class="bubble bubble-customer" style="--at:0.00">Sí, quiero continuar.<span class="message-meta">10:41 <span class="checks">✓✓</span></span></div><div class="ciclo-typing" style="--at:1.60" aria-hidden="true"><i></i><i></i><i></i></div><div class="bubble bubble-agent" style="--at:2.80">Para continuar necesito:<br>— Su nombre completo<br>— Fecha de nacimiento (DD/MM/AAAA)<br>— Género (M/F)<br>— Número de INE (10 dígitos, opcional)<span class="message-meta">10:41</span></div></div><div class="phone-composer" aria-hidden="true"><div class="composer-field"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M8.5 10h.01M15.5 10h.01M8.5 14c1 1 2.2 1.5 3.5 1.5s2.5-.5 3.5-1.5"></path></svg><span>Mensaje</span><span class="composer-clip"><svg viewBox="0 0 24 24"><path d="m21.4 11.6-8.8 8.8a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"></path></svg></span></div><span class="composer-mic"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"></path></svg></span></div>
+              </div><p class="ciclo-pie">Captura de datos para la emisión.</p></div>
+              <div class="ciclo-panel" data-escena="3" role="tabpanel" aria-label="Cotizamos pólizas"><div class="phone-screen"><div class="android-status" aria-hidden="true"><span>10:41</span><span>5G&nbsp;&nbsp;◔&nbsp;&nbsp;▰</span></div>
+                <div class="phone-bar">
+                  <span class="wa-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"></path></svg></span>
+                  <span class="agent-avatar">IM</span>
+                  <div><strong>Insurmind</strong><span class="agent-status">Cuenta de empresa</span></div>
+                  <span class="wa-actions" aria-hidden="true">
+                    <span class="wa-icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"></rect><path d="m16 10 5-3v10l-5-3"></path></svg></span>
+                    <span class="wa-icon"><svg viewBox="0 0 24 24"><path d="M21 16.4v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 1.1 3.7 2 2 0 0 1 3.1 1.5h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L7 9.5a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5 13 13 0 0 0 2.9.7 2 2 0 0 1 1.7 2Z"></path></svg></span>
+                    <span class="wa-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"></circle><circle cx="12" cy="19" r="1" fill="currentColor" stroke="none"></circle></svg></span>
+                  </span>
+                </div><div class="phone-thread"><div class="bubble bubble-agent" style="--at:0.00"><span class="ciclo-adjunto"><i>PDF</i><span><b>Cotizacion_2381_HD_2020.pdf</b><small>1 página · PDF</small></span></span>Aquí tienes tu cotización. ¿Continuamos con la emisión de tu póliza?<span class="message-meta">18:24</span></div></div><div class="phone-composer" aria-hidden="true"><div class="composer-field"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M8.5 10h.01M15.5 10h.01M8.5 14c1 1 2.2 1.5 3.5 1.5s2.5-.5 3.5-1.5"></path></svg><span>Mensaje</span><span class="composer-clip"><svg viewBox="0 0 24 24"><path d="m21.4 11.6-8.8 8.8a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"></path></svg></span></div><span class="composer-mic"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"></path></svg></span></div>
+              </div><p class="ciclo-pie">La cotización, entregada en la conversación.</p></div>
+              <div class="ciclo-panel" data-escena="4" role="tabpanel" aria-label="Resolvemos dudas"><div class="phone-screen"><div class="android-status" aria-hidden="true"><span>10:41</span><span>5G&nbsp;&nbsp;◔&nbsp;&nbsp;▰</span></div>
+                <div class="phone-bar">
+                  <span class="wa-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"></path></svg></span>
+                  <span class="agent-avatar">IM</span>
+                  <div><strong>Insurmind</strong><span class="agent-status">Cuenta de empresa</span></div>
+                  <span class="wa-actions" aria-hidden="true">
+                    <span class="wa-icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"></rect><path d="m16 10 5-3v10l-5-3"></path></svg></span>
+                    <span class="wa-icon"><svg viewBox="0 0 24 24"><path d="M21 16.4v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 1.1 3.7 2 2 0 0 1 3.1 1.5h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L7 9.5a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5 13 13 0 0 0 2.9.7 2 2 0 0 1 1.7 2Z"></path></svg></span>
+                    <span class="wa-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"></circle><circle cx="12" cy="19" r="1" fill="currentColor" stroke="none"></circle></svg></span>
+                  </span>
+                </div><div class="phone-thread"><div class="bubble bubble-customer" style="--at:0.00">¿el deducible de daños materiales es 25%?<span class="message-meta">18:31 <span class="checks">✓✓</span></span></div><div class="ciclo-typing" style="--at:1.60" aria-hidden="true"><i></i><i></i><i></i></div><div class="bubble bubble-agent" style="--at:2.80">Sí, Juan. En tu cotización 2381, la cobertura de Daños Materiales lleva un deducible del 25 % sobre el valor del vehículo.<span class="message-meta">18:31</span></div></div><div class="phone-composer" aria-hidden="true"><div class="composer-field"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M8.5 10h.01M15.5 10h.01M8.5 14c1 1 2.2 1.5 3.5 1.5s2.5-.5 3.5-1.5"></path></svg><span>Mensaje</span><span class="composer-clip"><svg viewBox="0 0 24 24"><path d="m21.4 11.6-8.8 8.8a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"></path></svg></span></div><span class="composer-mic"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"></path></svg></span></div>
+              </div><p class="ciclo-pie">Responde con la cifra de esa cotización, no con una genérica.</p></div>
+              <div class="ciclo-panel" data-escena="5" role="tabpanel" aria-label="Emitimos pólizas"><div class="phone-screen"><div class="android-status" aria-hidden="true"><span>10:41</span><span>5G&nbsp;&nbsp;◔&nbsp;&nbsp;▰</span></div>
+                <div class="phone-bar">
+                  <span class="wa-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"></path></svg></span>
+                  <span class="agent-avatar">IM</span>
+                  <div><strong>Insurmind</strong><span class="agent-status">Cuenta de empresa</span></div>
+                  <span class="wa-actions" aria-hidden="true">
+                    <span class="wa-icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"></rect><path d="m16 10 5-3v10l-5-3"></path></svg></span>
+                    <span class="wa-icon"><svg viewBox="0 0 24 24"><path d="M21 16.4v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 1.1 3.7 2 2 0 0 1 3.1 1.5h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L7 9.5a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5 13 13 0 0 0 2.9.7 2 2 0 0 1 1.7 2Z"></path></svg></span>
+                    <span class="wa-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"></circle><circle cx="12" cy="19" r="1" fill="currentColor" stroke="none"></circle></svg></span>
+                  </span>
+                </div><div class="phone-thread"><div class="bubble bubble-agent" style="--at:0.00">Leí tu tarjeta de circulación:<br>· Placas: MXA-12-34<br>· NIV: 3G1TC5CF0LL000000<br>¿Es correcto?<span class="message-meta">19:15</span></div><div class="bubble bubble-customer" style="--at:1.60">sí<span class="message-meta">19:16 <span class="checks">✓✓</span></span></div><div class="ciclo-typing" style="--at:3.20" aria-hidden="true"><i></i><i></i><i></i></div><div class="bubble bubble-agent" style="--at:4.40">¡Listo, Juan! 🎉 Tu póliza fue emitida exitosamente.<span class="message-meta">19:16</span></div></div><div class="phone-composer" aria-hidden="true"><div class="composer-field"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M8.5 10h.01M15.5 10h.01M8.5 14c1 1 2.2 1.5 3.5 1.5s2.5-.5 3.5-1.5"></path></svg><span>Mensaje</span><span class="composer-clip"><svg viewBox="0 0 24 24"><path d="m21.4 11.6-8.8 8.8a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"></path></svg></span></div><span class="composer-mic"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"></path></svg></span></div>
+              </div><p class="ciclo-pie">Lectura de la tarjeta de circulación y emisión.</p></div>
+              <div class="ciclo-panel" data-escena="6" role="tabpanel" aria-label="Cobramos"><div class="phone-screen"><div class="android-status" aria-hidden="true"><span>10:41</span><span>5G&nbsp;&nbsp;◔&nbsp;&nbsp;▰</span></div>
+                <div class="phone-bar">
+                  <span class="wa-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"></path></svg></span>
+                  <span class="agent-avatar">IM</span>
+                  <div><strong>Insurmind</strong><span class="agent-status">Cuenta de empresa</span></div>
+                  <span class="wa-actions" aria-hidden="true">
+                    <span class="wa-icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"></rect><path d="m16 10 5-3v10l-5-3"></path></svg></span>
+                    <span class="wa-icon"><svg viewBox="0 0 24 24"><path d="M21 16.4v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 1.1 3.7 2 2 0 0 1 3.1 1.5h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L7 9.5a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5 13 13 0 0 0 2.9.7 2 2 0 0 1 1.7 2Z"></path></svg></span>
+                    <span class="wa-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"></circle><circle cx="12" cy="19" r="1" fill="currentColor" stroke="none"></circle></svg></span>
+                  </span>
+                </div><div class="phone-thread"><div class="bubble bubble-agent" style="--at:0.00">Su póliza POL-•••• fue emitida exitosamente.<br><br>Link de pago: <span class="ciclo-enlace">insurmind.link/p/••••</span><span class="message-meta">12:24</span></div></div><div class="phone-composer" aria-hidden="true"><div class="composer-field"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M8.5 10h.01M15.5 10h.01M8.5 14c1 1 2.2 1.5 3.5 1.5s2.5-.5 3.5-1.5"></path></svg><span>Mensaje</span><span class="composer-clip"><svg viewBox="0 0 24 24"><path d="m21.4 11.6-8.8 8.8a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"></path></svg></span></div><span class="composer-mic"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"></path></svg></span></div>
+              </div><p class="ciclo-pie">La liga de pago, por el canal autorizado.</p></div>
+              <div class="ciclo-panel" data-escena="7" role="tabpanel" aria-label="Atención al cliente · dudas de la póliza"><div class="ciclo-ficha"><h3>Atención al cliente</h3><p>Cuando la póliza ya existe, el cliente sigue preguntando. El agente contesta con los datos de esa póliza, no con un FAQ.</p><ul><li>Responde sobre la póliza contratada</li><li>Escala cuando hace falta criterio humano</li><li>Deja la conversación trazable</li></ul></div></div>
+              <div class="ciclo-panel" data-escena="8" role="tabpanel" aria-label="Recordatorios de pago"><div class="phone-screen"><div class="android-status" aria-hidden="true"><span>10:41</span><span>5G&nbsp;&nbsp;◔&nbsp;&nbsp;▰</span></div>
+                <div class="phone-bar">
+                  <span class="wa-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"></path></svg></span>
+                  <span class="agent-avatar">IM</span>
+                  <div><strong>Insurmind</strong><span class="agent-status">Cuenta de empresa</span></div>
+                  <span class="wa-actions" aria-hidden="true">
+                    <span class="wa-icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"></rect><path d="m16 10 5-3v10l-5-3"></path></svg></span>
+                    <span class="wa-icon"><svg viewBox="0 0 24 24"><path d="M21 16.4v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 1.1 3.7 2 2 0 0 1 3.1 1.5h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L7 9.5a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5 13 13 0 0 0 2.9.7 2 2 0 0 1 1.7 2Z"></path></svg></span>
+                    <span class="wa-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"></circle><circle cx="12" cy="19" r="1" fill="currentColor" stroke="none"></circle></svg></span>
+                  </span>
+                </div><div class="phone-thread"><div class="bubble bubble-agent" style="--at:0.00">Hola Juan, tu recibo de la póliza vence el 21 de septiembre. Aquí tienes tu liga de pago para que tu cobertura siga vigente, sin interrupciones.<span class="ciclo-enlace">pago.seguroauto-tumarca.com/r/0412-8837</span><span class="message-meta">09:02</span></div></div><div class="phone-composer" aria-hidden="true"><div class="composer-field"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M8.5 10h.01M15.5 10h.01M8.5 14c1 1 2.2 1.5 3.5 1.5s2.5-.5 3.5-1.5"></path></svg><span>Mensaje</span><span class="composer-clip"><svg viewBox="0 0 24 24"><path d="m21.4 11.6-8.8 8.8a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"></path></svg></span></div><span class="composer-mic"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"></path></svg></span></div>
+              </div><p class="ciclo-pie">Aviso de vencimiento antes de que la póliza caiga.</p></div>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
 
       <section class="section" id="agentes" aria-labelledby="agents-intro-title">
         <div class="container">
@@ -4107,101 +4418,6 @@
         </div>
       </section>
 
-      <section class="section section-soft" id="en-accion" aria-labelledby="agent-demo-title">
-        <div class="container">
-          <div class="section-head reveal">
-            <span class="section-label">El agente en acción</span>
-            <div>
-              <h2 class="section-title" id="agent-demo-title">WhatsApp se convierte en una capa operativa.</h2>
-              <p class="section-intro">El agente no improvisa respuestas aisladas. Trabaja con el contexto de la oportunidad, ejecuta acciones autorizadas y deja evidencia de cada paso.</p>
-              <p class="demo-disclaimer"><span aria-hidden="true">✓</span>Escenas representativas basadas en mensajes y reglas verificadas de Insurmind. Datos anonimizados.</p>
-            </div>
-          </div>
-
-          <div class="demo-grid">
-            <article class="demo-card reveal">
-              <div class="demo-head"><strong>Convierte la cotización</strong><span class="demo-step">01</span></div>
-              <div class="phone-screen">
-                <div class="android-status" aria-hidden="true"><span>10:41</span><span>5G&nbsp;&nbsp;◔&nbsp;&nbsp;▰</span></div>
-                <div class="phone-bar">
-                  <span class="wa-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"></path></svg></span>
-                  <span class="agent-avatar">IM</span>
-                  <div><strong>Insurmind</strong><span class="agent-status">Cuenta de empresa</span></div>
-                  <span class="wa-actions" aria-hidden="true">
-                    <span class="wa-icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"></rect><path d="m16 10 5-3v10l-5-3"></path></svg></span>
-                    <span class="wa-icon"><svg viewBox="0 0 24 24"><path d="M21 16.4v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 1.1 3.7 2 2 0 0 1 3.1 1.5h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L7 9.5a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5 13 13 0 0 0 2.9.7 2 2 0 0 1 1.7 2Z"></path></svg></span>
-                    <span class="wa-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"></circle><circle cx="12" cy="19" r="1" fill="currentColor" stroke="none"></circle></svg></span>
-                  </span>
-                </div>
-                <div class="phone-thread">
-                  <span class="chat-day">Hoy</span>
-                  <div class="bubble bubble-customer">Sí, quiero continuar.<span class="message-meta">10:41 <span class="checks">✓✓</span></span></div>
-                  <div class="bubble bubble-agent">Para continuar necesito:<br>— Su nombre completo<br>— Fecha de nacimiento (DD/MM/AAAA)<br>— Género (M/F)<br>— Número de INE (10 dígitos, opcional)<span class="message-meta">10:41</span></div>
-                </div>
-                <div class="phone-composer" aria-hidden="true"><div class="composer-field"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M8.5 10h.01M15.5 10h.01M8.5 14c1 1 2.2 1.5 3.5 1.5s2.5-.5 3.5-1.5"></path></svg><span>Mensaje</span><span class="composer-clip"><svg viewBox="0 0 24 24"><path d="m21.4 11.6-8.8 8.8a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"></path></svg></span></div><span class="composer-mic"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"></path></svg></span></div>
-              </div>
-              <div class="proof-box">
-                <div class="proof-row"><strong>Lo que sabe</strong><span>Cotización, vehículo, cobertura y fase actual.</span></div>
-                <div class="proof-row"><strong>Lo que hace</strong><span>Pide solo el siguiente bloque de datos.</span></div>
-                <div class="proof-row"><strong>Lo que valida</strong><span>Formato y confirmación antes de emitir.</span></div>
-              </div>
-            </article>
-
-            <article class="demo-card reveal">
-              <div class="demo-head"><strong>Recupera la oportunidad</strong><span class="demo-step">02</span></div>
-              <div class="phone-screen">
-                <div class="android-status" aria-hidden="true"><span>11:08</span><span>5G&nbsp;&nbsp;◔&nbsp;&nbsp;▰</span></div>
-                <div class="phone-bar">
-                  <span class="wa-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"></path></svg></span>
-                  <span class="agent-avatar">IM</span>
-                  <div><strong>Insurmind</strong><span class="agent-status">Cuenta de empresa</span></div>
-                  <span class="wa-actions" aria-hidden="true"><span class="wa-icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"></rect><path d="m16 10 5-3v10l-5-3"></path></svg></span><span class="wa-icon"><svg viewBox="0 0 24 24"><path d="M21 16.4v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 1.1 3.7 2 2 0 0 1 3.1 1.5h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L7 9.5a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5 13 13 0 0 0 2.9.7 2 2 0 0 1 1.7 2Z"></path></svg></span><span class="wa-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"></circle><circle cx="12" cy="19" r="1" fill="currentColor" stroke="none"></circle></svg></span></span>
-                </div>
-                <div class="phone-thread">
-                  <span class="chat-day">18 min después</span>
-                  <div class="bubble bubble-agent">Hola, por si no viste mi mensaje anterior 😊<br><br>Tu cotización del Honda HR-V 2020 está lista — $8,940/año con cobertura Amplia.<br><br>¿Tienes alguna duda sobre la cobertura o el precio? Con gusto te ayudo.<span class="message-meta">11:06</span></div>
-                  <div class="bubble bubble-customer">Sí, tengo una duda sobre el pago mensual.<span class="message-meta">11:08 <span class="checks">✓✓</span></span></div>
-                </div>
-                <div class="phone-composer" aria-hidden="true"><div class="composer-field"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M8.5 10h.01M15.5 10h.01M8.5 14c1 1 2.2 1.5 3.5 1.5s2.5-.5 3.5-1.5"></path></svg><span>Mensaje</span><span class="composer-clip"><svg viewBox="0 0 24 24"><path d="m21.4 11.6-8.8 8.8a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"></path></svg></span></div><span class="composer-mic"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"></path></svg></span></div>
-              </div>
-              <div class="proof-box">
-                <div class="proof-row"><strong>Lo que sabe</strong><span>No hubo respuesta y todavía no existe una póliza.</span></div>
-                <div class="proof-row"><strong>Lo que hace</strong><span>Retoma la conversación sin duplicar mensajes.</span></div>
-                <div class="proof-row"><strong>Lo que valida</strong><span>Detiene futuros intentos cuando el cliente responde.</span></div>
-              </div>
-            </article>
-
-            <article class="demo-card reveal">
-              <div class="demo-head"><strong>Entrega el enlace inicial</strong><span class="demo-step">03</span></div>
-              <div class="phone-screen">
-                <div class="android-status" aria-hidden="true"><span>12:24</span><span>5G&nbsp;&nbsp;◔&nbsp;&nbsp;▰</span></div>
-                <div class="phone-bar">
-                  <span class="wa-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"></path></svg></span>
-                  <span class="agent-avatar">IM</span>
-                  <div><strong>Insurmind</strong><span class="agent-status">Cuenta de empresa</span></div>
-                  <span class="wa-actions" aria-hidden="true"><span class="wa-icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"></rect><path d="m16 10 5-3v10l-5-3"></path></svg></span><span class="wa-icon"><svg viewBox="0 0 24 24"><path d="M21 16.4v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 1.1 3.7 2 2 0 0 1 3.1 1.5h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L7 9.5a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5 13 13 0 0 0 2.9.7 2 2 0 0 1 1.7 2Z"></path></svg></span><span class="wa-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"></circle><circle cx="12" cy="19" r="1" fill="currentColor" stroke="none"></circle></svg></span></span>
-                </div>
-                <div class="phone-thread">
-                  <span class="chat-day">Póliza emitida</span>
-                  <div class="bubble bubble-agent">Su póliza POL-•••• fue emitida exitosamente.<br><br>Link de pago: insurmind.link/p/••••<span class="message-meta">12:24</span><span class="payment-link"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7M10 14 21 3"></path><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"></path></svg>Abrir enlace de pago</span></div>
-                </div>
-                <div class="phone-composer" aria-hidden="true"><div class="composer-field"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M8.5 10h.01M15.5 10h.01M8.5 14c1 1 2.2 1.5 3.5 1.5s2.5-.5 3.5-1.5"></path></svg><span>Mensaje</span><span class="composer-clip"><svg viewBox="0 0 24 24"><path d="m21.4 11.6-8.8 8.8a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"></path></svg></span></div><span class="composer-mic"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"></path></svg></span></div>
-              </div>
-              <div class="proof-box">
-                <div class="proof-row"><strong>Lo que sabe</strong><span>La póliza fue emitida y existe un enlace vigente.</span></div>
-                <div class="proof-row"><strong>Lo que hace</strong><span>Entrega el enlace inicial por el canal autorizado.</span></div>
-                <div class="proof-row"><strong>Lo que valida</strong><span>No declara un pago sin evidencia de la aseguradora.</span></div>
-              </div>
-            </article>
-          </div>
-
-          <div class="handoff-callout reveal">
-            <span class="spark" aria-hidden="true">HU</span>
-            <div><strong>El equipo humano nunca desaparece.</strong><p>Puede ver el contexto, tomar la conversación y resolver excepciones sin obligar al cliente a empezar de nuevo.</p></div>
-            <span class="handoff-state">Control disponible</span>
-          </div>
-        </div>
-      </section>
 
       <section class="section" id="plataforma" aria-labelledby="platform-title">
         <div class="container">
@@ -4761,6 +4977,100 @@
         form.addEventListener("input", function (e) {
           if (fieldOf(e.target) && fieldOf(e.target).classList.contains("is-invalid")) setError(e.target, "");
         });
+      })();
+
+    
+      /* ---- Dónde actuamos: la rueda y la escena, sincronizadas ----
+         Adaptado del gráfico que entregó Alberto. Se quitó su código de
+         window.openai.widgetState: se construyó como widget de ChatGPT y en una
+         web no hace nada.
+         La etapa dura 7 s, no los 2,8 s del original: una conversación corta
+         necesita ese tiempo para leerse. */
+      (function () {
+        const raiz = document.getElementById("donde-actuamos");
+        if (!raiz) return;
+        const svg = raiz.querySelector("svg");
+        const etapas = Array.from(svg.querySelectorAll(".stage"));
+        const paneles = Array.from(raiz.querySelectorAll("[data-escena]"));
+        const punto = svg.querySelector("[data-dot]");
+        const halo = svg.querySelector("[data-halo]");
+        const fase = raiz.querySelector("[data-ciclo-fase]");
+        const nombre = raiz.querySelector("[data-ciclo-nombre]");
+        const bPausa = raiz.querySelector("[data-ciclo-pausa]");
+        const bSig = raiz.querySelector("[data-ciclo-siguiente]");
+        if (!svg || !etapas.length || !paneles.length) return;
+
+        const NOMBRES = ["Medimos la inversión de tu campaña", "Capturamos datos", "Cotizamos pólizas",
+          "Resolvemos dudas", "Emitimos pólizas", "Cobramos",
+          "Atención al cliente · dudas de la póliza", "Recordatorios de pago"];
+        const DURACION = 7000;
+        const reducido = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        let pausado = reducido;
+        let transcurrido = 0;
+        let anterior = null;
+        let ultima = -1;
+        let visible = false;
+
+        function pintar() {
+          const vuelta = transcurrido / DURACION;
+          const i = Math.floor(vuelta) % 8;
+          const parte = vuelta - Math.floor(vuelta);
+          const avance = Math.max(0, Math.min(1, (parte - 0.72) / 0.28));
+          const suave = avance * avance * (3 - 2 * avance);
+          const ang = (-112.5 - 45 * (Math.floor(vuelta) + suave)) * Math.PI / 180;
+          const x = 500 + 373.5 * Math.cos(ang);
+          const y = 535 + 373.5 * Math.sin(ang);
+          const color = i < 6 ? "#4f46e5" : "#2f8c6b";
+          [punto, halo].forEach(function (n) {
+            if (!n) return;
+            n.setAttribute("cx", x); n.setAttribute("cy", y); n.setAttribute("fill", color);
+          });
+          if (i !== ultima) {
+            etapas.forEach(function (n, k) { n.classList.toggle("active", k === i); });
+            // reiniciar la animación del panel que entra
+            paneles.forEach(function (p) {
+              const activo = Number(p.dataset.escena) === i + 1;
+              if (activo && !p.classList.contains("is-active")) {
+                p.classList.remove("is-active"); void p.offsetWidth;
+              }
+              p.classList.toggle("is-active", activo);
+            });
+            const esVenta = i < 6;
+            fase.textContent = esVenta ? "Ventas" : "Postventa";
+            fase.className = "ciclo-fase " + (esVenta ? "venta" : "postventa");
+            nombre.textContent = NOMBRES[i];
+            ultima = i;
+          }
+          bPausa.textContent = pausado ? "Reproducir" : "Pausar";
+          bPausa.setAttribute("aria-pressed", String(pausado));
+        }
+
+        function marco(t) {
+          if (anterior !== null && !pausado && visible && !document.hidden) {
+            transcurrido += Math.min(t - anterior, 80);
+          }
+          anterior = t;
+          pintar();
+          requestAnimationFrame(marco);
+        }
+
+        bPausa.addEventListener("click", function () { pausado = !pausado; anterior = null; pintar(); });
+        bSig.addEventListener("click", function () {
+          pausado = true;
+          transcurrido = (Math.floor(transcurrido / DURACION) + 1) * DURACION;
+          pintar();
+        });
+
+        // no gastar ciclos ni adelantar escenas mientras no se ve
+        if ("IntersectionObserver" in window) {
+          new IntersectionObserver(function (es) {
+            es.forEach(function (e) { visible = e.isIntersecting; });
+          }, { threshold: 0.25 }).observe(raiz);
+        } else { visible = true; }
+
+        pintar();
+        requestAnimationFrame(marco);
       })();
 
     </script>
