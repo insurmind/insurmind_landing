@@ -99,7 +99,15 @@ La web pública de **Insurmind**, **agentes de IA que se conectan a cualquier as
 
 **Justificación del cambio, firmada por Alberto el 2026-10-06** (lo que §5 exige): el orden anterior abría por el problema y dejaba el dashboard en sexto lugar. Este abre por la distinción de categoría —chatbot frente a agente— y pone el centro de control en tercero, antes que las conversaciones. Es un cambio de estrategia, no de maquetación: **mueve la prueba del chat al panel**. Se acepta porque el comprador es un director comercial o de sistemas, y a ese perfil le convence antes una consola de operación que una conversación.
 
-**El héroe abre con el diagrama de encaje** (7 oct 2026, decisión de Alberto). Patrón tomado del diagrama de LiteLLM: quién opera a la izquierda —tus clientes, los agentes de IA, tu equipo—, Insurmind en el centro con sus seis capacidades, y a la derecha «Lo que ya tienes»: aseguradoras, brokers e insurtech. **Cajas neutras, sin un solo logo.** Sustituye al mock del centro de control, y con él salen del héroe siete cifras sin verificar. Por debajo de 900 px se desplaza en horizontal con ancho mínimo, como el diagrama de arquitectura: encogerlo dejaba su texto por debajo de 11 px.
+**El héroe abre con el diagrama del núcleo conectado** (7 oct 2026, decisión de Alberto). Quién opera a la izquierda —tus clientes, los agentes de IA, tu equipo—, Insurmind en el centro con sus seis capacidades, y a la derecha «Lo que ya tienes»: aseguradoras, brokers e insurtech. **Cajas neutras, sin un solo logo.** Sustituye al mock del centro de control, y con él salen del héroe siete cifras sin verificar.
+
+El diagrama tuvo dos versiones el mismo día. La primera era un SVG estático con el patrón de LiteLLM (PR #28). La segunda, la vigente, la entregó Alberto en `insurmind-nucleo-conectado.html`: la misma lectura, pero en HTML con iconos y con los cables animados. Lo que cambió al adoptarla:
+
+- **El héroe pasó a una sola columna.** El SVG anterior era casi cuadrado (620×540) y cabía al lado del titular. Este es apaisado: 1120×691 en tres columnas, y 343×806 cuando se apila. Medido en la columna derecha del héroe —540 px— solo ofrecía la forma apilada de 800 px de alto. Titular, copy y botones arriba; el diagrama debajo, a ancho de contenedor. Un scroll más, que es lo que manda §10.
+- **Los cortes van con `@container`, no con `@media`.** El diagrama vive en una caja cuyo ancho no es el del viewport. Con los `@media` del fichero original, en una pantalla de 1440 px aplicaba las reglas de «escritorio» dentro de una columna de 540 y los laterales quedaban en **27 px**. Pasa a tres columnas cuando su propia caja llega a 700 px, que en la página ocurre hacia los 768 de viewport.
+- **Cuidado otra vez con el orden de las reglas**: `@container` no suma especificidad, igual que `@media`. Las reglas base van antes de los bloques `@container`. Ya se rompió dos veces por esto en este repo.
+- Se le quitó el código de `window.openai.widgetState` —venía como widget de ChatGPT—, se pasaron los trece iconos de `<img src="data:…base64">` a SVG en línea con `currentColor` (menos peso y funciona en blanco y negro) y se subieron a 11 px los seis textos que venían a 9 y 10.
+- Tres colores de etiqueta del original fallaban AA: 3,05:1 y 3,68:1 sobre la zona teñida de la tarjeta, a 11 px. Ahora usan `--muted`, que da 5,35:1 y además quita dos hexadecimales fuera de paleta.
 
 **Medir el texto de un SVG es distinto.** `getComputedStyle(...).fontSize` devuelve el valor del lienzo, no el que se ve: hay que multiplicarlo por `ancho renderizado / viewBox.width`. Por no hacerlo se publicaron los números del ciclo a **7,67 px** creyendo que eran 13. Si tocas un SVG, mide el renderizado.
 
@@ -128,6 +136,14 @@ La web pública de **Insurmind**, **agentes de IA que se conectan a cualquier as
 1. El indicador de «escribiendo…» anima **solo `opacity`** y lleva `margin-bottom:-30px` que cancela su huella. Animar `height` movía el teléfono 41 px y el titular 21 px.
 2. Las animaciones del embudo usan `animation-fill-mode: both`, **nunca `backwards`**. La regla global `.anim .msg{opacity:0}` también las alcanza, y `backwards` no conserva el estado final: con `backwards` quedaban 2 de 12 burbujas visibles.
 3. Arrancan cuando se ve el **60 %** del demo (o del alto de pantalla, si el demo es más alto). Al 45 % empezaban mientras la sección aún subía.
+
+**El diagrama del héroe es la excepción a la primera regla.** No es CSS con `--at`: es un bucle de `requestAnimationFrame` que mueve puntos por un SVG cuyos cables se recalculan con el ancho. No se puede hacer en CSS puro porque la geometría depende de dónde cae cada caja. A cambio cumple el resto, y de una forma que conviene no deshacer:
+
+- **Dibujar y animar son dos cosas distintas.** `dibujar()` traza cables y puertos y corre **siempre**, también con `prefers-reduced-motion`: si no corriera, no habría cables. `pintar()` mueve los puntos y solo corre con el diagrama en pantalla y el movimiento permitido.
+- **En reposo no se congela, se apaga.** Al pausar, al salir de pantalla o con movimiento reducido, los puntos se esconden y las cajas se apagan. La primera versión llamaba a `pintar()` al terminar de dibujar y dejaba el fotograma cero: un punto suelto a mitad de cable, que es justo lo que prohíbe «estado por defecto = estado final».
+- `latido()` pinta en cada fotograma, incluso cuando no ha avanzado el reloj. Si solo pintara al avanzar, al reanudar se veía un fotograma con todo apagado.
+- **Sin JS no hay cables.** Es el único punto en el que esta pieza se queda corta frente a §6. Mientras el tablero no lleva la clase `cableado`, un trazo de CSS entre bloques mantiene legible la relación. Si algún día alguien quiere cerrarlo del todo, hace falta geometría fija, y con ella se va la adaptación al ancho.
+- Medir esto en Chrome headless **no funciona con `--virtual-time-budget`**: el `requestAnimationFrame` real solo se dispara tres o cuatro veces en dos segundos y parece que la animación está parada. Para medirla hay que sustituir `requestAnimationFrame` por un reloj de pasos fijos sobre `setTimeout` en una copia del fichero.
 
 ## 7. Flujo de trabajo
 
