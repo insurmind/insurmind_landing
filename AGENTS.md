@@ -89,10 +89,9 @@ La web pública de **Insurmind**, **agentes de IA que se conectan a cualquier as
 | # | Sección | id | Menú |
 |---|---|---|---|
 | 1 | Héroe: titular canónico + mock del centro de control | `top` | — |
-| — | Franja de proceso: cotiza · responde · recopila · valida · emite | — | — |
-| 2 | Un chatbot responde, un agente hace avanzar el proceso | `agentes` | Agentes |
-| 3 | Producto en operación: el centro de control completo | `producto` | Producto |
-| 4 | El agente en acción: tres conversaciones de WhatsApp | `en-accion` | WhatsApp |
+| 2 | **Dónde actuamos: el ciclo de venta y postventa** | `donde-actuamos` | Dónde actuamos |
+| 3 | Un chatbot responde, un agente hace avanzar el proceso | `agentes` | Agentes |
+| 4 | Producto en operación: el centro de control completo | `producto` | Producto |
 | 5 | Plataforma: seis agentes, disponibles hoy o extensibles | `plataforma` | — |
 | 6 | IA con control: agente · reglas · sistemas · personas | `control` | — |
 | 7 | Arquitectura: canales → agentes → core → integraciones | `arquitectura` | Arquitectura |
@@ -100,6 +99,14 @@ La web pública de **Insurmind**, **agentes de IA que se conectan a cualquier as
 | 9 | Cierre + formulario de demo | `contacto` | — |
 
 **Justificación del cambio, firmada por Alberto el 2026-10-06** (lo que §5 exige): el orden anterior abría por el problema y dejaba el dashboard en sexto lugar. Este abre por la distinción de categoría —chatbot frente a agente— y pone el centro de control en tercero, antes que las conversaciones. Es un cambio de estrategia, no de maquetación: **mueve la prueba del chat al panel**. Se acepta porque el comprador es un director comercial o de sistemas, y a ese perfil le convence antes una consola de operación que una conversación.
+
+**La sección 2 es la columna vertebral de la página** (7 oct 2026, decisión de Alberto: «rehacer la home a nivel de contenido, cómo mostramos lo que hacemos»). Una rueda de ocho etapas —seis de venta, dos de postventa— y, al lado, la prueba de la etapa activa. Las dos se mueven juntas.
+
+- **Absorbió dos secciones**, que decían lo mismo peor: la franja de proceso bajo el héroe, y «El agente en acción», cuyas conversaciones viven ahora dentro del ciclo, cada una en su etapa.
+- **Seis etapas tienen conversación**, con copy de producción reutilizado literal de `index.html` y de `variante-b.html`. **Las etapas 01 y 07 no**: llevan ficha descriptiva porque no hay material. Alberto entregará esas dos escenas. **Hasta entonces no inventes conversaciones para rellenarlas**: §4 manda.
+- El gráfico base lo entregó Alberto. Se le quitó el código de `window.openai.widgetState` —venía como widget de ChatGPT— y su hoja embebida, cuyos selectores apuntaban a un contenedor inexistente. Los ids del SVG van renombrados para no chocar con el diagrama de arquitectura.
+- La etapa dura **7 s**, no los 2,8 s del original: una conversación corta no se lee en menos. La rueda solo avanza con la sección en pantalla.
+- Por debajo de 980 px se apila; por debajo de 540 la rueda deja solo los números y el rótulo de estado nombra la etapa.
 
 - Las cinco escenas del embudo y los cuatro verbos como secciones **ya no existen** en esta página. Siguen en `variante-a.html` y en `variante-b.html`, que son archivo.
 - Cambiar el orden sigue requiriendo justificación escrita en el PR.
