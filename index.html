@@ -3968,20 +3968,32 @@
       @keyframes ciclo-sube { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
       @keyframes ciclo-typ { 0% { opacity: 0 } 12% { opacity: 1 } 88% { opacity: 1 } 100% { opacity: 0 } }
 
+      /* Tipografía del SVG. Venía como hoja embebida dentro del propio gráfico,
+         con selectores que apuntaban a un contenedor que ya no existe. Vive
+         aquí, con los selectores buenos. */
+      .ciclo-rueda svg text { font-family: var(--heading), system-ui, sans-serif; text-anchor: middle; fill: #151526; }
+      .ciclo-rueda svg .label { font-size: 22px; font-weight: 600; }
+      .ciclo-rueda svg .number { font-size: 16px; letter-spacing: 2px; fill: #6b687a; }
+
       @media (prefers-reduced-motion: reduce) {
         .ciclo-rueda .stage { transition: none; }
         .ciclo-panel.is-active .bubble { animation: none; opacity: 1; transform: none; }
         .ciclo-panel.is-active .ciclo-typing { display: none; }
       }
 
-      @media (max-width: 980px) {
+      @media (max-width: 1100px) {
         .ciclo-grid { grid-template-columns: 1fr; gap: 2rem; }
-        .ciclo-rueda { max-width: 32rem; margin: 0 auto; }
+        .ciclo-rueda { max-width: 34rem; margin: 0 auto; }
         .ciclo-escena { min-height: 0; }
       }
       @media (max-width: 540px) {
         .ciclo-rueda svg .label { display: none; }
         .ciclo-rueda svg .number { font-size: 34px; }
+        /* Las píldoras VENTAS/POSTVENTA y el rótulo del centro no llevan clase
+           en el gráfico original; se suben por atributo, como hacía su propia
+           hoja, o a 390 px se renderizan a 8 px. */
+        .ciclo-rueda svg text[font-size="18"] { font-size: 29px; }
+        .ciclo-rueda svg text[font-size="20"] { font-size: 26px; }
         .ciclo-nombre { font-size: 0.95rem; }
         .ciclo-estado { flex-direction: column; gap: 0.4rem; }
       }
@@ -4023,12 +4035,6 @@
         word-break: break-all;
       }
 
-      /* Tipografía del SVG. Venía como hoja embebida dentro del propio gráfico,
-         con selectores que apuntaban a un contenedor que ya no existe. Vive
-         aquí, con los selectores buenos. */
-      .ciclo-rueda svg text { font-family: var(--heading), system-ui, sans-serif; text-anchor: middle; fill: #151526; }
-      .ciclo-rueda svg .label { font-size: 22px; font-weight: 600; }
-      .ciclo-rueda svg .number { font-size: 13px; letter-spacing: 2px; fill: #6b687a; }
 
     
       /* --- Escena 01: el cuadro de mando, en tres vistas ---
@@ -4103,6 +4109,32 @@
       .cm-puntos button::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #cfc9ea; transition: background .2s; }
       .cm-puntos button[aria-current="true"]::before { background: var(--indigo); }
 
+    
+      /* --- Diagrama de encaje del héroe ---
+         Patrón tomado del diagrama de LiteLLM: quién opera a la izquierda, el
+         producto en medio, con qué se conecta a la derecha. Cajas neutras, sin
+         un solo logo: §4 lo exige para aseguradoras y aquí se aplica a todos.
+         Decisión de Alberto del 7 oct 2026. */
+      .encaje { max-width: 34rem; margin: 0 auto; }
+      .encaje svg { display: block; width: 100%; height: auto; }
+      .enc-rotulo text { font-family: var(--body); font-size: 15px; font-weight: 700; letter-spacing: 1.6px; fill: #8b87a8; text-anchor: middle; }
+      .enc-caja rect { fill: var(--white); stroke: #dedaf6; stroke-width: 1.5; }
+      .enc-titulo text { font-family: var(--heading); font-size: 21px; font-weight: 700; fill: var(--ink); text-anchor: middle; letter-spacing: -0.3px; }
+      .enc-marca-txt { font-family: var(--heading); font-size: 17px; font-weight: 800; fill: var(--white); text-anchor: middle; letter-spacing: 1.2px; }
+      .enc-fila rect { fill: var(--white); stroke: #e6e2f8; stroke-width: 1.5; }
+      .enc-fila-txt text { font-family: var(--body); font-size: 18px; font-weight: 600; fill: #3c3a52; text-anchor: middle; }
+      .encaje-pie { max-width: 34rem; margin: 1rem auto 0; color: var(--muted); font-size: 0.85rem; line-height: 1.5; text-align: center; }
+      /* Por debajo de 900 px el diagrama no cabe sin encoger su texto por
+         debajo del suelo de 11 px. En vez de deformarlo, se desplaza en
+         horizontal con un ancho mínimo: el mismo patrón que ya usa el
+         diagrama de arquitectura de esta página. */
+      @media (max-width: 900px) {
+        .encaje { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .encaje svg { min-width: 30rem; }
+        .encaje-pista { display: block; }
+      }
+      .encaje-pista { display: none; margin-top: 0.6rem; color: var(--muted); font-size: 0.8rem; text-align: center; }
+
     </style>
   </head>
   <body>
@@ -4140,36 +4172,78 @@
             <p class="hero-note"><span class="check" aria-hidden="true">✓</span>Disponibles hoy: agentes comercial, seguimiento, cartera y cobranza, y supervisión.</p>
           </div>
 
-          <div class="product-visual reveal" aria-label="Vista del centro de control operativo de Insurmind">
-            <div class="app-shell ops-preview">
-              <div class="app-topbar">
-                <span class="ops-preview-mark" aria-hidden="true">✦</span>
-                <span class="ops-preview-search">Pregúntale a Insurmind</span>
-                <span class="ops-demo-tag">Entorno demostrativo</span>
-                <span class="ops-preview-alert" aria-label="8 intervenciones urgentes">8</span>
-              </div>
-              <div class="ops-preview-body">
-                <p class="ops-kicker">Misión de control</p>
-                <h3 class="ops-preview-title">Tus agentes, operando el proceso comercial.</h3>
-                <p class="ops-preview-copy">Supervisa qué objetivo persigue cada agente y cómo la capa de control concentra las excepciones.</p>
-                <div class="ops-core-preview">
-                  <span class="ops-status">Core operativo disponible</span>
-                  <h3>Tu operación comercial está en movimiento.</h3>
-                  <p>Tres agentes operativos y una capa de supervisión comparten contexto, reglas e integraciones.</p>
-                  <div class="hero-metrics-grid" aria-label="Indicadores operativos demostrativos">
-                    <div class="hero-metric"><span>Acciones ejecutadas</span><strong>3.846</strong><small>hoy</small></div>
-                    <div class="hero-metric"><span>Casos en manos de agentes</span><strong>684</strong><small>ahora</small></div>
-                    <div class="hero-metric success"><span>Resueltos sin intervención</span><strong>96,4%</strong><small>últimas 24 h</small></div>
-                    <div class="hero-metric human"><span>Esperan criterio humano</span><strong>46</strong><small>8 urgentes</small></div>
-                  </div>
-                  <div class="hero-outcomes" aria-label="Resultados autónomos demostrativos"><span><strong>327</strong>Pólizas emitidas</span><span><strong>184</strong>Cobros recuperados</span><span><strong>296</strong>Pólizas pagadas</span></div>
-                </div>
-              </div>
+          <div class="product-visual reveal">
+            <div class="encaje">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 540" role="img" aria-labelledby="encaje-t encaje-d">
+  <title id="encaje-t">Dónde encaja Insurmind en tu organización</title>
+  <desc id="encaje-d">Tres columnas. A la izquierda, quién opera: tus clientes, los agentes de IA y tu equipo. En el centro, Insurmind: contexto, reglas, estados, evidencia, descuentos y recordatorios de pago. A la derecha, lo que ya tienes: aseguradoras, brokers e insurtech.</desc>
+  <defs>
+    <linearGradient id="enc-marca" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#4f46e5"/><stop offset="1" stop-color="#7c3aed"/>
+    </linearGradient>
+  </defs>
+
+  <g class="enc-rotulo">
+    <text x="84" y="26">QUIÉN OPERA</text>
+    <text x="536" y="26" text-anchor="end">LO QUE YA TIENES</text>
+  </g>
+
+  <g fill="none" stroke="#cdc6f0" stroke-width="2">
+    <path d="M160 124 H182 Q192 124 192 134 V270"/>
+    <path d="M160 270 H192"/>
+    <path d="M160 416 H182 Q192 416 192 406 V270"/>
+    <path d="M192 270 H228"/>
+    <path d="M392 270 H428 Q438 270 438 260 V134 Q438 124 448 124 H470"/>
+    <path d="M438 270 H470"/>
+    <path d="M438 270 V406 Q438 416 448 416 H470"/>
+  </g>
+  <g fill="#cdc6f0"><circle cx="192" cy="270" r="5"/><circle cx="438" cy="270" r="5"/></g>
+
+  <g class="enc-caja">
+    <rect x="8" y="90" width="152" height="68" rx="16"/>
+    <rect x="8" y="236" width="152" height="68" rx="16"/>
+    <rect x="8" y="382" width="152" height="68" rx="16"/>
+  </g>
+  <g class="enc-titulo">
+    <text x="84" y="131">Tus clientes</text>
+    <text x="84" y="277">Agentes de IA</text>
+    <text x="84" y="423">Tu equipo</text>
+  </g>
+
+  <rect x="228" y="46" width="164" height="448" rx="22" fill="#fbfaff" stroke="#dedaf6"/>
+  <rect x="244" y="64" width="132" height="34" rx="12" fill="url(#enc-marca)"/>
+  <text x="310" y="87" class="enc-marca-txt">INSURMIND</text>
+  <g class="enc-fila">
+    <rect x="244" y="116" width="132" height="46" rx="13"/>
+    <rect x="244" y="172" width="132" height="46" rx="13"/>
+    <rect x="244" y="228" width="132" height="46" rx="13"/>
+    <rect x="244" y="284" width="132" height="46" rx="13"/>
+    <rect x="244" y="340" width="132" height="46" rx="13"/>
+    <rect x="244" y="396" width="132" height="62" rx="13"/>
+  </g>
+  <g class="enc-fila-txt">
+    <text x="310" y="145">Contexto</text>
+    <text x="310" y="201">Reglas</text>
+    <text x="310" y="257">Estados</text>
+    <text x="310" y="313">Evidencia</text>
+    <text x="310" y="369">Descuentos</text>
+    <text x="310" y="420">Recordatorios</text><text x="310" y="443">de pago</text>
+  </g>
+
+  <g class="enc-caja">
+    <rect x="460" y="90" width="152" height="68" rx="16"/>
+    <rect x="460" y="236" width="152" height="68" rx="16"/>
+    <rect x="460" y="382" width="152" height="68" rx="16"/>
+  </g>
+  <g class="enc-titulo">
+    <text x="536" y="131">Aseguradoras</text>
+    <text x="536" y="277">Brokers</text>
+    <text x="536" y="423">Insurtech</text>
+  </g>
+</svg>
             </div>
-            <div class="flow-note">
-              <span class="spark" aria-hidden="true">✦</span>
-              <span><strong>Resultados visibles</strong>Autonomía y criterio humano, en una sola vista.</span>
-            </div>
+            <p class="encaje-pista">Desliza el diagrama para verlo completo &rarr;</p>
+            <p class="encaje-pie">Los agentes y tu equipo trabajan sobre un mismo núcleo, y ese núcleo habla con los sistemas que ya usas.</p>
           </div>
         </div>
       </section>
@@ -4187,7 +4261,7 @@
 
           <div class="ciclo-grid reveal">
             <div class="ciclo-rueda">
-              <svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewBox="0 132 1000 790" role="img" aria-labelledby="ciclo-svg-title ciclo-svg-desc">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewBox="110 132 780 790" role="img" aria-labelledby="ciclo-svg-title ciclo-svg-desc">
 <title id="ciclo-svg-title">Agentes híbridos para la venta y postventa en seguros</title>
 <desc id="ciclo-svg-desc">Venta ocupa tres cuartas partes con seis servicios: medición de inversión de campaña, captura de datos, cotización de pólizas, resolución de dudas, emisión y cobro. Postventa ocupa un cuarto con atención al cliente y recordatorios de pago. Las proporciones organizan servicios y no representan métricas.</desc>
 <defs><linearGradient id="ciclo-brand" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#4f46e5"/><stop offset="1" stop-color="#7c3aed"/></linearGradient><radialGradient id="ciclo-core"><stop stop-color="#ffffff"/><stop offset="1" stop-color="#f4efff"/></radialGradient></defs>

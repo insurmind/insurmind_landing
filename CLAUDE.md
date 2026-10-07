@@ -87,7 +87,7 @@ La web pública de **Insurmind**, **agentes de IA que se conectan a cualquier as
 
 | # | Sección | id | Menú |
 |---|---|---|---|
-| 1 | Héroe: titular canónico + mock del centro de control | `top` | — |
+| 1 | Héroe: titular canónico + **diagrama de encaje** | `top` | — |
 | 2 | **Dónde actuamos: el ciclo de venta y postventa** | `donde-actuamos` | Dónde actuamos |
 | 3 | Un chatbot responde, un agente hace avanzar el proceso | `agentes` | Agentes |
 | 4 | Producto en operación: el centro de control completo | `producto` | Producto |
@@ -98,6 +98,10 @@ La web pública de **Insurmind**, **agentes de IA que se conectan a cualquier as
 | 9 | Cierre + formulario de demo | `contacto` | — |
 
 **Justificación del cambio, firmada por Alberto el 2026-10-06** (lo que §5 exige): el orden anterior abría por el problema y dejaba el dashboard en sexto lugar. Este abre por la distinción de categoría —chatbot frente a agente— y pone el centro de control en tercero, antes que las conversaciones. Es un cambio de estrategia, no de maquetación: **mueve la prueba del chat al panel**. Se acepta porque el comprador es un director comercial o de sistemas, y a ese perfil le convence antes una consola de operación que una conversación.
+
+**El héroe abre con el diagrama de encaje** (7 oct 2026, decisión de Alberto). Patrón tomado del diagrama de LiteLLM: quién opera a la izquierda —tus clientes, los agentes de IA, tu equipo—, Insurmind en el centro con sus seis capacidades, y a la derecha «Lo que ya tienes»: aseguradoras, brokers e insurtech. **Cajas neutras, sin un solo logo.** Sustituye al mock del centro de control, y con él salen del héroe siete cifras sin verificar. Por debajo de 900 px se desplaza en horizontal con ancho mínimo, como el diagrama de arquitectura: encogerlo dejaba su texto por debajo de 11 px.
+
+**Medir el texto de un SVG es distinto.** `getComputedStyle(...).fontSize` devuelve el valor del lienzo, no el que se ve: hay que multiplicarlo por `ancho renderizado / viewBox.width`. Por no hacerlo se publicaron los números del ciclo a **7,67 px** creyendo que eran 13. Si tocas un SVG, mide el renderizado.
 
 **La sección 2 es la columna vertebral de la página** (7 oct 2026, decisión de Alberto: «rehacer la home a nivel de contenido, cómo mostramos lo que hacemos»). Una rueda de ocho etapas —seis de venta, dos de postventa— y, al lado, la prueba de la etapa activa. Las dos se mueven juntas.
 
