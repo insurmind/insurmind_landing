@@ -4030,6 +4030,79 @@
       .ciclo-rueda svg .label { font-size: 22px; font-weight: 600; }
       .ciclo-rueda svg .number { font-size: 13px; letter-spacing: 2px; fill: #6b687a; }
 
+    
+      /* --- Escena 01: el cuadro de mando, en tres vistas ---
+         El cuadro original está diseñado para 900 px y el panel mide 368.
+         En vez de encogerlo hasta hacerlo ilegible, se parte en las tres
+         piezas que ya tenía: gasto por canal, rendimiento de la semana y el
+         recorrido de las ventas. Cifras literales del fichero de Alberto. */
+      .cm {
+        max-width: 23rem;
+        margin: 0 auto;
+        border: 1px solid var(--line);
+        border-radius: 1.4rem;
+        background: var(--white);
+        box-shadow: 0 20px 48px -28px rgba(45, 38, 99, 0.22);
+        overflow: hidden;
+      }
+      .cm-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.6rem;
+        padding: 0.85rem 1.1rem;
+        border-bottom: 1px solid var(--line);
+      }
+      .cm-marca { display: flex; align-items: center; gap: 0.5rem; font-family: var(--heading); font-weight: 700; font-size: 0.95rem; }
+      .cm-marca span {
+        display: grid; width: 1.6rem; height: 1.6rem; place-items: center;
+        border-radius: 0.5rem; background: linear-gradient(145deg, var(--indigo), var(--violet));
+        color: #fff; font-size: 0.72rem; font-weight: 800;
+      }
+      .cm-tag {
+        padding: 0.3rem 0.6rem; border: 1px solid var(--line); border-radius: 999px;
+        background: var(--soft); color: var(--indigo); font-size: 0.7rem; font-weight: 700;
+      }
+      .cm-vista { display: none; padding: 1.1rem 1.1rem 1.25rem; min-height: 15.5rem; }
+      .cm-vista.is-on { display: block; }
+      .cm-h { font-family: var(--heading); font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; }
+      .cm-sub { margin-top: 0.15rem; color: var(--muted); font-size: 0.78rem; }
+
+      .cm-linea { display: flex; align-items: baseline; justify-content: space-between; gap: 0.75rem; padding: 0.5rem 0; border-bottom: 1px solid var(--line); }
+      .cm-linea:last-of-type { border-bottom: 0; }
+      .cm-linea b { display: flex; align-items: center; gap: 0.5rem; font-weight: 500; font-size: 0.88rem; }
+      .cm-linea img { width: 20px; height: 20px; flex: none; object-fit: contain; }
+      .cm-linea i { font-style: normal; font-weight: 700; font-size: 0.9rem; }
+      .cm-total { display: flex; justify-content: space-between; margin-top: 0.35rem; padding-top: 0.6rem; border-top: 1px solid var(--ink); font-size: 0.88rem; font-weight: 700; }
+      .cm-destacado { margin-top: 0.9rem; padding-top: 0.8rem; border-top: 1px solid var(--line); }
+      .cm-destacado span { display: block; color: var(--muted); font-size: 0.76rem; }
+      .cm-destacado strong { display: block; margin-top: 0.1rem; font-family: var(--heading); font-size: 1.6rem; font-weight: 700; letter-spacing: -0.03em; color: #157a52; }
+      .cm-destacado em { display: block; margin-top: 0.25rem; font-style: normal; color: var(--muted); font-size: 0.76rem; }
+
+      .cm-barras { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.3rem; align-items: end; margin-top: 0.9rem; }
+      .cm-barras div { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; justify-content: flex-end; }
+      .cm-barras u { display: block; width: 100%; border-radius: 0.25rem 0.25rem 0 0; background: #c9c0f6; text-decoration: none; }
+      .cm-barras div.alta u { background: var(--indigo); }
+      .cm-barras b { font-size: 0.7rem; font-weight: 700; }
+      .cm-barras small { color: var(--muted); font-size: 0.7rem; }
+      .cm-nota { margin-top: 0.85rem; padding-top: 0.7rem; border-top: 1px solid var(--line); color: #157a52; font-size: 0.78rem; line-height: 1.45; }
+
+      .cm-paso { display: flex; align-items: baseline; gap: 0.7rem; padding: 0.55rem 0; border-bottom: 1px solid var(--line); }
+      .cm-paso:last-of-type { border-bottom: 0; }
+      .cm-paso strong { flex: 0 0 4.3rem; font-family: var(--heading); font-size: 1.1rem; font-weight: 700; letter-spacing: -0.02em; }
+      .cm-paso span { font-size: 0.86rem; font-weight: 500; }
+      .cm-paso em { margin-left: auto; font-style: normal; color: var(--muted); font-size: 0.74rem; white-space: nowrap; }
+      .cm-paso.fin strong { color: #157a52; }
+
+      .cm-pie { padding: 0 1.1rem 1rem; color: var(--muted); font-size: 0.72rem; line-height: 1.45; }
+      .cm-puntos { display: flex; justify-content: center; gap: 0.4rem; padding: 0 0 1rem; }
+      .cm-puntos button {
+        width: 24px; height: 24px; padding: 0; border: 0; background: none; cursor: pointer;
+        display: grid; place-items: center;
+      }
+      .cm-puntos button::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #cfc9ea; transition: background .2s; }
+      .cm-puntos button[aria-current="true"]::before { background: var(--indigo); }
+
     </style>
   </head>
   <body>
@@ -4174,7 +4247,51 @@
             </div>
 
             <div class="ciclo-escena">
-              <div class="ciclo-panel is-active" data-escena="1" role="tabpanel" aria-label="Medimos la inversión de tu campaña"><div class="ciclo-ficha"><h3>Medimos la inversión de tu campaña</h3><p>Antes de la primera conversación ya hay trabajo: saber qué campaña trae cada lead y cuánto cuesta.</p><ul><li>Cada lead llega con su origen</li><li>El coste por oportunidad, a la vista</li><li>El mismo embudo, por marca o por campaña</li></ul></div></div>
+              <div class="ciclo-panel is-active" data-escena="1" role="tabpanel" aria-label="Medimos la inversión de tu campaña">
+              <div class="cm" data-cm>
+                  <div class="cm-top">
+                    <span class="cm-marca"><span aria-hidden="true">IM</span>Insurmind</span>
+                    <span class="cm-tag">Datos ilustrativos</span>
+                  </div>
+
+                  <div class="cm-vista is-on" data-cm-vista="1" role="tabpanel" aria-label="Gasto en publicidad">
+                    <p class="cm-h">Gasto en publicidad</p>
+                    <p class="cm-sub">7 días · MXN</p>
+                    <div class="cm-linea"><b><img src="data:image/webp;base64,UklGRuoEAABXRUJQVlA4WAoAAAAQAAAATwAATwAAQUxQSNIBAAABkCNtexpJXznWCWbRUV9iIG1Y3pjT4ajhIsOTOe2Ou8p9imFm5hlVtbX0L9jdkv6/No6ICYBr1Ts8Ea9cGiJzuhJPjvcrMFal6W2yuDVfVDwKjTuyfl/PexcM7pPjzXLgVc2Qh7rsz+s2efr9vR89LfK4+cSDLwl5nXxwFpH3kaMFYrjgIrwllhehtZwmpjpnKdTEVod2LojxrZUFYr1gISLmUVcfiP3XLp4k/JJHnTVJwFZH70nE1518l6HdQZmErGUEWgoTpJVJzKG0TTkOUvIkaOGfuiQNAOpekjsFFEnUEjAvyzSwJcs2FAmr+qXpHZdmeFKaiViaeEWalVNpLo00hv57jTTmUprTFWlWYmniCWkmh6UZ75VmQEmjsC3LFjAtyzxQkqUIqDtJ7hWAhiR1AChIkv8H+3JsInVIjnJaYKTQQRpqUpSR3ZbhOzp8LcP7TtCSoImOHyX8kied4Su/D+g24hah+wVeC7B5y+kCVkPNR4d2kNNcdA62wwsetyEcLnBYgNvIvwiuPyR+JV/h/knTp9YjePn+uy/t1/C2rH0wNfgclDddHQwF8D1fv7d31yiApSrOb9nYni4pMFb945PxyqkhMpcr8cRwr4JrVlA4IPICAADQEQCdASpQAFAAPm0ukUWkIqGWbM7sQAbEswQ4AMGYdRCzQl7D+E/VXpRXHXOA2wHmA/ZLqAegB/Ov611n3oAeWR+4fws+U7ioEKB2A1mgwBnofL0dIN+WWrewhNH+n/csotxSmC8EYmTrkvM26pEe7Mh6YBxKbvB3oTx7m28ZGXh676HCyLPYzPsUW5hMRGnILsNCQrPEAP7+nfcT/ZAi05OHe3pjNKKH8lYY/uB6RXWOp5zyaIzD4Xhhf9YJEVFatiQb5L4j4sDP//BRf/8GL///BSiEbb6czJw8wtRwxYrA6eoD67gCpTvxBLkyInSnciXuv6XBH+P6unuuRDcb4rQFlJb1PxZu1P/5MXxJLmuyush8QpKsGTnz+1hN+LaAJ0e/GTC+9IfoaszK8IhU9fQqkU6wlvOzsJNZmZHdtKNaxIyW6vo+Cp+Tpytu90SonIH0ylC+vye0vvFB3Onq/0DvnB5ig6vphj8dmyzxPwMnzHF8vVJeHFw3thcgtD6v4nb3s6KF1PLUlE+Cj2fj/8bxOknaIelUnHTNfbpYbKCWSz15E4X5f8YunNAkS6sOdGf3Nophf+C9wFjsVdL6mkKtOToGo1uS58XTlpD4tSLv5jRJNaM+hpCgIAD6ZhyHf4C6n1OwdSn+UAGu/5pwZIMEdmV85gWowk8wL7TvvzfYzJNVa37XWRNAOH72Nk/33BXIufO/e0SHCTLcaFEzIjZQ31qsmSD2a6pS9DXHDwuyCCWn1d6xUlMR4ikYQCiA1viqO6Ky68IctclpLPyUE4HpPGeWdQFwaZouw1gIQpGweL9PnkPt1nftk4ZY37StdIxN8qpQc91+Bpv+ZTlJc5RAty/45ItS9MKqDdAGqiKyKVkRjFNQ6DwG6r8hSy7oFmSAvlgIW6ef6p/B76Up0oz2d5dSXtOJPWB/LRI1Y5aelIcW49Hn//4N3//giv//4KbdiIAECTYSaSR/KsOwADwMCf9Uit/6pDVUAEZC5dAA" alt="" aria-hidden="true">Google Ads</b><i>$12,000</i></div>
+                    <div class="cm-linea"><b><img src="data:image/png;base64,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" alt="" aria-hidden="true">Instagram</b><i>$8,000</i></div>
+                    <div class="cm-linea"><b><img src="data:image/png;base64,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" alt="" aria-hidden="true">Facebook</b><i>$10,000</i></div>
+                    <div class="cm-total"><span>Todos los canales</span><span>$30,000</span></div>
+                    <div class="cm-destacado">
+                      <span>Primas cobradas · semana</span>
+                      <strong>$600,000</strong>
+                      <em>$20 cobrados por cada $1 de pauta.</em>
+                    </div>
+                  </div>
+
+                  <div class="cm-vista" data-cm-vista="2" role="tabpanel" aria-label="Rendimiento semanal">
+                    <p class="cm-h">Rendimiento semanal</p>
+                    <p class="cm-sub">Pólizas emitidas por día</p>
+                    <div class="cm-barras" aria-hidden="true"><div><b>23</b><u style="height:22px"></u><small>Lun</small></div><div><b>29</b><u style="height:36px"></u><small>Mar</small></div><div><b>35</b><u style="height:51px"></u><small>Mié</small></div><div><b>28</b><u style="height:34px"></u><small>Jue</small></div><div class="alta"><b>44</b><u style="height:72px"></u><small>Vie</small></div><div><b>34</b><u style="height:48px"></u><small>Sáb</small></div><div><b>27</b><u style="height:32px"></u><small>Dom</small></div></div>
+                    <p class="cm-nota">Viernes: menor costo por emisión de esta semana ($91 MXN).</p>
+                  </div>
+
+                  <div class="cm-vista" data-cm-vista="3" role="tabpanel" aria-label="El recorrido de tus ventas">
+                    <p class="cm-h">El recorrido de tus ventas</p>
+                    <p class="cm-sub">Del clic al cobro</p>
+                    <div class="cm-paso"><strong>15,000</strong><span>Clics</span><em>$2.00 por clic</em></div>
+                    <div class="cm-paso"><strong>1,800</strong><span>Conversaciones</span><em>12% de los clics</em></div>
+                    <div class="cm-paso"><strong>220</strong><span>Emisiones</span><em>12.2% de las conversaciones</em></div>
+                    <div class="cm-paso fin"><strong>200</strong><span>Cobros</span><em>90.9% de las emisiones</em></div>
+                  </div>
+
+                  <p class="cm-pie">Datos ilustrativos. El costo por emisión compara el gasto y las emisiones del día; puede haber desfase entre clic y venta. Las primas no representan utilidad.</p>
+                  <div class="cm-puntos" role="tablist" aria-label="Vistas del cuadro de mando">
+                    <button type="button" data-cm-punto="1" aria-current="true" aria-label="Gasto en publicidad"></button>
+                    <button type="button" data-cm-punto="2" aria-current="false" aria-label="Rendimiento semanal"></button>
+                    <button type="button" data-cm-punto="3" aria-current="false" aria-label="El recorrido de tus ventas"></button>
+                  </div>
+                </div>
+              </div>
               <div class="ciclo-panel" data-escena="2" role="tabpanel" aria-label="Capturamos datos"><div class="phone-screen"><div class="android-status" aria-hidden="true"><span>10:41</span><span>5G&nbsp;&nbsp;◔&nbsp;&nbsp;▰</span></div>
                 <div class="phone-bar">
                   <span class="wa-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"></path></svg></span>
@@ -4998,12 +5115,24 @@
         const nombre = raiz.querySelector("[data-ciclo-nombre]");
         const bPausa = raiz.querySelector("[data-ciclo-pausa]");
         const bSig = raiz.querySelector("[data-ciclo-siguiente]");
+        const cmVistas = Array.from(raiz.querySelectorAll("[data-cm-vista]"));
+        const cmPuntos = Array.from(raiz.querySelectorAll("[data-cm-punto]"));
         if (!svg || !etapas.length || !paneles.length) return;
 
         const NOMBRES = ["Medimos la inversión de tu campaña", "Capturamos datos", "Cotizamos pólizas",
           "Resolvemos dudas", "Emitimos pólizas", "Cobramos",
           "Atención al cliente · dudas de la póliza", "Recordatorios de pago"];
-        const DURACION = 7000;
+        // La etapa 01 muestra tres vistas del cuadro de mando, así que dura
+        // el triple de una vista. El resto, 7 s: lo que tarda en leerse una
+        // conversación corta.
+        const VISTA_CM = 3500;
+        const DURACIONES = [VISTA_CM * 3, 7000, 7000, 7000, 7000, 7000, 7000, 7000];
+        const TOTAL = DURACIONES.reduce(function (a, b) { return a + b; }, 0);
+        function etapaEn(t) {
+          var r = t % TOTAL, i = 0;
+          while (r >= DURACIONES[i]) { r -= DURACIONES[i]; i++; }
+          return { i: i, parte: r / DURACIONES[i], vueltas: Math.floor(t / TOTAL) * 8 + i };
+        }
         const reducido = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
         let pausado = reducido;
@@ -5013,12 +5142,12 @@
         let visible = false;
 
         function pintar() {
-          const vuelta = transcurrido / DURACION;
-          const i = Math.floor(vuelta) % 8;
-          const parte = vuelta - Math.floor(vuelta);
+          const e = etapaEn(transcurrido);
+          const i = e.i;
+          const parte = e.parte;
           const avance = Math.max(0, Math.min(1, (parte - 0.72) / 0.28));
           const suave = avance * avance * (3 - 2 * avance);
-          const ang = (-112.5 - 45 * (Math.floor(vuelta) + suave)) * Math.PI / 180;
+          const ang = (-112.5 - 45 * (e.vueltas + suave)) * Math.PI / 180;
           const x = 500 + 373.5 * Math.cos(ang);
           const y = 535 + 373.5 * Math.sin(ang);
           const color = i < 6 ? "#4f46e5" : "#2f8c6b";
@@ -5026,6 +5155,13 @@
             if (!n) return;
             n.setAttribute("cx", x); n.setAttribute("cy", y); n.setAttribute("fill", color);
           });
+          // El cuadro de mando de la etapa 01 rota entre sus tres vistas dentro
+          // de esa misma etapa, con el mismo reloj: pausar detiene las dos cosas.
+          if (cmVistas.length) {
+            const v = i === 0 ? Math.min(cmVistas.length - 1, Math.floor(parte * cmVistas.length)) : 0;
+            cmVistas.forEach(function (n, k) { n.classList.toggle("is-on", k === v); });
+            cmPuntos.forEach(function (n, k) { n.setAttribute("aria-current", String(k === v)); });
+          }
           if (i !== ultima) {
             etapas.forEach(function (n, k) { n.classList.toggle("active", k === i); });
             // reiniciar la animación del panel que entra
@@ -5056,9 +5192,19 @@
         }
 
         bPausa.addEventListener("click", function () { pausado = !pausado; anterior = null; pintar(); });
+        cmPuntos.forEach(function (b, k) {
+          b.addEventListener("click", function () {
+            pausado = true;
+            // al principio de la etapa 01, más la fracción de la vista elegida
+            transcurrido = Math.floor(transcurrido / TOTAL) * TOTAL + k * VISTA_CM + 10;
+            pintar();
+          });
+        });
+
         bSig.addEventListener("click", function () {
           pausado = true;
-          transcurrido = (Math.floor(transcurrido / DURACION) + 1) * DURACION;
+          var e = etapaEn(transcurrido);
+          transcurrido += DURACIONES[e.i] * (1 - e.parte) + 1;
           pintar();
         });
 
