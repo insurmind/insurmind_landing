@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#ffffff" />
     <meta
       name="description"
-      content="Agentes de IA que se conectan a cualquier aseguradora en México para cotizar, resolver, emitir y cobrar. Sin intervención, de principio a fin, y con el control siempre de tu lado."
+      content="Agentes de IA que se conectan a cualquier aseguradora en México para cotizar, resolver, emitir y cobrar. Tu equipo toma la conversación cuando hace falta y se la devuelve al agente."
     />
     <title>Insurmind | Agentes IA para Seguros</title>
     <link rel="canonical" href="https://insurmind.ai/" />
@@ -15,7 +15,7 @@
     <meta property="og:locale" content="es_MX" />
     <meta property="og:url" content="https://insurmind.ai/" />
     <meta property="og:title" content="Insurmind | Agentes IA para Seguros" />
-    <meta property="og:description" content="Agentes de IA que se conectan a cualquier aseguradora en México para cotizar, resolver, emitir y cobrar. Sin intervención, de principio a fin, y con el control siempre de tu lado." />
+    <meta property="og:description" content="Agentes de IA que se conectan a cualquier aseguradora en México para cotizar, resolver, emitir y cobrar. Tu equipo toma la conversación cuando hace falta y se la devuelve al agente." />
     <meta property="og:image" content="https://insurmind.ai/assets/og-image-3.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -23,7 +23,7 @@
     <meta property="og:image:alt" content="Insurmind — agentes de IA que se conectan a cualquier aseguradora en México para cotizar, resolver, emitir y cobrar." />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Insurmind | Agentes IA para Seguros" />
-    <meta name="twitter:description" content="Agentes de IA que se conectan a cualquier aseguradora en México para cotizar, resolver, emitir y cobrar. Sin intervención, de principio a fin, y con el control siempre de tu lado." />
+    <meta name="twitter:description" content="Agentes de IA que se conectan a cualquier aseguradora en México para cotizar, resolver, emitir y cobrar. Tu equipo toma la conversación cuando hace falta y se la devuelve al agente." />
     <meta name="twitter:image" content="https://insurmind.ai/assets/og-image-3.png" />
     <meta name="twitter:image:alt" content="Insurmind — agentes de IA que se conectan a cualquier aseguradora en México para cotizar, resolver, emitir y cobrar." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -2789,20 +2789,17 @@
             regla base escrita después lo pisa. Ya ha pasado dos veces aquí. */
       .nucleo { container-type: inline-size; max-width: 70rem; margin: 0 auto; }
 
+      /* Sin marco. El diagrama no es un widget incrustado: flota sobre el
+         fondo del héroe y las cajas de dentro son lo único que tiene borde.
+         Decisión de Alberto del 7 oct 2026, sobre la referencia de Juan.
+         Si alguna vez le devuelves un fondo propio, recuerda que los textos
+         de etiqueta se midieron contra el fondo que tengan debajo. */
       .nx {
         position: relative;
         isolation: isolate;
-        padding: 1.1rem 1rem 1.2rem;
-        border: 1px solid rgba(205, 201, 229, 0.75);
-        border-radius: 1.65rem;
-        background:
-          radial-gradient(ellipse at 50% 38%, rgba(221, 216, 255, 0.4), transparent 58%),
-          radial-gradient(ellipse at 96% 88%, rgba(29, 154, 108, 0.1), transparent 46%),
-          rgba(255, 255, 255, 0.92);
-        box-shadow: 0 18px 50px rgba(44, 38, 94, 0.08);
       }
 
-      .nx-top { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+      .nx-top { margin-bottom: 0.4rem; text-align: center; }
       .nx-eyebrow { margin: 0; color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: 0.14em; line-height: 1.4; text-transform: uppercase; }
       .nx-pausa {
         flex-shrink: 0; min-height: 36px; padding: 0.5rem 0.8rem;
@@ -2871,7 +2868,10 @@
       .nx-cap.activo { border-color: #b7a6f1; background: var(--soft); color: var(--indigo-dark); }
       .nx-cap.activo svg { opacity: 1; }
 
-      .nx-strip { display: flex; justify-content: center; align-items: center; gap: 0.5rem; margin-top: 0.7rem; color: var(--muted); font-size: 12px; }
+      /* El pie reúne la señal, la frase y el control de pausa. Sin el marco, el
+         botón arriba a la derecha era lo que más delataba el widget. */
+      .nx-pie-fila { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.5rem 1rem; margin-top: 0.9rem; }
+      .nx-strip { display: flex; align-items: center; gap: 0.5rem; margin: 0; color: var(--muted); font-size: 12px; }
       .nx-senal { width: 6px; height: 6px; border-radius: 50%; background: var(--indigo); box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1); }
       .nx-pie { max-width: 44rem; margin: 1rem auto 0; color: var(--muted); font-size: 0.85rem; line-height: 1.5; text-align: center; }
 
@@ -2889,7 +2889,6 @@
          Medido a 646: laterales de 162 px y núcleo de 219, y «Recordatorios de
          pago» sigue entrando en una línea. */
       @container (min-width: 520px) {
-        .nx { padding: 1.2rem 1.3rem 1.2rem; }
         .nx-board { grid-template-columns: minmax(0, 1fr) minmax(9.5rem, 1.35fr) minmax(0, 1fr); gap: 1.9rem; padding: 2rem 0 1.2rem; }
         .nx-lado { grid-template-columns: minmax(0, 1fr); gap: 1.4rem; }
         .nx-rotulo, .nx-salida .nx-rotulo { top: -1.7rem; bottom: auto; }
@@ -2911,7 +2910,6 @@
          pantalla y 816 a 1600, así que este escalón ya lo alcanza el propio
          héroe, no solo la versión apilada. */
       @container (min-width: 760px) {
-        .nx { padding: 1.5rem 1.6rem 1.4rem; }
         .nx-board { grid-template-columns: minmax(0, 1fr) minmax(13rem, 1.4fr) minmax(0, 1fr); gap: 3rem; padding: 2rem 0 1.2rem; }
         .nx-lado { gap: 2rem; }
         .nx-rotulo, .nx-salida .nx-rotulo { top: -1.75rem; }
@@ -2930,7 +2928,6 @@
       }
 
       @container (min-width: 1000px) {
-        .nx { padding: 1.9rem 2.6rem 1.6rem; }
         .nx-board { gap: 4.6rem; }
         .nx-cuerpo { min-height: 8.2rem; }
         .nx-nombre { font-size: 17px; }
@@ -2987,8 +2984,7 @@
                 <div class="nx" id="nucleo-conectado">
                   <div class="nx-top">
                     <p class="nx-eyebrow">Un núcleo. Toda tu operación.</p>
-                    <button type="button" class="nx-pausa" data-nx-pausa aria-pressed="false">Pausar animación</button>
-                        </div>
+                  </div>
                   <div class="nx-board" role="group" aria-label="Tus clientes, los agentes de IA y tu equipo se conectan a través del núcleo de Insurmind con las aseguradoras, los brokers y las insurtech que ya usas.">
                     <svg class="nx-wires" aria-hidden="true"></svg>
                     <div class="nx-lado nx-entrada">
@@ -3046,7 +3042,10 @@
                       </div>
                     </div>
                         </div>
-                  <p class="nx-strip"><span class="nx-senal" aria-hidden="true"></span>Contexto compartido · Operación conectada</p>
+                  <div class="nx-pie-fila">
+                    <p class="nx-strip"><span class="nx-senal" aria-hidden="true"></span>Contexto compartido · Operación conectada</p>
+                    <button type="button" class="nx-pausa" data-nx-pausa aria-pressed="false">Pausar animación</button>
+                  </div>
                       </div>
                 <p class="nx-pie">Los agentes y tu equipo trabajan sobre un mismo núcleo, y ese núcleo habla con los sistemas que ya usas.</p>
               </div>
