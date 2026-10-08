@@ -2547,9 +2547,19 @@
       }
       .ciclo-rueda { min-width: 0; }
       .ciclo-rueda svg { display: block; width: 100%; height: auto; }
-      .ciclo-rueda .stage { transition: fill 0.45s ease; }
+      /* Las etapas son pestañas: se pueden pulsar y enfocar. El `fill` del
+         atributo en el SVG es una presentation attribute, que pierde contra
+         cualquier regla CSS, así que estas ganan sin necesidad de !important. */
+      .ciclo-rueda .stage { cursor: pointer; transition: fill 0.45s ease; }
+      .ciclo-rueda .stage:hover { fill: #e6ddff; }
+      .ciclo-rueda .stage.post:hover { fill: #d5efe1; }
       .ciclo-rueda .stage.active { fill: #d8caff; }
       .ciclo-rueda .stage.post.active { fill: #bde5d0; }
+      /* El foco en un <path> no se ve con outline en todos los navegadores, así
+         que se marca también con el trazo, que sí es propio del SVG. */
+      .ciclo-rueda .stage:focus { outline: none; }
+      .ciclo-rueda .stage:focus-visible { stroke: var(--indigo-dark); stroke-width: 4; outline: 3px solid var(--indigo-dark); outline-offset: 2px; }
+      .ciclo-rueda .stage.post:focus-visible { stroke: #15795c; outline-color: #15795c; }
 
       .ciclo-estado {
         display: flex;
@@ -3164,45 +3174,46 @@
 
           <div class="ciclo-grid reveal">
             <div class="ciclo-rueda">
-              <svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewBox="110 132 780 790" role="img" aria-labelledby="ciclo-svg-title ciclo-svg-desc">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewBox="110 132 780 790" role="group" aria-labelledby="ciclo-svg-title ciclo-svg-desc">
 <title id="ciclo-svg-title">Agentes híbridos para la venta y postventa en seguros</title>
 <desc id="ciclo-svg-desc">Venta ocupa tres cuartas partes con seis servicios: medición de inversión de campaña, captura de datos, cotización de pólizas, resolución de dudas, emisión y cobro. Postventa ocupa un cuarto con atención al cliente y recordatorios de pago. Las proporciones organizan servicios y no representan métricas.</desc>
 <defs><linearGradient id="ciclo-brand" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#4f46e5"/><stop offset="1" stop-color="#7c3aed"/></linearGradient><radialGradient id="ciclo-core"><stop stop-color="#ffffff"/><stop offset="1" stop-color="#f4efff"/></radialGradient></defs>
+<g role="tablist" aria-label="Etapas del ciclo de venta y postventa"><path class="stage" d="M 248.346 277.570 A 360 360 0 0 1 495.916 175.023 L 497.958 355.012 A 180 180 0 0 0 374.173 406.285 Z" fill="#f3efff" role="tab" data-etapa="0" id="ciclo-etapa-1" aria-controls="ciclo-escena-1" aria-selected="true" tabindex="0" aria-label="Etapa 01 de 8: Medimos la inversión de tu campaña"/><path class="stage" d="M 140.023 530.916 A 360 360 0 0 1 242.570 283.346 L 371.285 409.173 A 180 180 0 0 0 320.012 532.958 Z" fill="#eee8ff" role="tab" data-etapa="1" id="ciclo-etapa-2" aria-controls="ciclo-escena-2" aria-selected="false" tabindex="-1" aria-label="Etapa 02 de 8: Capturamos datos"/><path class="stage" d="M 242.570 786.654 A 360 360 0 0 1 140.023 539.084 L 320.012 537.042 A 180 180 0 0 0 371.285 660.827 Z" fill="#f3efff" role="tab" data-etapa="2" id="ciclo-etapa-3" aria-controls="ciclo-escena-3" aria-selected="false" tabindex="-1" aria-label="Etapa 03 de 8: Cotizamos pólizas"/><path class="stage" d="M 495.916 894.977 A 360 360 0 0 1 248.346 792.430 L 374.173 663.715 A 180 180 0 0 0 497.958 714.988 Z" fill="#eee8ff" role="tab" data-etapa="3" id="ciclo-etapa-4" aria-controls="ciclo-escena-4" aria-selected="false" tabindex="-1" aria-label="Etapa 04 de 8: Resolvemos dudas"/><path class="stage" d="M 751.654 792.430 A 360 360 0 0 1 504.084 894.977 L 502.042 714.988 A 180 180 0 0 0 625.827 663.715 Z" fill="#f3efff" role="tab" data-etapa="4" id="ciclo-etapa-5" aria-controls="ciclo-escena-5" aria-selected="false" tabindex="-1" aria-label="Etapa 05 de 8: Emitimos pólizas"/><path class="stage" d="M 859.977 539.084 A 360 360 0 0 1 757.430 786.654 L 628.715 660.827 A 180 180 0 0 0 679.988 537.042 Z" fill="#eee8ff" role="tab" data-etapa="5" id="ciclo-etapa-6" aria-controls="ciclo-escena-6" aria-selected="false" tabindex="-1" aria-label="Etapa 06 de 8: Cobramos"/><path class="stage post" d="M 757.430 283.346 A 360 360 0 0 1 859.977 530.916 L 679.988 532.958 A 180 180 0 0 0 628.715 409.173 Z" fill="#eaf6ef" role="tab" data-etapa="6" id="ciclo-etapa-7" aria-controls="ciclo-escena-7" aria-selected="false" tabindex="-1" aria-label="Etapa 07 de 8: Atención al cliente · dudas de la póliza"/><path class="stage post" d="M 504.084 175.023 A 360 360 0 0 1 751.654 277.570 L 625.827 406.285 A 180 180 0 0 0 502.042 355.012 Z" fill="#e1f1e8" role="tab" data-etapa="7" id="ciclo-etapa-8" aria-controls="ciclo-escena-8" aria-selected="false" tabindex="-1" aria-label="Etapa 08 de 8: Recordatorios de pago"/></g>
 
 
 
 <rect x="165" y="151" width="170" height="40" rx="20" fill="url(#ciclo-brand)"/><text x="250" y="178" style="fill:#fff" font-size="18" font-weight="700">VENTAS</text>
 <rect x="670" y="151" width="170" height="40" rx="20" fill="#e8f6ef" stroke="#c6e7d7"/><text x="755" y="178" style="fill:#28775c" font-size="18" font-weight="700">POSTVENTA</text>
-<path class="stage" d="M 248.346 277.570 A 360 360 0 0 1 495.916 175.023 L 497.958 355.012 A 180 180 0 0 0 374.173 406.285 Z" fill="#f3efff"/>
+
 <text x="396.68" y="242.55" class="number">01</text>
 <text x="396.68" y="265.55" class="label">Medimos la</text>
 <text x="396.68" y="292.55" class="label">inversión de</text>
 <text x="396.68" y="319.55" class="label">tu campaña</text>
-<path class="stage" d="M 140.023 530.916 A 360 360 0 0 1 242.570 283.346 L 371.285 409.173 A 180 180 0 0 0 320.012 532.958 Z" fill="#eee8ff"/>
+
 <text x="250.55" y="388.68" class="number">02</text>
 <text x="250.55" y="425.18" class="label">Capturamos</text>
 <text x="250.55" y="452.18" class="label">datos</text>
-<path class="stage" d="M 242.570 786.654 A 360 360 0 0 1 140.023 539.084 L 320.012 537.042 A 180 180 0 0 0 371.285 660.827 Z" fill="#f3efff"/>
+
 <text x="250.55" y="595.32" class="number">03</text>
 <text x="250.55" y="631.82" class="label">Cotizamos</text>
 <text x="250.55" y="658.82" class="label">pólizas</text>
-<path class="stage" d="M 495.916 894.977 A 360 360 0 0 1 248.346 792.430 L 374.173 663.715 A 180 180 0 0 0 497.958 714.988 Z" fill="#eee8ff"/>
+
 <text x="396.68" y="741.45" class="number">04</text>
 <text x="396.68" y="777.95" class="label">Resolvemos</text>
 <text x="396.68" y="804.95" class="label">dudas</text>
-<path class="stage" d="M 751.654 792.430 A 360 360 0 0 1 504.084 894.977 L 502.042 714.988 A 180 180 0 0 0 625.827 663.715 Z" fill="#f3efff"/>
+
 <text x="603.32" y="741.45" class="number">05</text>
 <text x="603.32" y="777.95" class="label">Emitimos</text>
 <text x="603.32" y="804.95" class="label">pólizas</text>
-<path class="stage" d="M 859.977 539.084 A 360 360 0 0 1 757.430 786.654 L 628.715 660.827 A 180 180 0 0 0 679.988 537.042 Z" fill="#eee8ff"/>
+
 <text x="749.45" y="595.32" class="number">06</text>
 <text x="749.45" y="645.32" class="label">Cobramos</text>
-<path class="stage post" d="M 757.430 283.346 A 360 360 0 0 1 859.977 530.916 L 679.988 532.958 A 180 180 0 0 0 628.715 409.173 Z" fill="#eaf6ef"/>
+
 <text x="749.45" y="388.68" class="number">07</text>
 <text x="749.45" y="411.68" class="label">Atención</text>
 <text x="749.45" y="438.68" class="label">al cliente</text>
 <text x="749.45" y="465.68" class="label" style="font-size:17px;font-weight:400">Dudas de tu póliza</text>
-<path class="stage post" d="M 504.084 175.023 A 360 360 0 0 1 751.654 277.570 L 625.827 406.285 A 180 180 0 0 0 502.042 355.012 Z" fill="#e1f1e8"/>
+
 <text x="603.32" y="242.55" class="number">08</text>
 <text x="603.32" y="279.05" class="label">Recordatorios</text>
 <text x="603.32" y="306.05" class="label">de pago</text>
@@ -3224,7 +3235,7 @@
             </div>
 
             <div class="ciclo-escena">
-              <div class="ciclo-panel is-active" data-escena="1" role="tabpanel" aria-label="Medimos la inversión de tu campaña">
+              <div class="ciclo-panel is-active" data-escena="1" id="ciclo-escena-1" role="tabpanel" tabindex="0" aria-labelledby="ciclo-etapa-1">
               <div class="cm" data-cm>
                   <div class="cm-top">
                     <span class="cm-marca"><span aria-hidden="true">IM</span>Insurmind</span>
@@ -3269,7 +3280,7 @@
                   </div>
                 </div>
               </div>
-              <div class="ciclo-panel" data-escena="2" role="tabpanel" aria-label="Capturamos datos"><div class="phone-screen"><div class="android-status" aria-hidden="true"><span>10:41</span><span>5G&nbsp;&nbsp;◔&nbsp;&nbsp;▰</span></div>
+              <div class="ciclo-panel" data-escena="2" id="ciclo-escena-2" role="tabpanel" tabindex="0" aria-labelledby="ciclo-etapa-2"><div class="phone-screen"><div class="android-status" aria-hidden="true"><span>10:41</span><span>5G&nbsp;&nbsp;◔&nbsp;&nbsp;▰</span></div>
                 <div class="phone-bar">
                   <span class="wa-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"></path></svg></span>
                   <span class="agent-avatar">IM</span>
@@ -3281,7 +3292,7 @@
                   </span>
                 </div><div class="phone-thread"><div class="bubble bubble-customer" style="--at:0.00">Sí, quiero continuar.<span class="message-meta">10:41 <span class="checks">✓✓</span></span></div><div class="ciclo-typing" style="--at:1.60" aria-hidden="true"><i></i><i></i><i></i></div><div class="bubble bubble-agent" style="--at:2.80">Para continuar necesito:<br>— Su nombre completo<br>— Fecha de nacimiento (DD/MM/AAAA)<br>— Género (M/F)<br>— Número de INE (10 dígitos, opcional)<span class="message-meta">10:41</span></div></div><div class="phone-composer" aria-hidden="true"><div class="composer-field"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M8.5 10h.01M15.5 10h.01M8.5 14c1 1 2.2 1.5 3.5 1.5s2.5-.5 3.5-1.5"></path></svg><span>Mensaje</span><span class="composer-clip"><svg viewBox="0 0 24 24"><path d="m21.4 11.6-8.8 8.8a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"></path></svg></span></div><span class="composer-mic"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"></path></svg></span></div>
               </div><p class="ciclo-pie">Captura de datos para la emisión.</p></div>
-              <div class="ciclo-panel" data-escena="3" role="tabpanel" aria-label="Cotizamos pólizas"><div class="phone-screen"><div class="android-status" aria-hidden="true"><span>10:41</span><span>5G&nbsp;&nbsp;◔&nbsp;&nbsp;▰</span></div>
+              <div class="ciclo-panel" data-escena="3" id="ciclo-escena-3" role="tabpanel" tabindex="0" aria-labelledby="ciclo-etapa-3"><div class="phone-screen"><div class="android-status" aria-hidden="true"><span>10:41</span><span>5G&nbsp;&nbsp;◔&nbsp;&nbsp;▰</span></div>
                 <div class="phone-bar">
                   <span class="wa-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"></path></svg></span>
                   <span class="agent-avatar">IM</span>
@@ -3293,7 +3304,7 @@
                   </span>
                 </div><div class="phone-thread"><div class="bubble bubble-agent" style="--at:0.00"><span class="ciclo-adjunto"><i>PDF</i><span><b>Cotizacion_2381_HD_2020.pdf</b><small>1 página · PDF</small></span></span>Aquí tienes tu cotización. ¿Continuamos con la emisión de tu póliza?<span class="message-meta">18:24</span></div></div><div class="phone-composer" aria-hidden="true"><div class="composer-field"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M8.5 10h.01M15.5 10h.01M8.5 14c1 1 2.2 1.5 3.5 1.5s2.5-.5 3.5-1.5"></path></svg><span>Mensaje</span><span class="composer-clip"><svg viewBox="0 0 24 24"><path d="m21.4 11.6-8.8 8.8a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"></path></svg></span></div><span class="composer-mic"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"></path></svg></span></div>
               </div><p class="ciclo-pie">La cotización, entregada en la conversación.</p></div>
-              <div class="ciclo-panel" data-escena="4" role="tabpanel" aria-label="Resolvemos dudas"><div class="phone-screen"><div class="android-status" aria-hidden="true"><span>10:41</span><span>5G&nbsp;&nbsp;◔&nbsp;&nbsp;▰</span></div>
+              <div class="ciclo-panel" data-escena="4" id="ciclo-escena-4" role="tabpanel" tabindex="0" aria-labelledby="ciclo-etapa-4"><div class="phone-screen"><div class="android-status" aria-hidden="true"><span>10:41</span><span>5G&nbsp;&nbsp;◔&nbsp;&nbsp;▰</span></div>
                 <div class="phone-bar">
                   <span class="wa-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"></path></svg></span>
                   <span class="agent-avatar">IM</span>
@@ -3305,7 +3316,7 @@
                   </span>
                 </div><div class="phone-thread"><div class="bubble bubble-customer" style="--at:0.00">¿el deducible de daños materiales es 25%?<span class="message-meta">18:31 <span class="checks">✓✓</span></span></div><div class="ciclo-typing" style="--at:1.60" aria-hidden="true"><i></i><i></i><i></i></div><div class="bubble bubble-agent" style="--at:2.80">Sí, Juan. En tu cotización 2381, la cobertura de Daños Materiales lleva un deducible del 25 % sobre el valor del vehículo.<span class="message-meta">18:31</span></div></div><div class="phone-composer" aria-hidden="true"><div class="composer-field"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M8.5 10h.01M15.5 10h.01M8.5 14c1 1 2.2 1.5 3.5 1.5s2.5-.5 3.5-1.5"></path></svg><span>Mensaje</span><span class="composer-clip"><svg viewBox="0 0 24 24"><path d="m21.4 11.6-8.8 8.8a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"></path></svg></span></div><span class="composer-mic"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"></path></svg></span></div>
               </div><p class="ciclo-pie">Responde con la cifra de esa cotización, no con una genérica.</p></div>
-              <div class="ciclo-panel" data-escena="5" role="tabpanel" aria-label="Emitimos pólizas"><div class="phone-screen"><div class="android-status" aria-hidden="true"><span>10:41</span><span>5G&nbsp;&nbsp;◔&nbsp;&nbsp;▰</span></div>
+              <div class="ciclo-panel" data-escena="5" id="ciclo-escena-5" role="tabpanel" tabindex="0" aria-labelledby="ciclo-etapa-5"><div class="phone-screen"><div class="android-status" aria-hidden="true"><span>10:41</span><span>5G&nbsp;&nbsp;◔&nbsp;&nbsp;▰</span></div>
                 <div class="phone-bar">
                   <span class="wa-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"></path></svg></span>
                   <span class="agent-avatar">IM</span>
@@ -3317,7 +3328,7 @@
                   </span>
                 </div><div class="phone-thread"><div class="bubble bubble-agent" style="--at:0.00">Leí tu tarjeta de circulación:<br>· Placas: MXA-12-34<br>· NIV: 3G1TC5CF0LL000000<br>¿Es correcto?<span class="message-meta">19:15</span></div><div class="bubble bubble-customer" style="--at:1.60">sí<span class="message-meta">19:16 <span class="checks">✓✓</span></span></div><div class="ciclo-typing" style="--at:3.20" aria-hidden="true"><i></i><i></i><i></i></div><div class="bubble bubble-agent" style="--at:4.40">¡Listo, Juan! 🎉 Tu póliza fue emitida exitosamente.<span class="message-meta">19:16</span></div></div><div class="phone-composer" aria-hidden="true"><div class="composer-field"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M8.5 10h.01M15.5 10h.01M8.5 14c1 1 2.2 1.5 3.5 1.5s2.5-.5 3.5-1.5"></path></svg><span>Mensaje</span><span class="composer-clip"><svg viewBox="0 0 24 24"><path d="m21.4 11.6-8.8 8.8a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"></path></svg></span></div><span class="composer-mic"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"></path></svg></span></div>
               </div><p class="ciclo-pie">Lectura de la tarjeta de circulación y emisión.</p></div>
-              <div class="ciclo-panel" data-escena="6" role="tabpanel" aria-label="Cobramos"><div class="phone-screen"><div class="android-status" aria-hidden="true"><span>10:41</span><span>5G&nbsp;&nbsp;◔&nbsp;&nbsp;▰</span></div>
+              <div class="ciclo-panel" data-escena="6" id="ciclo-escena-6" role="tabpanel" tabindex="0" aria-labelledby="ciclo-etapa-6"><div class="phone-screen"><div class="android-status" aria-hidden="true"><span>10:41</span><span>5G&nbsp;&nbsp;◔&nbsp;&nbsp;▰</span></div>
                 <div class="phone-bar">
                   <span class="wa-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"></path></svg></span>
                   <span class="agent-avatar">IM</span>
@@ -3329,8 +3340,8 @@
                   </span>
                 </div><div class="phone-thread"><div class="bubble bubble-agent" style="--at:0.00">Su póliza POL-•••• fue emitida exitosamente.<br><br>Link de pago: <span class="ciclo-enlace">insurmind.link/p/••••</span><span class="message-meta">12:24</span></div></div><div class="phone-composer" aria-hidden="true"><div class="composer-field"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M8.5 10h.01M15.5 10h.01M8.5 14c1 1 2.2 1.5 3.5 1.5s2.5-.5 3.5-1.5"></path></svg><span>Mensaje</span><span class="composer-clip"><svg viewBox="0 0 24 24"><path d="m21.4 11.6-8.8 8.8a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"></path></svg></span></div><span class="composer-mic"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"></path></svg></span></div>
               </div><p class="ciclo-pie">La liga de pago, por el canal autorizado.</p></div>
-              <div class="ciclo-panel" data-escena="7" role="tabpanel" aria-label="Atención al cliente · dudas de la póliza"><div class="ciclo-ficha"><h3>Atención al cliente</h3><p>Cuando la póliza ya existe, el cliente sigue preguntando. El agente contesta con los datos de esa póliza, no con un FAQ.</p><ul><li>Responde sobre la póliza contratada</li><li>Escala cuando hace falta criterio humano</li><li>Deja la conversación trazable</li></ul></div></div>
-              <div class="ciclo-panel" data-escena="8" role="tabpanel" aria-label="Recordatorios de pago"><div class="phone-screen"><div class="android-status" aria-hidden="true"><span>10:41</span><span>5G&nbsp;&nbsp;◔&nbsp;&nbsp;▰</span></div>
+              <div class="ciclo-panel" data-escena="7" id="ciclo-escena-7" role="tabpanel" tabindex="0" aria-labelledby="ciclo-etapa-7"><div class="ciclo-ficha"><h3>Atención al cliente</h3><p>Cuando la póliza ya existe, el cliente sigue preguntando. El agente contesta con los datos de esa póliza, no con un FAQ.</p><ul><li>Responde sobre la póliza contratada</li><li>Escala cuando hace falta criterio humano</li><li>Deja la conversación trazable</li></ul></div></div>
+              <div class="ciclo-panel" data-escena="8" id="ciclo-escena-8" role="tabpanel" tabindex="0" aria-labelledby="ciclo-etapa-8"><div class="phone-screen"><div class="android-status" aria-hidden="true"><span>10:41</span><span>5G&nbsp;&nbsp;◔&nbsp;&nbsp;▰</span></div>
                 <div class="phone-bar">
                   <span class="wa-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"></path></svg></span>
                   <span class="agent-avatar">IM</span>
@@ -4211,7 +4222,15 @@
             cmPuntos.forEach(function (n, k) { n.setAttribute("aria-current", String(k === v)); });
           }
           if (i !== ultima) {
-            etapas.forEach(function (n, k) { n.classList.toggle("active", k === i); });
+            etapas.forEach(function (n, k) {
+              var activo = k === i;
+              n.classList.toggle("active", activo);
+              // tabindex itinerante: solo la etapa seleccionada entra en el
+              // orden de tabulación, para no meter ocho paradas en medio de la
+              // página. Las flechas mueven entre ellas.
+              n.setAttribute("aria-selected", String(activo));
+              n.setAttribute("tabindex", activo ? "0" : "-1");
+            });
             // reiniciar la animación del panel que entra
             paneles.forEach(function (p) {
               const activo = Number(p.dataset.escena) === i + 1;
@@ -4254,6 +4273,53 @@
           var e = etapaEn(transcurrido);
           transcurrido += DURACIONES[e.i] * (1 - e.parte) + 1;
           pintar();
+        });
+
+        /* --- Etapas seleccionables ---
+           Pedido por Alberto el 7 oct 2026: al pulsar una etapa, la animación
+           se detiene y a la derecha aparece la escena de esa etapa.
+
+           Siempre se avanza, nunca se retrocede: si la etapa elegida ya pasó
+           en esta vuelta, se salta a la siguiente vuelta. Así la rueda gira
+           siempre en el mismo sentido y el punto no da un salto hacia atrás,
+           que es lo que delataba que esto no es un reloj de verdad. */
+        function inicioDe(k) {
+          var off = 0;
+          for (var j = 0; j < k; j++) off += DURACIONES[j];
+          return off;
+        }
+
+        function irA(k) {
+          pausado = true;
+          anterior = null;
+          var base = Math.floor(transcurrido / TOTAL) * TOTAL + inicioDe(k) + 1;
+          transcurrido = base > transcurrido ? base : base + TOTAL;
+          pintar();
+        }
+
+        function enfocar(k) {
+          etapas[k].focus();
+          irA(k);
+        }
+
+        etapas.forEach(function (etapa, k) {
+          etapa.addEventListener("click", function () { irA(k); });
+          etapa.addEventListener("keydown", function (ev) {
+            var t = ev.key;
+            if (t === "Enter" || t === " " || t === "Spacebar") {
+              ev.preventDefault();
+              irA(k);
+              return;
+            }
+            var destino = null;
+            if (t === "ArrowRight" || t === "ArrowDown") destino = (k + 1) % etapas.length;
+            else if (t === "ArrowLeft" || t === "ArrowUp") destino = (k - 1 + etapas.length) % etapas.length;
+            else if (t === "Home") destino = 0;
+            else if (t === "End") destino = etapas.length - 1;
+            if (destino === null) return;
+            ev.preventDefault();
+            enfocar(destino);
+          });
         });
 
         // no gastar ciclos ni adelantar escenas mientras no se ve
