@@ -2928,6 +2928,7 @@
       .nx-punto.sal { fill: var(--success); }
 
       .nx-lado { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.55rem; }
+      .nx-entrada { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .nx-rotulo { position: absolute; top: -1.6rem; right: 0; left: 0; color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-align: center; white-space: nowrap; }
       .nx-salida .nx-rotulo { top: auto; bottom: -1.6rem; }
 
@@ -2964,6 +2965,26 @@
       }
       .nx-monograma { display: grid; place-items: center; flex-shrink: 0; width: 1.5rem; height: 1.5rem; border-radius: 0.5rem; background: linear-gradient(140deg, var(--indigo), var(--violet)); color: var(--white); font-size: 11px; font-weight: 700; letter-spacing: -0.02em; }
       .nx-core-rotulo { margin: 0 0 0.95rem; color: var(--muted); font-size: 11px; font-weight: 600; letter-spacing: 0.17em; text-align: center; text-transform: uppercase; }
+      /* «Agentes de IA» vive DENTRO del núcleo desde el 7 oct 2026, por decisión
+         de Alberto: «es la pieza más importante de ese núcleo». Antes era una
+         caja más de la columna «Quién opera», al lado de los clientes y del
+         equipo, lo que lo dejaba como un actor externo más.
+         Va destacado y encendido siempre: no entra en el turno de las seis
+         capacidades, porque no es una capacidad sino lo que las usa. */
+      .nx-motor {
+        display: flex; align-items: center; gap: 0.6rem;
+        margin-bottom: 0.65rem; padding: 0.6rem 0.7rem;
+        border-radius: 1rem;
+        background: linear-gradient(135deg, var(--indigo), var(--violet));
+        color: var(--white);
+        box-shadow: 0 6px 16px rgba(79, 70, 229, 0.26);
+      }
+      .nx-motor-icono { display: grid; place-items: center; flex-shrink: 0; width: 1.9rem; height: 1.9rem; border-radius: 0.6rem; background: rgba(255, 255, 255, 0.18); }
+      .nx-motor-icono svg { width: 1.05rem; height: 1.05rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+      .nx-motor-txt { display: grid; gap: 0.05rem; min-width: 0; }
+      .nx-motor-txt b { font-family: var(--heading); font-size: 13px; font-weight: 800; letter-spacing: -0.01em; }
+      .nx-motor-txt small { font-size: 11px; font-weight: 600; color: rgba(255, 255, 255, 0.82); }
+
       .nx-caps { display: grid; grid-template-columns: 1fr 1fr; gap: 0.45rem; }
       .nx-cap {
         display: flex; align-items: center; gap: 0.45rem; min-height: 2.6rem; padding: 0.55rem 0.6rem;
@@ -2998,7 +3019,11 @@
          pago» sigue entrando en una línea. */
       @container (min-width: 520px) {
         .nx-board { grid-template-columns: minmax(0, 1fr) minmax(9.5rem, 1.35fr) minmax(0, 1fr); gap: 1.9rem; padding: 2rem 0 1.2rem; }
-        .nx-lado { grid-template-columns: minmax(0, 1fr); gap: 1.4rem; }
+        /* Las dos columnas se estiran al alto del tablero y reparten sus cajas
+           entre los extremos. Sin esto, la de entrada —que tiene dos cajas
+           desde que los agentes se mudaron al núcleo— se centraba contra una
+           de tres y su rótulo quedaba más abajo que el de la derecha. */
+        .nx-lado { grid-template-columns: minmax(0, 1fr); gap: 1.4rem; align-self: stretch; align-content: space-between; }
         .nx-rotulo, .nx-salida .nx-rotulo { top: -1.7rem; bottom: auto; }
         .nx-cuerpo { gap: 0.5rem; min-height: 5.6rem; padding: 0.7rem 0.35rem; }
         .nx-nombre { font-size: 13px; }
@@ -3093,7 +3118,7 @@
                   <div class="nx-top">
                     <p class="nx-eyebrow">Un núcleo. Toda tu operación.</p>
                   </div>
-                  <div class="nx-board" role="group" aria-label="Tus clientes, los agentes de IA y tu equipo se conectan a través del núcleo de Insurmind con las aseguradoras, los brokers y las insurtech que ya usas.">
+                  <div class="nx-board" role="group" aria-label="Tus clientes y tu equipo se conectan, a través del núcleo de Insurmind y sus agentes de IA, con las aseguradoras, los brokers y las insurtech que ya usas.">
                     <svg class="nx-wires" aria-hidden="true"></svg>
                     <div class="nx-lado nx-entrada">
                       <span class="nx-rotulo">QUIÉN OPERA</span>
@@ -3105,12 +3130,6 @@
                       </div>
                       <div class="nx-nodo" data-nodo="ent-1">
                         <div class="nx-cuerpo">
-                          <span class="nx-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></span>
-                          <span class="nx-nombre">Agentes de IA</span>
-                        </div>
-                      </div>
-                      <div class="nx-nodo" data-nodo="ent-2">
-                        <div class="nx-cuerpo">
                           <span class="nx-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
                           <span class="nx-nombre">Tu equipo</span>
                         </div>
@@ -3119,6 +3138,10 @@
                     <div class="nx-core">
                       <p class="nx-marca"><span class="nx-monograma" aria-hidden="true">IM</span>Insurmind</p>
                       <p class="nx-core-rotulo">Núcleo compartido</p>
+                      <div class="nx-motor">
+                        <span class="nx-motor-icono" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></span>
+                        <span class="nx-motor-txt"><b>Agentes de IA</b><small>El motor del núcleo</small></span>
+                      </div>
                       <div class="nx-caps">
                         <div class="nx-cap" data-nx-cap><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/></svg><span>Contexto</span></div>
                         <div class="nx-cap" data-nx-cap><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/></svg><span>Reglas</span></div>
@@ -3155,7 +3178,7 @@
                     <button type="button" class="nx-pausa" data-nx-pausa aria-pressed="false">Pausar animación</button>
                   </div>
                       </div>
-                <p class="nx-pie">Los agentes y tu equipo trabajan sobre un mismo núcleo, y ese núcleo habla con los sistemas que ya usas.</p>
+                <p class="nx-pie">Tus clientes y tu equipo trabajan sobre un mismo núcleo, y ese núcleo habla con los sistemas que ya usas.</p>
               </div>
           </div>
         </div>
