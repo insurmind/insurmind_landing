@@ -17,7 +17,12 @@ La web pública de **Insurmind**, **agentes de IA que se conectan a cualquier as
 
 ## 2. Estado actual y punto de partida
 
-- **`index.html`** es la página publicada: HTML, CSS y JS mínimo en un archivo. Sin frameworks, sin build, sin dependencias salvo Google Fonts.
+- **`index.html`** es la página publicada: HTML, CSS y JS mínimo en un archivo. Sin frameworks, sin build y, desde el 2026-10-08, **sin ninguna dependencia externa**: las tipografías se sirven desde `assets/fonts/`.
+
+- **Las fuentes están autoalojadas y eso no es cosmético.** La hoja de `fonts.googleapis.com` bloqueaba el pintado 942 ms y era la única causa de que el rendimiento móvil se quedara en 84. Autoalojarlas lo subió a **96** y dejó el bloqueo en **0 ms**. No vuelvas a meter el `<link>` de Google.
+- Son los mismos ficheros que servía Google, con los mismos `unicode-range`. Inter y Manrope están bajo **SIL Open Font License 1.1**, que permite redistribuirlas; las licencias van al lado, en `assets/fonts/`. Si cambias de familia, lleva su licencia también.
+- Solo se precargan los subconjuntos `latin`. Los `latin-ext` quedan detrás de su `unicode-range` y el navegador no los pide en una página en español.
+- **`vercel.json` cachea `/assets/fonts/` un año con `immutable`.** Los nombres no llevan hash, así que **si cambias el contenido de una fuente tienes que renombrar el fichero**, o los navegadores seguirán con la vieja. Es la misma trampa que `og-image.png`.
 - **`aviso-de-privacidad.html`** (7 oct 2026, a petición de Alberto): segunda página pública, servida en `/aviso-de-privacidad` por el `cleanUrls` de `vercel.json`, y enlazada desde la casilla de consentimiento del formulario — la ley exige que el aviso esté disponible **en el momento** de recabar los datos. Estructura conforme a los artículos 15 a 17 de la LFPDPPP. **Publicado el 2026-10-08, sin huecos.** Razón social `Insurmind, S.A. de C.V.`, domicilio en Av. Javier Barros Sierra 495, Santa Fe, Álvaro Obregón, 01219 CDMX, y plazo de conservación de **24 meses desde el último contacto**: los cuatro datos los confirmó Alberto. **El texto sigue sin revisión legal profesional**: la estructura es conforme a la LFPDPPP, pero quien lo escribió no es abogado. Si un abogado lo revisa y cambia algo, anótalo aquí con fecha. No lleva `noindex`, y es a propósito: un aviso legal tiene que ser indexable.
 - **`variante-a.html`** guarda la dirección visual anterior («consultora sobria»: Hanken Grotesk en todo, sin banda oscura, sin NEGOCIA). Lleva `noindex, nofollow` y no está enlazada. Es archivo, no alternativa viva. No la mantengas al día.
 - **`assets/`**: `og-image.png` (1200×630) y `insurmind-tres-planos.svg` (el diagrama va inline en el HTML, el SVG suelto es la fuente).
