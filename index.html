@@ -300,7 +300,12 @@
            --container: justo lo contrario de lo que se busca. Con el max nunca
            encoge por debajo del contenedor y crece hasta 1440. */
         width: min(1440px, max(var(--container), calc(100% - 5rem)));
-        grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+        /* Mitad y mitad desde el 7 oct 2026: Alberto pide texto más grande y
+           gráfico más pequeño. El tope lo pone el diagrama, no el gusto: por
+           debajo de 520 px de caja se apila y se pierde la lectura
+           izquierda → núcleo → derecha. A 1180 de pantalla, 1/1 le deja 537.
+           Cualquier reparto más favorable al texto lo apila ahí. */
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
         gap: clamp(2rem, 3.6vw, 3.75rem);
         align-items: center;
       }
@@ -351,7 +356,7 @@
         /* 103 caracteres en una columna de 478 px. Con los 2,7rem de la versión
            a ancho completo salían siete líneas. Hay una segunda regla .hero h1
            más abajo que pisa a esta: si cambias el tamaño, cámbialo en las dos. */
-        font-size: clamp(1.75rem, 2.45vw, 2rem);
+        font-size: clamp(1.75rem, 2.9vw, 2.6rem);
         font-weight: 700;
         letter-spacing: -0.03em;
         line-height: 1.05;
@@ -797,7 +802,7 @@
       /* Pisa a la regla .hero h1 de más arriba. Mantener los dos valores iguales. */
       .hero h1 {
         max-width: none;
-        font-size: clamp(1.75rem, 2.45vw, 2rem);
+        font-size: clamp(1.75rem, 2.9vw, 2.6rem);
       }
 
       .bubble {
