@@ -353,10 +353,11 @@
         max-width: none;
         margin: 0;
         font-family: var(--heading);
-        /* 103 caracteres en una columna de 478 px. Con los 2,7rem de la versión
-           a ancho completo salían siete líneas. Hay una segunda regla .hero h1
-           más abajo que pisa a esta: si cambias el tamaño, cámbialo en las dos. */
-        font-size: clamp(1.75rem, 2.9vw, 2.6rem);
+        /* El titular pasó de 103 a 51 caracteres el 7 oct 2026, y por eso cabe
+           a 4,4rem en tres líneas: con 103 no cabía. Hay una segunda regla
+           .hero h1 más abajo que pisa a esta: si cambias el tamaño, cámbialo
+           en las dos o no pasará nada. */
+        font-size: clamp(2.2rem, 4.6vw, 4.4rem);
         font-weight: 700;
         letter-spacing: -0.03em;
         line-height: 1.05;
@@ -802,7 +803,7 @@
       /* Pisa a la regla .hero h1 de más arriba. Mantener los dos valores iguales. */
       .hero h1 {
         max-width: none;
-        font-size: clamp(1.75rem, 2.9vw, 2.6rem);
+        font-size: clamp(2.2rem, 4.6vw, 4.4rem);
       }
 
       .bubble {
@@ -2101,7 +2102,7 @@
         }
 
         .hero h1 {
-          font-size: clamp(1.75rem, 6.2vw, 2.35rem);
+          font-size: clamp(2.1rem, 7.4vw, 3.4rem);
           line-height: 1.08;
         }
 
@@ -3051,9 +3052,9 @@
           <span class="brand-word">Insurmind</span>
         </a>
         <nav class="site-nav" aria-label="Secciones">
+          <a href="#donde-actuamos">Dónde actuamos</a>
           <a href="#agentes">Agentes</a>
           <a href="#producto">Producto</a>
-          <a href="#donde-actuamos">Dónde actuamos</a>
           <a href="#arquitectura">Arquitectura</a>
         </nav>
         <div class="nav-cta">
@@ -3067,7 +3068,7 @@
         <div class="container hero-grid">
           <div class="hero-content reveal">
             <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span>Para aseguradoras y brokers en México</p>
-            <h1 id="hero-title">Agentes de IA que se conectan a cualquier aseguradora en México para <span class="gradient-text">cotizar, resolver, emitir y cobrar.</span></h1>
+            <h1 id="hero-title">Agentes de IA para la <span class="gradient-text">venta y postventa de Seguros.</span></h1>
             <p class="hero-copy">Una plataforma que puede trabajar mano a mano con tu equipo para acelerar las ventas.</p>
             <div class="hero-actions">
               <button type="button" class="button button-primary" data-demo-open>Solicitar un demo <span class="arrow" aria-hidden="true">→</span></button>

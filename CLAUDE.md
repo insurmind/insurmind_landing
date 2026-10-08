@@ -60,11 +60,17 @@ La web pública de **Insurmind**, **agentes de IA que se conectan a cualquier as
 
 ## 4. Copy — reglas duras
 
-- **El eslogan está decidido y no se toca. Cambió el 2026-10-07**, dictado por Alberto. Vigente:
-  > Agentes de IA que se conectan a cualquier aseguradora en México para cotizar, resolver, emitir y cobrar.
+- **El eslogan está decidido y no se toca. Cambió dos veces el 2026-10-07**, las dos dictadas por Alberto. Vigente:
+  > Agentes de IA para la venta y postventa de Seguros.
   > Una plataforma que puede trabajar mano a mano con tu equipo para acelerar las ventas.
 
-  La primera línea es el `h1` y **no se ha movido ni una coma** desde el principio. Lo que cambió es la segunda. La anterior decía: «Sin intervención, de principio a fin. Tú ves cada conversación, mides la conversión y tomas el control cuando el negocio lo pida.»
+  **«Seguros» va en mayúscula**: así lo escribió Alberto y así se queda. El degradado empieza en «venta».
+
+  Historial del mismo día, porque las dos decisiones se tomaron en horas y conviene no deshacerlas por error:
+  1. La **segunda línea** pasó de «Sin intervención, de principio a fin. Tú ves cada conversación, mides la conversión y tomas el control cuando el negocio lo pida.» a la actual. Giro de posicionamiento: de vender autonomía a vender colaboración.
+  2. La **primera línea** pasó de «Agentes de IA que se conectan a cualquier aseguradora en México para cotizar, resolver, emitir y cobrar.» a la actual. De **103 caracteres a 51**, y eso es lo que por fin permite que el titular se vea grande: a 4,4rem en tres líneas. Con 103 no cabía por debajo de siete.
+
+  **Las tres metaetiquetas se alinearon el mismo día**, en el PR #41: abren con el titular literal pero conservan «cualquier aseguradora en México», que el titular corto ya no dice y que es lo que posiciona la página en búsqueda. Una meta no es el titular: debe decir más. **Si vuelves a tocar `og:description`, hay que purgar la caché de Facebook y WhatsApp.**
 
   **El giro es de posicionamiento, no de redacción.** La segunda línea antes vendía autonomía —el agente trabaja y tú miras—; ahora vende colaboración: la plataforma trabaja *con* el equipo. Si alguien propone «recuperar» la frase anterior, esto es deliberado.
 
@@ -100,7 +106,7 @@ La web pública de **Insurmind**, **agentes de IA que se conectan a cualquier as
 | # | Sección | id | Menú |
 |---|---|---|---|
 | 1 | Héroe: titular canónico + **diagrama de encaje** | `top` | — |
-| 2 | **Dónde actuamos: el ciclo de venta y postventa** | `donde-actuamos` | Dónde actuamos |
+| 2 | **Dónde actuamos: el ciclo de venta y postventa** | `donde-actuamos` | Dónde actuamos **(primera del menú desde el 2026-10-07)** |
 | 3 | Un chatbot responde, un agente hace avanzar el proceso | `agentes` | Agentes |
 | 4 | Producto en operación: el centro de control completo | `producto` | Producto |
 | 5 | **Tomar la conversación: el equipo entra y la devuelve** | `tomar` | — |
