@@ -2787,9 +2787,13 @@
          Las piezas de WhatsApp —.phone-screen, .bubble, .ciclo-typing— son las
          mismas que usa el ciclo. Solo se añade lo que no existía: el aviso de
          sistema, la etiqueta de autor y la burbuja de la persona. */
-      .toma-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2.6rem; align-items: start; }
+      /* Una sola columna desde que la escena es el panel del producto y no una
+         maqueta de teléfono: el panel necesita el ancho entero. Los tres pasos
+         suben a una fila encima. */
+      .toma-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2.2rem; align-items: start; }
 
       .toma-pasos { display: grid; gap: 1.5rem; margin: 0; padding: 0; list-style: none; }
+      @media (min-width: 760px) { .toma-pasos { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; } }
       .toma-paso { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0.9rem; align-items: start; }
       .toma-num {
         display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 50%;
@@ -2799,8 +2803,6 @@
       .toma-paso h3 { margin: 0.2rem 0 0.3rem; font-family: var(--heading); font-size: 1.05rem; font-weight: 700; }
       .toma-paso p { margin: 0; color: var(--muted); font-size: 0.92rem; line-height: 1.55; }
 
-      .toma-escena .phone-screen { max-width: 23rem; margin: 0 auto; }
-      .toma-escena .phone-thread { min-height: 27rem; align-content: end; }
 
       /* Aviso de sistema: la línea centrada que WhatsApp usa para los cambios
          de estado. Es lo que hace visible la toma y la devolución. */
@@ -2844,9 +2846,7 @@
       .toma-controles button:hover { border-color: var(--lavender); color: var(--ink); }
       .toma-pie { max-width: 30rem; margin: 0.9rem auto 0; color: var(--muted); font-size: 0.85rem; line-height: 1.5; text-align: center; }
 
-      @media (min-width: 900px) {
-        .toma-grid { grid-template-columns: minmax(0, 0.82fr) minmax(0, 1fr); gap: clamp(2.5rem, 5vw, 4.5rem); }
-      }
+
 
       /* Mismo motor que el ciclo: la burbuja entra cuando le toca su --at.
          Sin la clase, y sin JS, el hilo se ve entero y quieto. */
@@ -2863,6 +2863,131 @@
         .toma-escena.is-active .toma-sistema { animation: none; opacity: 1; transform: none; }
         .toma-controles { display: none; }
       }
+
+
+      /* --- Panel de toma de conversación ---
+         Reproduce la interfaz real del producto a partir de las dos capturas
+         que entregó Alberto el 7 oct 2026: la bandeja con el botón «Tomar
+         conversación», y el mismo hilo ya tomado, con redactor y mensajes
+         sugeridos. Decisión suya: se enseña SOLO el panel, no el WhatsApp del
+         cliente en paralelo.
+
+         Dos cosas se apartan de la captura, las dos por §4:
+         - El nombre de la aseguradora va neutro. En la captura pone una real.
+         - El teléfono va enmascarado, como ya hace la página con POL-••••.
+
+         Las fases las lleva el script poniendo y quitando .is-on según el
+         atributo data-fases de cada elemento. La maqueta se sirve con .is-on
+         puesto en lo que se ve en la fase final, así que sin JS el panel se ve
+         completo y quieto: la conversación resuelta y liberada. */
+      .dt {
+        display: grid;
+        grid-template-columns: minmax(15rem, 0.9fr) minmax(0, 2.2fr);
+        /* Alto FIJO, no mínimo. Medido fase a fase, el panel pasaba de 539 a
+           758 px según iban entrando mensajes, y eso empuja la página entera
+           arriba y abajo mientras corre la animación. Es el mismo fallo que el
+           indicador de «escribiendo» del ciclo. 47,5rem es el alto de la fase
+           más llena. */
+        height: 47.5rem;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 1.1rem;
+        background: var(--white);
+        box-shadow: 0 18px 50px rgba(44, 38, 94, 0.09);
+        font-size: 12px;
+      }
+
+      /* ---- Columna izquierda: la bandeja ---- */
+      .dt-lista { display: flex; flex-direction: column; min-width: 0; overflow: hidden; border-right: 1px solid var(--line); background: var(--white); }
+      .dt-filtros { display: flex; flex-wrap: wrap; gap: 0.3rem; padding: 0.7rem 0.7rem 0.4rem; }
+      .dt-filtro { padding: 0.3rem 0.6rem; border-radius: 999px; color: #4a4860; font-size: 11px; font-weight: 700; }
+      .dt-filtro.on { background: var(--indigo); color: var(--white); }
+      .dt-buscar { margin: 0.2rem 0.7rem 0.5rem; padding: 0.5rem 0.65rem; border: 1px solid var(--line); border-radius: 0.6rem; color: #767388; font-size: 11px; }
+      .dt-meta { padding: 0 0.7rem 0.6rem; color: var(--muted); font-size: 11px; line-height: 1.5; }
+      .dt-meta b { color: #b91c1c; font-weight: 700; }
+      .dt-meta i { color: var(--indigo); font-style: normal; font-weight: 700; }
+
+      .dt-fila { display: grid; gap: 0.25rem; padding: 0.6rem 0.7rem; border-top: 1px solid var(--line); }
+      .dt-fila.sel { background: #f1edfd; box-shadow: inset 3px 0 0 var(--indigo); }
+      .dt-fila-top { display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; }
+      .dt-fila-top strong { font-family: var(--heading); font-size: 12px; font-weight: 800; letter-spacing: 0.01em; }
+      .dt-hora { flex-shrink: 0; color: var(--muted); font-size: 11px; }
+      .dt-prev { overflow: hidden; color: var(--muted); font-size: 11px; line-height: 1.4; text-overflow: ellipsis; white-space: nowrap; }
+      .dt-chips { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.1rem; }
+      .dt-chip { padding: 0.15rem 0.45rem; border-radius: 0.35rem; font-size: 11px; font-weight: 700; }
+      .dt-chip.espera { background: #fdf0d8; color: #92610f; }
+      .dt-chip.libre { background: #eceaf2; color: #55526a; }
+      .dt-chip.aband { background: #fde4e4; color: #a3201f; }
+      .dt-chip.quien { background: #e4f1ea; color: #15694f; }
+
+      /* ---- Columna derecha: el hilo ---- */
+      .dt-hilo { display: flex; flex-direction: column; min-width: 0; }
+      .dt-cab { display: flex; justify-content: space-between; align-items: center; gap: 0.7rem; padding: 0.7rem 0.85rem; background: #1b5a47; color: var(--white); }
+      .dt-cab strong { display: block; font-family: var(--heading); font-size: 13px; font-weight: 800; }
+      .dt-cab span { color: rgba(255, 255, 255, 0.78); font-size: 11px; }
+      .dt-btn { flex-shrink: 0; padding: 0.45rem 0.7rem; border-radius: 0.45rem; font-size: 11px; font-weight: 800; white-space: nowrap; }
+      .dt-btn.tomar { background: #4ade80; color: #0d3b2a; }
+      .dt-btn.liberar { background: rgba(255, 255, 255, 0.16); color: var(--white); }
+
+      .dt-cuerpo { display: grid; grid-template-columns: minmax(0, 1fr); flex: 1; min-height: 0; }
+      /* El hilo se llena desde abajo, como un chat de verdad: así el alto fijo
+         no deja un hueco raro arriba en las fases con pocos mensajes. */
+      .dt-mensajes {
+        display: flex; flex-direction: column; justify-content: flex-end; gap: 0.5rem; flex: 1;
+        overflow: hidden; padding: 0.8rem 0.9rem;
+        background:
+          radial-gradient(circle at 12px 12px, rgba(31, 43, 40, 0.055) 1px, transparent 1.4px) 0 0 / 24px 24px,
+          #ece5dd;
+      }
+      .dt-hoy { align-self: center; padding: 0.2rem 0.55rem; border-radius: 0.5rem; background: rgba(255, 255, 255, 0.78); color: #55565c; font-size: 11px; font-weight: 700; }
+      .dt-msg { max-width: 82%; padding: 0.5rem 0.6rem; border-radius: 0.45rem; box-shadow: 0 1px 1px rgba(31, 43, 40, 0.12); color: #17211f; font-size: 11.5px; line-height: 1.45; }
+      .dt-msg.cliente { align-self: flex-start; border-top-left-radius: 0.12rem; background: var(--white); }
+      .dt-msg.equipo { align-self: flex-end; border-top-right-radius: 0.12rem; background: #d9fdd3; }
+      .dt-msg.agente { align-self: flex-end; border-top-right-radius: 0.12rem; background: #d9fdd3; }
+      .dt-autor { display: block; margin-bottom: 0.15rem; color: #15694f; font-size: 11px; font-weight: 800; }
+      .dt-autor.ia { color: var(--indigo-dark); }
+      .dt-hora-msg { display: block; margin-top: 0.15rem; color: #66716d; font-size: 11px; text-align: right; }
+      .dt-nota { align-self: flex-start; padding: 0.35rem 0.6rem; border-radius: 0.35rem; background: #fdf6cf; color: #6d5a12; font-size: 11px; }
+      .dt-sistema { align-self: center; max-width: 86%; padding: 0.3rem 0.6rem; border-radius: 0.4rem; background: rgba(255, 255, 255, 0.82); color: #55526a; font-size: 11px; font-weight: 600; text-align: center; }
+      .dt-sistema b { color: var(--indigo-dark); font-weight: 800; }
+
+      .dt-aviso { padding: 0.75rem; border-top: 1px solid var(--line); background: #fafafd; color: var(--muted); font-size: 11.5px; text-align: center; }
+
+      /* ---- Redactor y sugeridos, solo con la conversación tomada ---- */
+      .dt-redactor { padding: 0.7rem 0.8rem; border-top: 1px solid var(--line); background: var(--white); }
+      .dt-campo { min-height: 3.6rem; padding: 0.55rem 0.65rem; border: 1px solid #b9c9e8; border-radius: 0.5rem; color: #767388; font-size: 11.5px; line-height: 1.5; }
+      .dt-campo.escrito { color: var(--ink); }
+      .dt-campo.escrito::after { display: inline-block; width: 1px; height: 1em; margin-left: 1px; background: var(--ink); content: ""; vertical-align: -2px; }
+      .dt-redactor-pie { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; margin-top: 0.5rem; }
+      .dt-formato { display: flex; gap: 0.6rem; color: #6c6a80; font-size: 12px; font-weight: 700; }
+      .dt-enviar { padding: 0.45rem 0.75rem; border-radius: 0.45rem; background: #e9e8ef; color: #68667c; font-size: 11.5px; font-weight: 700; }
+
+      .dt-sugeridos { display: none; padding: 0.8rem; border-left: 1px solid var(--line); background: #f7f9fd; }
+      .dt-sugeridos h4 { margin: 0 0 0.55rem; color: var(--muted); font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
+      .dt-sug { margin-bottom: 0.5rem; padding: 0.55rem 0.6rem; border: 1px solid var(--line); border-radius: 0.5rem; background: var(--white); }
+      .dt-sug b { display: block; margin-bottom: 0.15rem; color: var(--indigo-dark); font-size: 11.5px; font-weight: 800; line-height: 1.3; }
+      .dt-sug span { color: var(--muted); font-size: 11px; line-height: 1.45; }
+
+      /* El motor de fases: lo que no está encendido, no ocupa. */
+      .dt [data-fases] { display: none; }
+      .dt [data-fases].is-on { display: block; }
+      .dt-filtros [data-fases].is-on,
+      .dt-chips [data-fases].is-on { display: inline-block; }
+      .dt-mensajes [data-fases].is-on { display: block; }
+      .dt-cab [data-fases].is-on { display: inline-block; }
+      .dt-cuerpo.con-sugeridos { grid-template-columns: minmax(0, 1fr) minmax(9rem, 0.42fr); }
+      .dt-cuerpo.con-sugeridos .dt-sugeridos { display: block; }
+      .dt-panel { display: flex; flex-direction: column; min-width: 0; }
+
+      @media (max-width: 1080px) {
+        /* Por debajo de este ancho el panel no cabe sin encoger su texto por
+           debajo de 11 px. En vez de deformarlo se desplaza en horizontal, que
+           es el patrón que ya usa el diagrama de arquitectura. */
+        .toma-visual { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .dt { min-width: 60rem; }
+        .toma-pista { display: block; }
+      }
+      .toma-pista { display: none; margin-top: 0.6rem; color: var(--muted); font-size: 11.5px; text-align: center; }
 
       /* --- Diagrama del héroe: el núcleo conectado ---
          Sustituye al SVG estático de encaje (PR #28) por la versión que entregó
@@ -3529,7 +3654,7 @@
                     <span class="toma-num" aria-hidden="true">02</span>
                     <div>
                       <h3>Resuelve el caso</h3>
-                      <p>Escribe por la misma cuenta de empresa, con su nombre a la vista. El cliente sabe en todo momento con quién habla.</p>
+                      <p>Desde el mismo panel, con los mensajes sugeridos a mano. El cliente ve su nombre, no una cuenta distinta.</p>
                     </div>
                   </li>
                   <li class="toma-paso">
@@ -3541,30 +3666,73 @@
                   </li>
                 </ol>
                 <div class="toma-visual reveal">
-                  <div class="toma-escena" data-toma-escena>
-                    <div class="phone-screen">
-                      <div class="android-status" aria-hidden="true"><span>12:04</span><span>5G&nbsp;&nbsp;◔&nbsp;&nbsp;▰</span></div>
-                      <div class="phone-bar">
-                        <span class="wa-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"></path></svg></span>
-                        <span class="agent-avatar">IM</span>
-                        <div><strong>Insurmind</strong><span class="agent-status">Cuenta de empresa</span></div>
-                        <span class="wa-actions" aria-hidden="true"><span class="wa-icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"></rect><path d="m16 10 5-3v10l-5-3"></path></svg></span><span class="wa-icon"><svg viewBox="0 0 24 24"><path d="M21 16.4v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 1.1 3.7 2 2 0 0 1 3.1 1.5h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L7 9.5a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5 13 13 0 0 0 2.9.7 2 2 0 0 1 1.7 2Z"></path></svg></span><span class="wa-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"></circle><circle cx="12" cy="19" r="1" fill="currentColor" stroke="none"></circle></svg></span></span>
+                  <div class="dt" data-dt>
+                    <div class="dt-lista">
+                      <div class="dt-filtros" aria-hidden="true">
+                        <span class="dt-filtro on">Todos</span>
+                        <span class="dt-filtro">No contestan</span>
+                        <span class="dt-filtro">Contestan</span>
+                        <span class="dt-filtro">Tomadas</span>
+                        <span class="dt-filtro">Mis conversaciones</span>
                       </div>
-                      <div class="phone-thread">
-                        <div class="bubble bubble-customer" style="--at:0.00">Hable con uds por telefono para comentarles mi caso en particular sobre la renovación de mi póliza.<span class="message-meta">12:02 <span class="checks">✓✓</span></span></div>
-                        <p class="toma-sistema" style="--at:1.70"><b>Adela</b>, del equipo de renovaciones, tomó la conversación</p>
-                        <div class="ciclo-typing" style="--at:2.60" aria-hidden="true"><i></i><i></i><i></i></div>
-                                                <div class="bubble bubble-humano" style="--at:3.70"><span class="toma-autor">Adela · Renovaciones</span>Hola Juan Carlos, soy Adela del equipo especial de renovaciones. Voy a revisar tu caso y regreso a la brevedad.<span class="message-meta">12:03</span></div>
-                        <div class="ciclo-typing" style="--at:5.90" aria-hidden="true"><i></i><i></i><i></i></div>
-                        <div class="bubble bubble-humano" style="--at:7.10"><span class="toma-autor">Adela · Renovaciones</span>Listo Juan Carlos, tu renovación quedó desbloqueada y ya puedes disfrutar de tu poliza con tranquilidad.<span class="message-meta">12:07</span></div>
-                        <p class="toma-sistema" style="--at:8.70"><b>Adela</b> liberó la conversación. El agente retoma el hilo</p>
-                        <div class="bubble bubble-customer" style="--at:9.80">Muchas gracias de verdad fue de mucha ayuda!<span class="message-meta">12:08 <span class="checks">✓✓</span></span></div>
-                        <div class="ciclo-typing" style="--at:10.80" aria-hidden="true"><i></i><i></i><i></i></div>
-                        <div class="bubble bubble-agent" style="--at:11.90">De qué Juan Carlos estamos para servirte.<span class="message-meta">12:08</span></div>
+                      <p class="dt-buscar" aria-hidden="true">Buscar por teléfono o vehículo…</p>
+                      <p class="dt-meta">10 conversaciones · <b>2 abandonados</b><br><i>Recientes</i> &nbsp; Quien más espera</p>
+                      <div class="dt-fila">
+                        <span class="dt-fila-top"><strong>CHEVROLET 2009</strong><span class="dt-hora">17:56</span></span>
+                        <span class="dt-prev">¿qué le pareció el descuento?, ¿le gustaría qu…</span>
+                        <span class="dt-chips"><span class="dt-chip espera">Esperando</span><span class="dt-chip quien">Montserrat · tomada hace 16 min</span></span>
                       </div>
-                      <div class="phone-composer" aria-hidden="true">
-                        <div class="composer-field"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M8.5 10h.01M15.5 10h.01M8.5 14c1 1 2.2 1.5 3.5 1.5s2.5-.5 3.5-1.5"></path></svg><span>Mensaje</span><span class="composer-clip"><svg viewBox="0 0 24 24"><path d="m21.4 11.6-8.8 8.8a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"></path></svg></span></div>
-                        <span class="composer-mic"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"></path></svg></span>
+                      <div class="dt-fila">
+                        <span class="dt-fila-top"><strong>MITSUBISHI 2018</strong><span class="dt-hora">15:00</span></span>
+                        <span class="dt-prev">Sin respuesta todavía</span>
+                        <span class="dt-chips"><span class="dt-chip espera">Esperando</span><span class="dt-chip libre">Libre</span></span>
+                      </div>
+                      <div class="dt-fila">
+                        <span class="dt-fila-top"><strong>HYUNDAI 2026</strong><span class="dt-hora">12:41</span></span>
+                        <span class="dt-prev">Hola, sigo pendiente de sus datos, ¿le gustaría…</span>
+                        <span class="dt-chips"><span class="dt-chip aband">Abandonado</span><span class="dt-chip libre">Libre</span></span>
+                      </div>
+                      <div class="dt-fila sel">
+                        <span class="dt-fila-top"><strong>NISSAN 2023</strong><span class="dt-hora">12:02</span></span>
+                        <span class="dt-prev">Hable con uds por telefono para comentarles mi caso…</span>
+                        <span class="dt-chips">
+                          <span class="dt-chip espera">Esperando</span>
+                          <span class="dt-chip libre is-on" data-fases="0,6,7,8">Libre</span>
+                          <span class="dt-chip quien" data-fases="1,2,3,4,5">Adela · tomada hace menos de 1 min</span>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="dt-hilo">
+                      <div class="dt-cab">
+                        <span><strong>NISSAN 2023</strong><span>227 ••• 8755</span></span>
+                        <span class="dt-btn tomar is-on" data-fases="0,6,7,8">Tomar conversación</span>
+                        <span class="dt-btn liberar" data-fases="1,2,3,4,5">Liberar conversación</span>
+                      </div>
+                      <div class="dt-cuerpo" data-dt-cuerpo>
+                        <div class="dt-panel">
+                          <div class="dt-mensajes">
+                            <span class="dt-hoy" aria-hidden="true">Hoy</span>
+                            <p class="dt-msg cliente is-on">Hable con uds por telefono para comentarles mi caso en particular sobre la renovación de mi póliza.<span class="dt-hora-msg">12:02</span></p>
+                            <p class="dt-nota" data-fases="0">Sin respuesta del equipo todavía.</p>
+                            <p class="dt-sistema is-on" data-fases="1,2,3,4,5,6,7,8"><b>Adela</b> tomó la conversación</p>
+                            <p class="dt-msg equipo is-on" data-fases="3,4,5,6,7,8"><span class="dt-autor">Adela · Renovaciones</span>Hola Juan Carlos, soy Adela del equipo especial de renovaciones. Voy a revisar tu caso y regreso a la brevedad.<span class="dt-hora-msg">12:03</span></p>
+                            <p class="dt-msg equipo is-on" data-fases="5,6,7,8"><span class="dt-autor">Adela · Renovaciones</span>Listo Juan Carlos, tu renovación quedó desbloqueada y ya puedes disfrutar de tu poliza con tranquilidad.<span class="dt-hora-msg">12:07</span></p>
+                            <p class="dt-sistema is-on" data-fases="6,7,8"><b>Adela</b> liberó la conversación. El agente retoma el hilo</p>
+                            <p class="dt-msg cliente is-on" data-fases="7,8">Muchas gracias de verdad fue de mucha ayuda!<span class="dt-hora-msg">12:08</span></p>
+                            <p class="dt-msg agente is-on" data-fases="8"><span class="dt-autor ia">Agente de IA</span>De qué Juan Carlos estamos para servirte.<span class="dt-hora-msg">12:08</span></p>
+                          </div>
+                          <p class="dt-aviso is-on" data-fases="0,6,7,8">Toma esta conversación para poder responder.</p>
+                          <div class="dt-redactor" data-fases="1,2,3,4,5">
+                            <p class="dt-campo" data-dt-campo>Escribe tu mensaje… («/» para respuestas rápidas)</p>
+                            <span class="dt-redactor-pie"><span class="dt-formato" aria-hidden="true"><b>B</b><i>I</i><span>🙂</span></span><span class="dt-enviar">Enviar mensaje</span></span>
+                          </div>
+                        </div>
+                        <div class="dt-sugeridos">
+                          <h4>Mensajes sugeridos</h4>
+                          <p class="dt-sug"><b>Recordatorio MSI</b><span>¡Hola! 🙂 Solo para recordarte: tu cotización la puedes pagar a meses sin…</span></p>
+                          <p class="dt-sug"><b>Precio preferencial + pedir nombre</b><span>¡Hola! 🙂 Solo para recordarte: tu cotización hoy tiene un precio preferencial si l…</span></p>
+                          <p class="dt-sug"><b>Check-in general</b><span>¡Hola! 🙂 ¿que te parece la cotización? ¿Quieres conocer otras opciones o modalidades…</span></p>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -3572,7 +3740,8 @@
                     <button type="button" data-toma-pausa aria-pressed="false">Pausar</button>
                     <button type="button" data-toma-repetir>Repetir</button>
                   </div>
-                  <p class="toma-pie">Conversación de producción. La persona y el agente escriben por la misma cuenta.</p>
+                  <p class="toma-pista">Desliza el panel para verlo completo &rarr;</p>
+                  <p class="toma-pie">Interfaz y conversación de producción. El nombre de la aseguradora y el teléfono van ocultos.</p>
                 </div>
               </div>
             </div>
@@ -4600,6 +4769,145 @@
             },
             { threshold: Math.min(0.6, (window.innerHeight || 800) / Math.max(escena.offsetHeight || 1, 1) * 0.6) }
           ).observe(escena);
+        } else {
+          visible = true;
+        }
+
+        rotular();
+      })();
+    </script>
+    <script>
+      /* Panel de toma de conversación: motor de fases.
+         Cada elemento con data-fases declara en qué fases se ve. El script
+         solo pone y quita .is-on. La maqueta se sirve con .is-on puesto en lo
+         que se ve en la fase final, así que sin JS, y con prefers-reduced-
+         motion, el panel se ve completo y quieto: la conversación resuelta y
+         liberada, que es el estado final de la historia. */
+      (function () {
+        var panel = document.querySelector("[data-dt]");
+        if (!panel) return;
+
+        var cuerpo = panel.querySelector("[data-dt-cuerpo]");
+        var campo = panel.querySelector("[data-dt-campo]");
+        var pausa = document.querySelector("[data-toma-pausa]");
+        var repetir = document.querySelector("[data-toma-repetir]");
+        var menos = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+        var timados = Array.prototype.slice.call(panel.querySelectorAll("[data-fases]")).map(function (el) {
+          return { el: el, fases: el.getAttribute("data-fases").split(",").map(Number) };
+        });
+
+        var VACIO = "Escribe tu mensaje… («/» para respuestas rápidas)";
+        var TEXTO1 = "Hola Juan Carlos, soy Adela del equipo especial de renovaciones. Voy a revisar tu caso y regreso a la brevedad.";
+        var TEXTO2 = "Listo Juan Carlos, tu renovación quedó desbloqueada y ya puedes disfrutar de tu poliza con tranquilidad.";
+        // Lo que se ve en el redactor en cada fase. null = el marcador de posición.
+        var REDACTOR = [null, null, TEXTO1, null, TEXTO2, null, null, null, null];
+        // Cuánto dura cada fase. La 2 y la 4 son las de escritura: necesitan
+        // leerse. La 8 es el final, y aguanta antes de volver a empezar.
+        var DURACION = [2600, 1300, 2600, 1600, 2600, 1600, 1500, 1700, 3400];
+        var FINAL = DURACION.length - 1;
+
+        var fase = FINAL;
+        var reloj = null;
+        var pausado = menos.matches;
+        var visible = false;
+
+        function aplicar(n) {
+          fase = n;
+          timados.forEach(function (t) {
+            t.el.classList.toggle("is-on", t.fases.indexOf(n) !== -1);
+          });
+          // Los sugeridos abren una columna, así que el cambio va en la rejilla.
+          cuerpo.classList.toggle("con-sugeridos", n >= 1 && n <= 5);
+          var txt = REDACTOR[n];
+          campo.textContent = txt === null ? VACIO : txt;
+          campo.classList.toggle("escrito", txt !== null);
+        }
+
+        function siguiente() {
+          aplicar((fase + 1) % DURACION.length);
+          programar();
+        }
+
+        function programar() {
+          detener();
+          if (pausado) return;
+          reloj = window.setTimeout(siguiente, DURACION[fase]);
+        }
+
+        function detener() {
+          if (reloj !== null) window.clearTimeout(reloj);
+          reloj = null;
+        }
+
+        function rotular() {
+          if (!pausa) return;
+          pausa.textContent = pausado ? "Reproducir" : "Pausar";
+          pausa.setAttribute("aria-pressed", String(pausado));
+        }
+
+        function desdeElPrincipio() {
+          aplicar(0);
+          programar();
+        }
+
+        if (pausa) {
+          pausa.addEventListener("click", function () {
+            pausado = !pausado;
+            rotular();
+            if (pausado) {
+              detener();
+              // Al pausar, el panel se queda en el estado final y completo, no
+              // congelado a medias: es lo que pide «estado por defecto =
+              // estado final».
+              aplicar(FINAL);
+            } else {
+              visible = true;
+              desdeElPrincipio();
+            }
+          });
+        }
+
+        if (repetir) {
+          repetir.addEventListener("click", function () {
+            if (pausado) {
+              pausado = false;
+              rotular();
+            }
+            visible = true;
+            desdeElPrincipio();
+          });
+        }
+
+        menos.addEventListener("change", function (e) {
+          pausado = e.matches;
+          rotular();
+          if (pausado) {
+            detener();
+            aplicar(FINAL);
+          } else {
+            desdeElPrincipio();
+          }
+        });
+
+        document.addEventListener("visibilitychange", function () {
+          if (document.hidden) detener();
+          else if (visible) programar();
+        });
+
+        if (window.IntersectionObserver) {
+          new IntersectionObserver(
+            function (entradas) {
+              var antes = visible;
+              visible = entradas[0].isIntersecting;
+              if (visible && !antes) desdeElPrincipio();
+              else if (!visible) {
+                detener();
+                aplicar(FINAL);
+              }
+            },
+            { threshold: 0.3 }
+          ).observe(panel);
         } else {
           visible = true;
         }
