@@ -70,7 +70,7 @@ La web pública de **Insurmind**, **agentes de IA que se conectan a cualquier as
   1. La **segunda línea** pasó de «Sin intervención, de principio a fin. Tú ves cada conversación, mides la conversión y tomas el control cuando el negocio lo pida.» a la actual. Giro de posicionamiento: de vender autonomía a vender colaboración.
   2. La **primera línea** pasó de «Agentes de IA que se conectan a cualquier aseguradora en México para cotizar, resolver, emitir y cobrar.» a la actual. De **103 caracteres a 51**, y eso es lo que por fin permite que el titular se vea grande: a 4,4rem en tres líneas. Con 103 no cabía por debajo de siete.
 
-  **Las metaetiquetas siguen citando el titular largo.** `description`, `og:description` y `twitter:description` empiezan por «Agentes de IA que se conectan a cualquier aseguradora en México para cotizar, resolver, emitir y cobrar.» Alberto no pidió cambiarlas y como descripción siguen siendo ciertas, pero si algún día se alinean, que sea una decisión consciente: tocar `og:description` obliga a purgar la caché de Facebook y WhatsApp.
+  **Las tres metaetiquetas se alinearon el mismo día**, en el PR #41: abren con el titular literal pero conservan «cualquier aseguradora en México», que el titular corto ya no dice y que es lo que posiciona la página en búsqueda. Una meta no es el titular: debe decir más. **Si vuelves a tocar `og:description`, hay que purgar la caché de Facebook y WhatsApp.**
 
   **El giro es de posicionamiento, no de redacción.** La segunda línea antes vendía autonomía —el agente trabaja y tú miras—; ahora vende colaboración: la plataforma trabaja *con* el equipo. Si alguien propone «recuperar» la frase anterior, esto es deliberado.
 
